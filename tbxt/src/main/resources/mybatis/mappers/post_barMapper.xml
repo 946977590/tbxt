@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pxxy.mapper.post_barMapper">
+  <resultMap id="BaseResultMap" type="com.pxxy.pojo.post_bar">
+    <id column="bar_id" jdbcType="VARCHAR" property="barId" />
+    <result column="bar_name" jdbcType="VARCHAR" property="barName" />
+    <result column="bar_leader" jdbcType="VARCHAR" property="barLeader" />
+    <result column="bar_picture" jdbcType="VARCHAR" property="barPicture" />
+    <result column="bar_sign" jdbcType="VARCHAR" property="barSign" />
+    <result column="bar_category" jdbcType="VARCHAR" property="barCategory" />
+    <result column="bar_creattime" jdbcType="VARCHAR" property="barCreattime" />
+    <result column="bar_modifytime" jdbcType="VARCHAR" property="barModifytime" />
+    <result column="bar_isdelete" jdbcType="VARCHAR" property="barIsdelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    bar_id, bar_name, bar_leader, bar_picture, bar_sign, bar_category, bar_creattime, 
+    bar_modifytime, bar_isdelete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from post_bar
+    where bar_id = #{barId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from post_bar
+    where bar_id = #{barId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pxxy.pojo.post_bar">
+    insert into post_bar (bar_id, bar_name, bar_leader, 
+      bar_picture, bar_sign, bar_category, 
+      bar_creattime, bar_modifytime, bar_isdelete
+      )
+    values (#{barId,jdbcType=VARCHAR}, #{barName,jdbcType=VARCHAR}, #{barLeader,jdbcType=VARCHAR}, 
+      #{barPicture,jdbcType=VARCHAR}, #{barSign,jdbcType=VARCHAR}, #{barCategory,jdbcType=VARCHAR}, 
+      #{barCreattime,jdbcType=VARCHAR}, #{barModifytime,jdbcType=VARCHAR}, #{barIsdelete,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pxxy.pojo.post_bar">
+    insert into post_bar
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="barId != null">
+        bar_id,
+      </if>
+      <if test="barName != null">
+        bar_name,
+      </if>
+      <if test="barLeader != null">
+        bar_leader,
+      </if>
+      <if test="barPicture != null">
+        bar_picture,
+      </if>
+      <if test="barSign != null">
+        bar_sign,
+      </if>
+      <if test="barCategory != null">
+        bar_category,
+      </if>
+      <if test="barCreattime != null">
+        bar_creattime,
+      </if>
+      <if test="barModifytime != null">
+        bar_modifytime,
+      </if>
+      <if test="barIsdelete != null">
+        bar_isdelete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="barId != null">
+        #{barId,jdbcType=VARCHAR},
+      </if>
+      <if test="barName != null">
+        #{barName,jdbcType=VARCHAR},
+      </if>
+      <if test="barLeader != null">
+        #{barLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="barPicture != null">
+        #{barPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="barSign != null">
+        #{barSign,jdbcType=VARCHAR},
+      </if>
+      <if test="barCategory != null">
+        #{barCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="barCreattime != null">
+        #{barCreattime,jdbcType=VARCHAR},
+      </if>
+      <if test="barModifytime != null">
+        #{barModifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="barIsdelete != null">
+        #{barIsdelete,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pxxy.pojo.post_bar">
+    update post_bar
+    <set>
+      <if test="barName != null">
+        bar_name = #{barName,jdbcType=VARCHAR},
+      </if>
+      <if test="barLeader != null">
+        bar_leader = #{barLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="barPicture != null">
+        bar_picture = #{barPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="barSign != null">
+        bar_sign = #{barSign,jdbcType=VARCHAR},
+      </if>
+      <if test="barCategory != null">
+        bar_category = #{barCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="barCreattime != null">
+        bar_creattime = #{barCreattime,jdbcType=VARCHAR},
+      </if>
+      <if test="barModifytime != null">
+        bar_modifytime = #{barModifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="barIsdelete != null">
+        bar_isdelete = #{barIsdelete,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bar_id = #{barId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pxxy.pojo.post_bar">
+    update post_bar
+    set bar_name = #{barName,jdbcType=VARCHAR},
+      bar_leader = #{barLeader,jdbcType=VARCHAR},
+      bar_picture = #{barPicture,jdbcType=VARCHAR},
+      bar_sign = #{barSign,jdbcType=VARCHAR},
+      bar_category = #{barCategory,jdbcType=VARCHAR},
+      bar_creattime = #{barCreattime,jdbcType=VARCHAR},
+      bar_modifytime = #{barModifytime,jdbcType=VARCHAR},
+      bar_isdelete = #{barIsdelete,jdbcType=VARCHAR}
+    where bar_id = #{barId,jdbcType=VARCHAR}
+  </update>
+</mapper>

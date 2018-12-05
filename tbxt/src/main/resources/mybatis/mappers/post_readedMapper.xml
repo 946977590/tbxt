@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pxxy.mapper.post_readedMapper">
+  <resultMap id="BaseResultMap" type="com.pxxy.pojo.post_readed">
+    <id column="readed_id" jdbcType="VARCHAR" property="readedId" />
+    <result column="post_id" jdbcType="VARCHAR" property="postId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    readed_id, post_id, user_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from post_readed
+    where readed_id = #{readedId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from post_readed
+    where readed_id = #{readedId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pxxy.pojo.post_readed">
+    insert into post_readed (readed_id, post_id, user_id
+      )
+    values (#{readedId,jdbcType=VARCHAR}, #{postId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pxxy.pojo.post_readed">
+    insert into post_readed
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="readedId != null">
+        readed_id,
+      </if>
+      <if test="postId != null">
+        post_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="readedId != null">
+        #{readedId,jdbcType=VARCHAR},
+      </if>
+      <if test="postId != null">
+        #{postId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pxxy.pojo.post_readed">
+    update post_readed
+    <set>
+      <if test="postId != null">
+        post_id = #{postId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where readed_id = #{readedId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pxxy.pojo.post_readed">
+    update post_readed
+    set post_id = #{postId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where readed_id = #{readedId,jdbcType=VARCHAR}
+  </update>
+</mapper>

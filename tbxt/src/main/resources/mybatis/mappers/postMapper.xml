@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pxxy.mapper.postMapper">
+	<resultMap id="BaseResultMap" type="com.pxxy.pojo.post">
+		<id column="post_id" jdbcType="VARCHAR" property="postId" />
+		<result column="post_bar_id" jdbcType="VARCHAR"
+			property="postBarId" />
+		<result column="post_user_id" jdbcType="VARCHAR"
+			property="postUserId" />
+		<result column="post_title" jdbcType="VARCHAR"
+			property="postTitle" />
+		<result column="post_content" jdbcType="VARCHAR"
+			property="postContent" />
+		<result column="post_author" jdbcType="VARCHAR"
+			property="postAuthor" />
+		<result column="post_creattime" jdbcType="VARCHAR"
+			property="postCreattime" />
+		<result column="post_modifytime" jdbcType="VARCHAR"
+			property="postModifytime" />
+		<result column="post_isdelete" jdbcType="VARCHAR"
+			property="postIsdelete" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		post_id, post_bar_id, post_user_id, post_title, post_content, post_author,
+		post_creattime,
+		post_modifytime, post_isdelete
+	</sql>
+
+	<resultMap type="com.pxxy.DTO.PostUserDTO" id="QueryDTO_resultMap">  
+	    <association property="post"  javaType="post" resultMap="BaseResultMap"/>
+	    <association property="post_bar"  javaType="com.pxxy.pojo.post_bar" resultMap="com.pxxy.mapper.post_barMapper.BaseResultMap"/>
+		
+		<!-- <collection property="post_pictureList" ofType="post_picture">  
+            <id property="pictureId" column="picture_id" />
+            <result column="picture_belong" property="pictureBelong"/>
+			<result column="picture_name" property="pictureName"/>
+        </collection> -->
+        
+        <collection property="post_barList" ofType="post_bar"> 
+        	<id property="barId" column="bar_id" />
+			<result property="barName" column="bar_name"/>
+        </collection>
+        <collection property="postList" ofType="post"> 
+        	<id column="post_id" jdbcType="VARCHAR" property="postId" />
+			<result column="post_bar_id" property="postBarId" />
+			<result column="post_user_id" property="postUserId" />
+			<result column="post_title" property="postTitle" />
+			<result column="post_content" property="postContent" />
+			<result column="post_author" property="postAuthor" />
+			<result column="post_creattime" property="postCreattime" />
+			<result column="post_modifytime" property="postModifytime" />
+			<result column="post_isdelete" property="postIsdelete" />
+        </collection>
+        
+	</resultMap>  
+
+ 	<select id="queryPostByUserId"  resultMap="QueryDTO_resultMap">
+		SELECT 
+			post.post_id,
+			post.post_bar_id, 
+			post.post_title,
+			post.post_content,
+			post.post_author,
+			post.post_creattime,
+			post_bar.bar_id,
+			post_bar.bar_name
+			<!-- post_picture.picture_name,
+			post_picture.picture_id -->
+		FROM post 
+ 		inner JOIN post_bar on post.post_bar_id=post_bar.bar_id
+ 		inner JOIN user on post.post_user_id = user.user_id
+		<!-- inner JOIN post_picture on post.post_id=post_picture.picture_belong -->
+		WHERE user.user_id = #{userId} ORDER BY post.post_creattime
+	</select>
+	
+<!-- ==================================分割线============================================== -->
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from post
+		where post_id = #{postId,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from post
+		where post_id = #{postId,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="insert" parameterType="com.pxxy.pojo.post">
+		insert into post (post_id, post_bar_id, post_user_id,
+		post_title, post_content, post_author,
+		post_creattime, post_modifytime, post_isdelete
+		)
+		values (#{postId,jdbcType=VARCHAR}, #{postBarId,jdbcType=VARCHAR},
+		#{postUserId,jdbcType=VARCHAR},
+		#{postTitle,jdbcType=VARCHAR}, #{postContent,jdbcType=VARCHAR}, #{postAuthor,jdbcType=VARCHAR},
+		#{postCreattime,jdbcType=VARCHAR}, #{postModifytime,jdbcType=VARCHAR},
+		#{postIsdelete,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.pxxy.pojo.post">
+		insert into post
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="postId != null">
+				post_id,
+			</if>
+			<if test="postBarId != null">
+				post_bar_id,
+			</if>
+			<if test="postUserId != null">
+				post_user_id,
+			</if>
+			<if test="postTitle != null">
+				post_title,
+			</if>
+			<if test="postContent != null">
+				post_content,
+			</if>
+			<if test="postAuthor != null">
+				post_author,
+			</if>
+			<if test="postCreattime != null">
+				post_creattime,
+			</if>
+			<if test="postModifytime != null">
+				post_modifytime,
+			</if>
+			<if test="postIsdelete != null">
+				post_isdelete,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="postId != null">
+				#{postId,jdbcType=VARCHAR},
+			</if>
+			<if test="postBarId != null">
+				#{postBarId,jdbcType=VARCHAR},
+			</if>
+			<if test="postUserId != null">
+				#{postUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="postTitle != null">
+				#{postTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="postContent != null">
+				#{postContent,jdbcType=VARCHAR},
+			</if>
+			<if test="postAuthor != null">
+				#{postAuthor,jdbcType=VARCHAR},
+			</if>
+			<if test="postCreattime != null">
+				#{postCreattime,jdbcType=VARCHAR},
+			</if>
+			<if test="postModifytime != null">
+				#{postModifytime,jdbcType=VARCHAR},
+			</if>
+			<if test="postIsdelete != null">
+				#{postIsdelete,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.pxxy.pojo.post">
+		update post
+		<set>
+			<if test="postBarId != null">
+				post_bar_id = #{postBarId,jdbcType=VARCHAR},
+			</if>
+			<if test="postUserId != null">
+				post_user_id = #{postUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="postTitle != null">
+				post_title = #{postTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="postContent != null">
+				post_content = #{postContent,jdbcType=VARCHAR},
+			</if>
+			<if test="postAuthor != null">
+				post_author = #{postAuthor,jdbcType=VARCHAR},
+			</if>
+			<if test="postCreattime != null">
+				post_creattime = #{postCreattime,jdbcType=VARCHAR},
+			</if>
+			<if test="postModifytime != null">
+				post_modifytime = #{postModifytime,jdbcType=VARCHAR},
+			</if>
+			<if test="postIsdelete != null">
+				post_isdelete = #{postIsdelete,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where post_id = #{postId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.pxxy.pojo.post">
+		update post
+		set post_bar_id = #{postBarId,jdbcType=VARCHAR},
+		post_user_id = #{postUserId,jdbcType=VARCHAR},
+		post_title = #{postTitle,jdbcType=VARCHAR},
+		post_content = #{postContent,jdbcType=VARCHAR},
+		post_author = #{postAuthor,jdbcType=VARCHAR},
+		post_creattime = #{postCreattime,jdbcType=VARCHAR},
+		post_modifytime = #{postModifytime,jdbcType=VARCHAR},
+		post_isdelete = #{postIsdelete,jdbcType=VARCHAR}
+		where post_id = #{postId,jdbcType=VARCHAR}
+	</update>
+</mapper>

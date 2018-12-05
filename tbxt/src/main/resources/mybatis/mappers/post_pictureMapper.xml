@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pxxy.mapper.post_pictureMapper">
+  <resultMap id="BaseResultMap" type="com.pxxy.pojo.post_picture">
+    <id column="picture_id" jdbcType="VARCHAR" property="pictureId" />
+    <result column="picture_name" jdbcType="VARCHAR" property="pictureName" />
+    <result column="picture_belong" jdbcType="VARCHAR" property="pictureBelong" />
+    <result column="picture_sequence" jdbcType="VARCHAR" property="pictureSequence" />
+    <result column="picture_creattime" jdbcType="VARCHAR" property="pictureCreattime" />
+    <result column="picture_modifytime" jdbcType="VARCHAR" property="pictureModifytime" />
+    <result column="picture_isdelete" jdbcType="VARCHAR" property="pictureIsdelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    picture_id, picture_name, picture_belong, picture_sequence, picture_creattime, picture_modifytime, 
+    picture_isdelete
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from post_picture
+    where picture_id = #{pictureId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByPostId" parameterType="java.lang.String" resultType="post_picture">
+    select * 
+    from post_picture 
+    where picture_belong = #{postId,jdbcType=VARCHAR} 
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from post_picture
+    where picture_id = #{pictureId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pxxy.pojo.post_picture">
+    insert into post_picture (picture_id, picture_name, picture_belong, 
+      picture_sequence, picture_creattime, picture_modifytime, 
+      picture_isdelete)
+    values (#{pictureId,jdbcType=VARCHAR}, #{pictureName,jdbcType=VARCHAR}, #{pictureBelong,jdbcType=VARCHAR}, 
+      #{pictureSequence,jdbcType=VARCHAR}, #{pictureCreattime,jdbcType=VARCHAR}, #{pictureModifytime,jdbcType=VARCHAR}, 
+      #{pictureIsdelete,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pxxy.pojo.post_picture">
+    insert into post_picture
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pictureId != null">
+        picture_id,
+      </if>
+      <if test="pictureName != null">
+        picture_name,
+      </if>
+      <if test="pictureBelong != null">
+        picture_belong,
+      </if>
+      <if test="pictureSequence != null">
+        picture_sequence,
+      </if>
+      <if test="pictureCreattime != null">
+        picture_creattime,
+      </if>
+      <if test="pictureModifytime != null">
+        picture_modifytime,
+      </if>
+      <if test="pictureIsdelete != null">
+        picture_isdelete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pictureId != null">
+        #{pictureId,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureName != null">
+        #{pictureName,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureBelong != null">
+        #{pictureBelong,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureSequence != null">
+        #{pictureSequence,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureCreattime != null">
+        #{pictureCreattime,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureModifytime != null">
+        #{pictureModifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureIsdelete != null">
+        #{pictureIsdelete,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pxxy.pojo.post_picture">
+    update post_picture
+    <set>
+      <if test="pictureName != null">
+        picture_name = #{pictureName,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureBelong != null">
+        picture_belong = #{pictureBelong,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureSequence != null">
+        picture_sequence = #{pictureSequence,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureCreattime != null">
+        picture_creattime = #{pictureCreattime,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureModifytime != null">
+        picture_modifytime = #{pictureModifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureIsdelete != null">
+        picture_isdelete = #{pictureIsdelete,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where picture_id = #{pictureId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pxxy.pojo.post_picture">
+    update post_picture
+    set picture_name = #{pictureName,jdbcType=VARCHAR},
+      picture_belong = #{pictureBelong,jdbcType=VARCHAR},
+      picture_sequence = #{pictureSequence,jdbcType=VARCHAR},
+      picture_creattime = #{pictureCreattime,jdbcType=VARCHAR},
+      picture_modifytime = #{pictureModifytime,jdbcType=VARCHAR},
+      picture_isdelete = #{pictureIsdelete,jdbcType=VARCHAR}
+    where picture_id = #{pictureId,jdbcType=VARCHAR}
+  </update>
+</mapper>
