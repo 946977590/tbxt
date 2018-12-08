@@ -80,6 +80,8 @@ public class userController {
 	@RequestMapping(value="/requestSession",method=RequestMethod.POST)
 	@ResponseBody
 	public void requestSession(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = response.getWriter();
 		HttpSession session = request.getSession();
 		user sessionUser = (user) session.getAttribute("user");
@@ -87,7 +89,7 @@ public class userController {
 			String sessionName = sessionUser.getUserNickname();
 			pw.write(sessionName);
 		}else{
-			pw.write("null");
+			pw.write("");
 		}
 		pw.flush();
 		pw.close();

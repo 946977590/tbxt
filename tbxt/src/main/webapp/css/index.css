@@ -147,7 +147,9 @@
 	width: 510px;
 	height: 220px;
 }
-
+.right-sec_tiezi_photo_box{
+	clear:both;
+}
 .right-sec_tiezi_photo {
 	float: left;
 	margin-left: 15px;

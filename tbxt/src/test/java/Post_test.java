@@ -17,19 +17,12 @@ public class Post_test {
 	@Autowired
 	private postService postService;
 	
-	@Test
-	public void test22() {
-		postService.test();
-	}
 	
 	@Test
 	public void test11() {
-		String userId = "e7f19db3-8a3a-472c-891a-b7ae776cfd01";
-		PostUserDTO PostUserDTO = postMapper.queryPostByUserId(userId);
+		String postId = "7eff2242-a10c-4300-b6fa-764868dcf35f";
+		PostUserDTO PostUserDTO = postService.queryPostLayer(postId);
 		System.out.println("PostUserDTO"+PostUserDTO);
-		System.out.println("获取的barList的长度=="+PostUserDTO.getPost_barList().size());
-		System.out.println("PostUserDTOBar===="+PostUserDTO.getPostList().get(0).getPostTitle());
-		System.out.println("PostUserDTOBar===="+PostUserDTO.getPostList().get(1).getPostTitle());
-		System.out.println("PostUserDTOBar===="+PostUserDTO.getPostList().get(2).getPostTitle());
+		
 	}
 }

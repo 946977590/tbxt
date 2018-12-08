@@ -5,6 +5,10 @@ import org.springframework.stereotype.Service;
 
 import com.pxxy.pojo.post;
 import com.pxxy.pojo.post_picture;
+import com.pxxy.DTO.DTOBarAndPic;
+import com.pxxy.DTO.DTOgreat;
+import com.pxxy.DTO.DTOreaded;
+import com.pxxy.DTO.DTOtopic;
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.mapper.postMapper;
 import com.pxxy.service.postService;
@@ -34,8 +38,27 @@ public class postServiceImpl implements postService {
 		return PostUserDTO;
 	}
 	
-	public void test() {
-		System.out.println("alsihdoaiuhsfiouahirfuaishu");
+	public PostUserDTO queryPostViewByTest(String userId) {
+		PostUserDTO postUserDTO = postMapper.queryPostViewByTest(userId);
+		return postUserDTO;
+	}
+
+	public PostUserDTO queryPostLayer(String postId) {
+		DTOBarAndPic DTO_BarAndPic = postMapper.queryPostLayer_BarAndPic(postId);
+		DTOtopic DTO_Topic = postMapper.queryPostLayer_Topic(postId);
+		DTOgreat DTO_great = postMapper.queryPostLayer_great(postId);
+		DTOreaded DTO_readed = postMapper.queryPostLayer_readed(postId);
+		PostUserDTO postDTO = new PostUserDTO();
+		if(DTO_BarAndPic!=null) {
+			postDTO.setDTOBarAndPic(DTO_BarAndPic);
+		}if(DTO_Topic!=null) {
+			postDTO.setDTOtopic(DTO_Topic);
+		}if(DTO_great!=null) {
+			postDTO.setDTOgreat(DTO_great);
+		}if(DTO_readed!=null) {
+			postDTO.setDTOreaded(DTO_readed);
+		}
+		return postDTO;
 	}
 
 }

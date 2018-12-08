@@ -70,9 +70,120 @@
  		inner JOIN post_bar on post.post_bar_id=post_bar.bar_id
  		inner JOIN user on post.post_user_id = user.user_id
 		<!-- inner JOIN post_picture on post.post_id=post_picture.picture_belong -->
+		WHERE user.user_id = #{userId} ORDER BY post.post_creattime DESC
+	</select>
+	
+	
+	<resultMap type="com.pxxy.DTO.PostUserDTO" id="Query_postViewDTO_resultMap">  
+	    <association property="post"  javaType="post" resultMap="BaseResultMap"/>
+	    <association property="post_bar"  javaType="com.pxxy.pojo.post_bar" resultMap="com.pxxy.mapper.post_barMapper.BaseResultMap"/>
+		
+		<collection property="post_pictureList" ofType="post_picture">  
+            <id property="pictureId" column="picture_id" />
+            <result column="picture_belong" property="pictureBelong"/>
+			<result column="picture_name" property="pictureName"/>
+        </collection>
+	</resultMap>  
+	
+	<select id="queryPostViewByTest"  resultMap="Query_postViewDTO_resultMap">
+		SELECT 
+			post.post_id,
+			post.post_bar_id, 
+			post.post_title,
+			post.post_content,
+			post.post_author,
+			post.post_user_id,
+			post.post_creattime,
+			post_bar.bar_id,
+			post_bar.bar_name,
+			post_picture.picture_name,
+			post_picture.picture_id
+		FROM post 
+ 		inner JOIN post_bar on post.post_bar_id=post_bar.bar_id
+ 		inner JOIN user on post.post_user_id = user.user_id
+		inner JOIN post_picture on post.post_id=post_picture.picture_belong
 		WHERE user.user_id = #{userId} ORDER BY post.post_creattime
 	</select>
 	
+	<resultMap type="com.pxxy.DTO.DTOgreat" id="Query_postLayer_resultMap0">  
+        <collection property="post_greatList" ofType="post_great">  
+            <id property="greatId" column="great_id" />
+        </collection>
+	</resultMap>
+	<select id="queryPostLayer_great"  resultMap="Query_postLayer_resultMap0">
+		SELECT
+	post_great.great_id
+	FROM
+		post_great
+	WHERE
+	post_great.post_id = #{postId}
+	</select>
+	
+	<resultMap type="com.pxxy.DTO.DTOreaded" id="Query_postLayer_resultMap1">  
+        <collection property="post_readedList" ofType="post_readed">  
+            <id property="readedId" column="readed_id" />
+        </collection>
+        
+	</resultMap>
+	<select id="queryPostLayer_readed"  resultMap="Query_postLayer_resultMap1">
+		SELECT
+			post_readed.readed_id
+		FROM
+			post_readed
+		WHERE
+			post_readed.post_id = #{postId}
+	</select>
+	
+	<resultMap type="com.pxxy.DTO.DTOBarAndPic" id="Query_postLayer_resultMap2">  
+	    <association property="post"  javaType="post" resultMap="BaseResultMap"/>
+	    <association property="post_bar"  javaType="com.pxxy.pojo.post_bar" resultMap="com.pxxy.mapper.post_barMapper.BaseResultMap"/>
+		
+		<collection property="post_pictureList" ofType="post_picture">  
+            <id property="pictureId" column="picture_id" />
+            <result column="picture_belong" property="pictureBelong"/>
+			<result column="picture_name" property="pictureName"/>
+        </collection>
+	</resultMap>
+	<select id="queryPostLayer_BarAndPic"  resultMap="Query_postLayer_resultMap2">
+		SELECT 
+			post.post_id,
+			post.post_bar_id, 
+			post.post_title,
+			post.post_content,
+			post.post_author,
+			post.post_creattime,
+ 			post_picture.picture_name,
+ 			post_picture.picture_id,
+			user.user_id,
+			post_bar.bar_id,
+			post_bar.bar_name
+		FROM post 
+ 		inner JOIN post_bar on post.post_bar_id=post_bar.bar_id
+ 		inner JOIN user on post.post_user_id = user.user_id                                                                 
+		left JOIN post_picture on post_picture.picture_belong = post.post_id 	
+		WHERE post.post_id 	= #{postId}
+	</select>
+	
+	<resultMap type="com.pxxy.DTO.DTOtopic" id="Query_postLayer_resultMap3">  
+		<collection property="post_topicList" ofType="post_topic">  
+            <id property="topicId" column="topic_id" />
+            <result column="topic_content" property="topicContent"/>
+			<result column="user_id" property="userId"/>
+			<result column="b_user_id" property="bUserId"/>
+        </collection>
+	</resultMap>
+	<select id="queryPostLayer_Topic"  resultMap="Query_postLayer_resultMap3">
+		SELECT
+		post_topic.topic_id,
+		post_topic.topic_content,
+		post_topic.user_id,
+		post_topic.b_user_id
+	FROM
+		post
+	INNER JOIN post_topic ON post_topic.post_id = post.post_id
+	WHERE
+		post.post_id = #{postId} 
+	</select>
 <!-- ==================================分割线============================================== -->
 
 	<select id="selectByPrimaryKey" parameterType="java.lang.String"
