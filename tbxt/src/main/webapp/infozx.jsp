@@ -67,18 +67,18 @@
 	</div>
 		<!-- ====================================top_box===================================== -->
 		<div id="tie_read_great">
-			<button id="fatie_number1" class="layui-btn layui-btn-lg layui-btn-normal">
+			<button id="fatie_number1" class="layui-btn layui-btn-primary ">
 				<a id="great_icon" class="layui-icon layui-icon-edit">发帖</a>
-				<br><span>1231</span>
+				<br><span id="great_icon2">1231</span>
 			</button>	
-			<button id="read_number1" class="layui-btn layui-btn-lg layui-btn-normal">
+			<button id="read_number1" class="layui-btn layui-btn-primary ">
 				<a id="great_icon" class="layui-icon layui-icon-star">已读</a>
-				<br><span>1231</span>
+				<br><span id="great_icon2">1231</span>
 			</button>	
 				
-			<button id="great_number1" class="layui-btn layui-btn-lg layui-btn-normal">
+			<button id="great_number1" class="layui-btn layui-btn-primary ">
 				<a id="great_icon" class="layui-icon layui-icon-praise">获赞</a>
-				<br><span>1231</span>
+				<br><span id="great_icon2">1231</span>
 			</button>
 			
 			
@@ -133,13 +133,6 @@
 		<!-- ==========================个人信息页面模态框===================== -->
 		 <div><myinfo_component /></div>
 		
-
-		<!-- ==========================评论区页面===================== -->
-		<div><comment_component /></div>
-
-		<!-- ==========================帖子页面===================== -->
-		<div><post_layer_component /></div>
-
 	</div>
 	
 	<script type="text/javascript" src="${path}js/toastr.js"></script>

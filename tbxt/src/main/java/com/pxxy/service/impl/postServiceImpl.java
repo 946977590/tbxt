@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pxxy.pojo.post;
+import com.pxxy.pojo.post_great;
 import com.pxxy.pojo.post_picture;
 import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.DTOgreat;
@@ -59,6 +60,24 @@ public class postServiceImpl implements postService {
 			postDTO.setDTOreaded(DTO_readed);
 		}
 		return postDTO;
+	}
+
+	public void greatAdd(String greatId, String postId, String userId) {
+		postMapper.greatAdd(greatId, postId, userId);
+	}
+
+	public post_great judgeGreat(String postId, String userId) {
+		post_great great = postMapper.judgeGreat(postId, userId);
+		return great;
+	}
+
+	public void delGreat(String greatId) {
+		postMapper.delGreat(greatId);
+	}
+
+	public DTOgreat queryPostLayer_great(String postId) {
+		DTOgreat DTO_great = postMapper.queryPostLayer_great(postId);
+		return DTO_great;
 	}
 
 }

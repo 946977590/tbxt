@@ -1,11 +1,14 @@
 package com.pxxy.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.DTOgreat;
 import com.pxxy.DTO.DTOreaded;
 import com.pxxy.DTO.DTOtopic;
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.pojo.post;
+import com.pxxy.pojo.post_great;
 import com.pxxy.pojo.post_picture;
 
 public interface postMapper {
@@ -32,4 +35,10 @@ public interface postMapper {
     DTOtopic queryPostLayer_Topic(String postId);	//PostœÍ«È  ∆¿¬€
     
     DTOBarAndPic queryPostLayer_BarAndPic(String postId);	//PostœÍ«È Ã˘∞…-Õº∆¨
+    
+    post_great judgeGreat(@Param("postId")String postId,@Param("userId")String userId);			//µ„‘ﬁ≈–∂œ
+    
+    void greatAdd(@Param("greatId")String greatId,@Param("postId")String postId,@Param("userId")String userId);	//µ„‘ﬁ
+    
+    void delGreat(String greatId);		//…æ≥˝µ„‘ﬁ
 }

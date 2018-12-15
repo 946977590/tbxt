@@ -15,6 +15,8 @@ public class post implements Serializable {
 
     private String postAuthor;
 
+    private String postCategory;
+
     private String postCreattime;
 
     private String postModifytime;
@@ -23,11 +25,7 @@ public class post implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public post() {
-		super();
-	}
-
-	public String getPostId() {
+    public String getPostId() {
         return postId;
     }
 
@@ -75,6 +73,14 @@ public class post implements Serializable {
         this.postAuthor = postAuthor == null ? null : postAuthor.trim();
     }
 
+    public String getPostCategory() {
+        return postCategory;
+    }
+
+    public void setPostCategory(String postCategory) {
+        this.postCategory = postCategory == null ? null : postCategory.trim();
+    }
+
     public String getPostCreattime() {
         return postCreattime;
     }
@@ -98,13 +104,4 @@ public class post implements Serializable {
     public void setPostIsdelete(String postIsdelete) {
         this.postIsdelete = postIsdelete == null ? null : postIsdelete.trim();
     }
-
-	@Override
-	public String toString() {
-		return "post [postId=" + postId + ", postBarId=" + postBarId + ", postUserId=" + postUserId + ", postTitle="
-				+ postTitle + ", postContent=" + postContent + ", postAuthor=" + postAuthor + ", postCreattime="
-				+ postCreattime + ", postModifytime=" + postModifytime + ", postIsdelete=" + postIsdelete + "]";
-	}
-    
-    
 }

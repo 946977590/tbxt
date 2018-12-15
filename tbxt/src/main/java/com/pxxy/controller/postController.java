@@ -27,8 +27,11 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.pxxy.service.postService;
 import com.pxxy.service.post_pictureService;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.pxxy.DTO.DTOgreat;
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.pojo.post;
+import com.pxxy.pojo.post_great;
 import com.pxxy.pojo.post_picture;
 import com.pxxy.pojo.user;
 
@@ -238,9 +241,119 @@ public class postController {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = response.getWriter();
 		PostUserDTO postUserDTO = postService.queryPostLayer(postId);
+//		if(postUserDTO.getDTOgreat() == null) {
+//			postUserDTO.setDTOgreat(dTOgreat);
+//		}
 		System.out.println(postUserDTO);
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().serializeNulls().create();	//防止Gson转Json对象空属性丢失
 		String res = gson.toJson(postUserDTO);
+		pw.write(res);
+		pw.flush();
+		pw.close();
+    }
+    
+  //判断点赞情况
+    @RequestMapping(value = "/greatJudge", method = RequestMethod.POST)
+	@ResponseBody
+	public void greatJudge(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(required = false) String userId,@RequestParam String postId
+			) throws IOException {
+    	response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter pw = response.getWriter();
+		String res = "";
+		HttpSession session = request.getSession();
+		user sessionUser = (user) session.getAttribute("user"); // session未登录，则不可发帖
+		if(sessionUser != null) {
+			userId = sessionUser.getUserId();
+			System.out.println("页面获取的postId为==="+postId);
+			System.out.println("页面获取的userId为==="+userId);
+			post_great great = postService.judgeGreat(postId, userId);
+			System.out.println("great===="+great);
+			if(great !=null) {
+				res="great_1";
+			}else {
+				res="great_0";
+			}
+		}else {
+			res="session_null";
+		}
+		pw.write(res);
+		pw.flush();
+		pw.close();
+    }
+    
+    //点赞
+    @RequestMapping(value = "/greatAdd", method = RequestMethod.POST)
+	@ResponseBody
+	public void greatAdd(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam String postId
+			) throws IOException {
+    	response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter pw = response.getWriter();
+		String res = "";
+		HttpSession session = request.getSession();
+		user sessionUser = (user) session.getAttribute("user"); // session未登录，则不可发帖
+		if(sessionUser != null) {
+			String userId = sessionUser.getUserId();
+			String greatId2 = UUID.randomUUID().toString();
+			System.out.println("点赞postId==="+postId);
+			postService.greatAdd(greatId2, postId, userId);
+			System.out.println("点赞数据添加成功");
+			res = "great_add";
+		}else {
+			res = "session_null";
+		}
+		pw.write(res);
+		pw.flush();
+		pw.close();
+    }
+  //取消点赞
+    @RequestMapping(value = "/greatDel", method = RequestMethod.POST)
+	@ResponseBody
+	public void greatDel(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam String postId
+			) throws IOException {
+    	response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter pw = response.getWriter();
+		String res = "";
+		HttpSession session = request.getSession();
+		user sessionUser = (user) session.getAttribute("user"); // session未登录，则不可发帖
+		if(sessionUser != null) {
+			String userId = sessionUser.getUserId();
+			post_great great = postService.judgeGreat(postId, userId);
+			if(great!=null) {
+				String greatId = great.getGreatId();
+				postService.delGreat(greatId);
+				System.out.println("点赞数据删除成功");
+				res = "great_del";
+			}else {
+				res = "del_error";
+			}
+		}else {
+			res = "session_null";
+		}
+		pw.write(res);
+		pw.flush();
+		pw.close();
+    }
+  //获取点赞数量
+    @RequestMapping(value = "/GetgreatNum", method = RequestMethod.POST)
+	@ResponseBody
+	public void GetgreatNum(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam String postId
+			) throws IOException {
+    	response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter pw = response.getWriter();
+		String res = "";
+		System.out.println("点赞postId==="+postId);
+		DTOgreat DTO_great = postService.queryPostLayer_great(postId);
+		Gson gson = new GsonBuilder().serializeNulls().create();
+		res = gson.toJson(DTO_great);
+		System.out.println("DTO_greatDTO_greatDTO_great==="+DTO_great);
 		pw.write(res);
 		pw.flush();
 		pw.close();

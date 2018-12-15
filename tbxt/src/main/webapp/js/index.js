@@ -1,5 +1,9 @@
-  //准备一个空的实例对象
-  var Event = new Vue();
+//准备一个空的实例对象
+var Event = new Vue({
+	data:{
+		postid:''
+	}
+});
 //头部导航栏组件
 var toplable_component = Vue.extend({
 	props: ['content', 'index'],
@@ -85,7 +89,6 @@ var post_view_component = Vue.extend({
 //						console.log("中间帖子预览"+JSON.stringify(res.body));
 						this.list = res.body;
 						this.pictureList = res.body.post_pictureList;
-//						console.log(JSON.stringify(this.list));
 						this.post_data = this.list.post.postCreattime.substr(0,this.list.post.postCreattime.length-8);
 //						console.log("this.post_data=="+this.pictureList[0].pictureName);
 					} 
@@ -98,9 +101,10 @@ var post_view_component = Vue.extend({
 	        methods:{
 	        	// 打开帖子
 				open_tiezi : function(postid) {
-					this.postid = postid;
-					console.log("获取的帖子id是==="+this.postid)
-					Event.$emit('postid',this.postid)
+//					console.log("chuancan");
+//					console.log("获取的帖子id是==="+postid)
+					this.$options.methods.GetPostById(postid);
+//					bus.$emit("postid",postid)   //$emit这个方法会触发一个事件
 					layui.use([ 'layer' ], function() {
 						var layer = layui.layer, $ = layui.$;
 						layer.open({
@@ -113,140 +117,42 @@ var post_view_component = Vue.extend({
 						});
 					})
 				},
-	        }
+				//传递postid获取相关参数
+				GetPostById :function(postid){
+//					console.log("jieshou=="+postid);
+					var data = {
+							'postId': postid
+					}
+					var url = 'http://localhost:8080/tbxt/GetpostByPostId';
+					vm.$http.post(url,data,{
+						emulateJSON : true,
+					}).then(function(res) {
+//						console.log("res.body=="+JSON.stringify(res.body));
+						vm.postList = res.body
+						vm.readed = res.body.DTOreaded.post_readedList.length
+						if(res.body.DTOgreat == null){
+							vm.great = "0"
+						}else{
+							vm.great = res.body.DTOgreat.post_greatList.length
+						}
+						if(res.body.DTOBarAndPic.post_pictureList != null){
+							vm.pictureList = res.body.DTOBarAndPic.post_pictureList
+						}
+						if(res.body.DTOtopic != null){
+							vm.post_topicList = res.body.DTOtopic.post_topicList;
+						}
+						vm.pass_postId = postid;
+					}, function(err) {
+						// 处理失败的结果
+						console.log(err)
+						toastr.error("获取帖子动态信息失败!");
+					})	
+				},
+				
+				
+				
+	        },
 	})
-	
-//帖子Layer页面
-	var post_layer_component = Vue.extend({
-		template:`
-		<div v-if="postList">
-			<div class="lay-blog" id="tiezi_Box" style="display: none;" >
-			<div class="container-wrap">
-				<div class="container container-message container-details">
-					<div class="contar-wrap">
-						<div class="item">
-							<div class="item-box  layer-photos-demo1 layer-photos-demo">
-								<div class="layui-input-block" id="user_post_img">
-									<img class="info-img" src="img/psb.jpg" style="float: left;"
-										alt="">
-									<h5 style="text-align: left;">
-										<span>{{postList.DTOBarAndPic.post.postAuthor}}</span>
-									</h5>
-									<h5 style="text-align: left;">
-										发布于：<span>{{postList.DTOBarAndPic.post.postCreattime}}</span>
-									</h5>
-								</div>
-								<p class="comment_content">{{postList.DTOBarAndPic.post.postContent}}</p>
-								<img v-for="item in pictureList" :key="item" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " 
-								style="width: 200px;padding:5px; height: 130px;float: left;margin-left: 1px;"
-									alt=""> 
-								<div class="count layui-clear">
-									<span class="pull-left">阅读 <em>{{readed}}</em></span> <span
-										class="pull-right like"><i
-										class="layui-icon layui-icon-praise"></i><em>{{great}}</em></span>
-								</div>
-							</div>
-						</div>
-						<a name="comment"> </a>
-						<div class="comt layui-clear">
-							<a href="javascript:;" class="pull-left">评论</a> <a
-								href="javascript:;" v-on:click="open_comment_w" class="pull-right">写评论</a>
-						</div>
-						<div id="LAY-msg-box">
-							<div class="info-item" v-for="item in post_topicList" :key="item">
-								<img class="info-img" src="img/psb.jpg" alt="">
-								<div class="info-text">
-									<p class="title count">
-										<span class="name">{{item.userId}}</span> <span class="info-img like"><i
-											class="layui-icon layui-icon-praise"></i>5.8万</span>
-									</p>
-									<p class="info-intr">{{item.topicContent}}</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		</div>
-		`,
-		data(){
-			return {
-				postList:'',
-		        readed:'',
-		        great:'',
-		        pictureList:'',
-		        data2:'',
-		        postid:''
-		      }
-		},
-		mounted(){
-			Event.$on('postid', function (data2) {
-		        this.postid = data2;
-	        })
-	        console.log("this.data2=================="+postid);
-			var data = {
-					'postId':'7eff2242-a10c-4300-b6fa-764868dcf35f' 
-			}
-			var url = 'http://localhost:8080/tbxt/GetpostByPostId';
-			this.$http.post(url,data,{
-				emulateJSON : true,
-			}).then(function(res) {
-				this.postList = res.body
-				this.readed = res.body.DTOreaded.post_readedList.length
-				this.great = res.body.DTOgreat.post_greatList.length
-				this.pictureList = res.body.DTOBarAndPic.post_pictureList
-				this.post_topicList = res.body.DTOtopic.post_topicList;
-//				console.log("postList=="+JSON.stringify(this.postList))
-//				console.log("2=="+JSON.stringify(this.readed))
-//				console.log("3=="+JSON.stringify(this.great))
-//				console.log("4=="+JSON.stringify(this.pictureList))
-//				console.log("5=="+JSON.stringify(this.post_topicList))
-			}, function(err) {
-				// 处理失败的结果
-				console.log(err)
-				toastr.error("获取帖子动态信息失败!");
-			})	
-		},
-		methods:{
-			// 打开评论框
-			open_comment_w : function() {
-				layui.use([ 'layer' ], function() {
-					var layer = layui.layer, $ = layui.$;
-					layer.open({
-						type : 1,// 类型
-						area : [ '1000px', '550px' ],// 定义宽和高
-						title : '评论界面',// 题目
-						shadeClose : false,// 点击遮罩层关闭
-						content : $('#comments_Box')
-					// 打开的内容
-					});
-				})
-			},
-		}
-	})
-//评论区Layer
-	var comment_component = Vue.extend({
-	template:`
-		<div id="comments_Box" style="display: none;">
-			<form class="layui-form" action="">
-				<div class="layui-form-item layui-form-text"
-					style="background-color: #FFFFFF">
-					<textarea id="comments_textarea" placeholder="写点什么啊"></textarea>
-				</div>
-				<button id="btn_comments_tj" v-on:click="" class="layui-btn">提交</button>
-			</form>
-		</div>
-	`,
-	data(){
-	      return {
-	      }
-	    },
-  mounted(){
-        },
-        methods:{
-        }
-})
 //个人信息页面Layer
 	var myinfo_component = Vue.extend({
 	template:`<div id="my_info_Box" style="display: none;">
@@ -586,7 +492,7 @@ var post_view_component = Vue.extend({
 						toastr.success("登陆成功!");
 						setTimeout(function(){
 							location.href="/tbxt/tieba.jsp";
-						},1000);
+						},500);
 					}else{
 						toastr.error("邮箱或者密码错误!");
 					}
@@ -601,7 +507,6 @@ var post_view_component = Vue.extend({
 })
 Vue.component('toplable_a',toplable_component)
 Vue.component('sjx_post_component',sjx_post_component)
-Vue.component('comment_component',comment_component)
 Vue.component('myinfo_component',myinfo_component)
 Vue.component('creat_post_component',creat_post_component)
 Vue.component('register_component',register_component)
@@ -617,10 +522,26 @@ var vm = new Vue(
 						'地图', '文库' ],
 				sjx_postList :[],
 				register_result : null,
+				postList:{
+					DTOBarAndPic:{
+						post:{
+							postAuthor:'',
+							postCreattime:'',
+							postContent:'',
+						}
+					}
+				},
+				readed:'',
+				great:'',
+				post_topicList:{
+					userId:'',
+					topicContent:''
+				},
+				pictureList:'',
+				pass_postId:''
 			},
 		 components: {
-				 'post_view_component':post_view_component,
-				 'post_layer_component':post_layer_component,
+			 'post_view_component':post_view_component
 				  },
 			//vue载入后执行获取session方法
 			mounted(){ 
@@ -695,15 +616,62 @@ var vm = new Vue(
 				},
 				//打开发帖页面
 				open_fatie:function(){
-					layui.use(['layer'],function () {
-							var layer = layui.layer,$=layui.$;
-							layer.open({
-									type:1,//类型
-									area:['1330px','600px'],//定义宽和高
-									title:'发表新帖',//题目
-									shadeClose:false,//点击遮罩层关闭
-									content: $('#fatie_Box')//打开的内容
-							});
+					var url = 'http://localhost:8080/tbxt/GetpostByuserId';
+					this.$http.post(url, {
+						emulateJSON : true
+					}).then(function(res) {
+						if(res.body=='Getpost_error'){
+							toastr.error("请先登录!");
+						}else{
+							layui.use(['layer'],function () {
+								var layer = layui.layer,$=layui.$;
+								layer.open({
+										type:1,//类型
+										area:['1330px','600px'],//定义宽和高
+										title:'发表新帖',//题目
+										shadeClose:false,//点击遮罩层关闭
+										content: $('#fatie_Box')//打开的内容
+								});
+						})
+						} 
+					}, function(err) {
+						// 处理失败的结果
+						console.log(err)
+						toastr.error("获取个人动态信息失败!");
+					})	
+				},
+				//打开个人动态页面
+				open_myinfozx:function(){
+					var url = 'http://localhost:8080/tbxt/GetpostByuserId';
+					this.$http.post(url, {
+						emulateJSON : true
+					}).then(function(res) {
+						if(res.body=='Getpost_error'){
+							toastr.error("请先登录!");
+						}else{
+							setTimeout(function(){ 
+								location.href="/tbxt/infozx.jsp";
+							}
+							,500);
+						} 
+					}, function(err) {
+						// 处理失败的结果
+						console.log(err)
+						toastr.error("获取个人动态信息失败!");
+					})	
+				},
+				// 打开评论框
+				open_comment_w : function() {
+					layui.use([ 'layer' ], function() {
+						var layer = layui.layer, $ = layui.$;
+						layer.open({
+							type : 1,// 类型
+							area : [ '800px', '450px' ],// 定义宽和高
+							title : '评论界面',// 题目
+							shadeClose : false,// 点击遮罩层关闭
+							content : $('#comments_Box')
+						// 打开的内容
+						});
 					})
 				},
 				// 打开注册模态框
@@ -720,6 +688,119 @@ var vm = new Vue(
 						// 打开的内容
 						});
 					})
+				},
+				//判断点赞
+				judge_great : function(postId){
+					postId = vm.pass_postId
+					var url = 'http://localhost:8080/tbxt/greatJudge';
+//					console.log("judge_great.点赞id==="+postId);
+					var data = {
+						'postId': postId,
+					}
+					this.$http.post(url, data,{
+						emulateJSON : true
+					}).then(function(res) {
+//						console.log("成功进入点赞判断逻辑");
+						 switch(res.body){
+						     case 'great_0':
+						       toastr.success("点赞成功!");
+						       this.$options.methods.great_add(postId);
+						       break;
+						     case 'great_1':
+						       toastr.success("取消点赞!");
+						       this.$options.methods.great_del(postId);
+						       break;
+						     case 'session_null':
+						       toastr.error("账号检测请登录!");
+						       break;
+						     default:
+						       toastr.error("数据异常!");
+						       break;
+					   }
+					}, function(err) {
+						// 处理失败的结果
+						console.log(err)
+						toastr.error("获取个人动态信息失败!");
+					})
+				},
+				//点赞
+				great_add : function(postId){
+					var url = 'http://localhost:8080/tbxt/greatAdd';
+					console.log("click_great点赞id==="+postId);
+					var data = {
+							'postId': postId,
+					}
+					vm.$http.post(url, data,{
+						emulateJSON : true
+					}).then(function(res) {
+						 switch(res.body){
+						 
+						     case 'great_add':
+						    	 var url2 = 'http://localhost:8080/tbxt/GetgreatNum';
+						    	 vm.$http.post(url2, data,{
+										emulateJSON : true
+									}).then(function(res) {
+//										console.log("二次异步得到点赞==="+JSON.stringify(res.body));
+										vm.great = res.body.post_greatList.length
+									}, function(err) {
+										// 处理失败的结果
+										console.log(err)
+										toastr.error("获取个人动态信息失败!");
+									})	 
+						       break;
+						     case 'session_null':
+						       toastr.success("未登录!");
+						       break;
+						     default:
+						       toastr.error("数据异常!");
+						       break;
+					   }
+					}, function(err) {
+						// 处理失败的结果
+						console.log(err)
+						toastr.error("获取个人动态信息失败!");
+					})	
+				},
+				//取消点赞
+				great_del : function(postId){
+					var url = 'http://localhost:8080/tbxt/greatDel';
+//					console.log("click_great点赞id==="+postId);
+					var data = {
+							'postId': postId,
+					}
+					vm.$http.post(url, data,{
+						emulateJSON : true
+					}).then(function(res) {
+						 switch(res.body){
+						     case 'great_del':
+						    	 var url2 = 'http://localhost:8080/tbxt/GetgreatNum';
+						    	 vm.$http.post(url2, data,{
+										emulateJSON : true
+									}).then(function(res) {
+//										console.log("二次异步得到点赞==="+JSON.stringify(res.body));
+										if(res.body == null || res.body == 'null'){
+											vm.great = '0'
+										}else{
+											vm.great = res.body.post_greatList.length
+										}
+									}, function(err) {
+										// 处理失败的结果
+										console.log(err)
+										toastr.error("获取个人动态信息失败!");
+									})	 
+						       break;
+						     case 'del_error':
+						       toastr.success("点赞异常!");
+						       break; 
+						     default:
+						       toastr.error("数据异常!");
+						       break;
+					   }
+					}, function(err) {
+						// 处理失败的结果
+						console.log(err)
+						toastr.error("获取个人动态信息失败!");
+					})	
 				},
 				
 			}

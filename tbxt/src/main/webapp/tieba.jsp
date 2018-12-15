@@ -59,7 +59,7 @@
 					<li class="layui-nav-item" ><a href="javascript:;"  style="font-size: 20px;float:right;margin-right: 30px;" class="layui-icon layui-icon-female">最左社区</a></li>
 					<li class="layui-nav-item" style="float:right;margin-right: 40px;"><a href="javascript:;"  style="font-size: 20px;margin-left: 50px;" class="layui-icon layui-icon-edit" @click="open_fatie">发帖</a></li>
 					<li class="layui-nav-item" style="float:right;"><a href="javascript:;"  style="font-size: 20px;margin-left: 50px;" class="layui-icon layui-icon-search">寻吧</a></li>
-					<li class="layui-nav-item" style="float:right;"><a href="infozx.jsp"  style="font-size: 20px;margin-left: 50px;" class="layui-icon layui-icon-log" >我的动态</a></li>
+					<li class="layui-nav-item" style="float:right;"><a href="javascript:;"  style="font-size: 20px;margin-left: 50px;" class="layui-icon layui-icon-log" @click="open_myinfozx">我的动态</a></li>
 					<li class="layui-nav-item" style="float:right;"><a href="tieba.jsp"  style="font-size: 20px;margin-left: 50px;" class="layui-icon layui-icon-link">最左首页</a></li>
 				</ul>
 			</div>
@@ -368,11 +368,66 @@
 		
 
 		<!-- ==========================评论区页面===================== -->
-		<div><comment_component /></div>
+		<div id="comments_Box" style="display: none;">
+			<div class="comments-form" action="">
+				<div class="layui-form-item layui-form-text"
+					style="background-color: #FFFFFF">
+					<textarea id="comments_textarea" placeholder="写点什么啊"></textarea>
+				</div>
+				<button id="btn_comments_tj" v-on:click="" class="layui-btn">提交</button>
+			</div>
+		</div>
 
 		<!-- ==========================帖子layer页面===================== -->
-		<div><post_layer_component /></div>
-
+		<div>
+			<div class="lay-blog" id="tiezi_Box" style="display: none;" >
+			<div class="container-wrap">
+				<div class="container container-message container-details">
+					<div class="contar-wrap">
+						<div class="item">
+							<div class="item-box  layer-photos-demo1 layer-photos-demo">
+								<div class="layui-input-block" id="user_post_img">
+									<img class="info-img" src="img/psb.jpg" style="float: left;"
+										alt="">
+									<h5 style="text-align: left;">
+										<span>{{postList.DTOBarAndPic.post.postAuthor}}</span>
+									</h5>
+									<h5 style="text-align: left;">
+										发布于：<span>{{postList.DTOBarAndPic.post.postCreattime}}</span>
+									</h5>
+								</div>
+								<p class="comment_content">{{postList.DTOBarAndPic.post.postContent}}</p>
+								<img v-for="item in pictureList" :key="item" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " 
+								style="width: 200px;padding:5px; height: 130px;float: left;margin-left: 1px;"
+									alt=""> 
+								<div class="count layui-clear">
+									<span class="pull-left">阅读 <em>{{readed}}</em></span> <span
+										class="pull-right like"><i class="layui-icon layui-icon-praise" @click="judge_great"></i><em v-if="great">{{great}}</em></span>
+								</div>
+							</div>
+						</div>
+						<a name="comment"> </a>
+						<div class="comt layui-clear">
+							<a href="javascript:;" class="pull-left" @click="open_comment_w">评论</a> <a
+								href="javascript:;" v-on:click="" class="pull-right">写评论</a>
+						</div>
+						<div id="LAY-msg-box" v-if="post_topicList">
+							<div class="info-item" v-for="item in post_topicList" :key="item">
+								<img class="info-img" src="img/psb.jpg" alt="">
+								<div class="info-text">
+									<p class="title count">
+										<span class="name">{{item.userId}}</span> <span class="info-img like"><i
+											class="layui-icon layui-icon-praise"></i>5.8万</span>
+									</p>
+									<p class="info-intr">{{item.topicContent}}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> 
 	</div>
 	</div>
 	<script type="text/javascript" src="${path}js/toastr.js"></script>
