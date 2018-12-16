@@ -65,6 +65,45 @@
 		WHERE user.user_id = #{userId} ORDER BY post.post_creattime DESC
 	</select>
 	
+	<!-- ====================头部=====首页预览帖子========================== -->
+	<select id="queryTopPostId" resultType="java.lang.String">
+	SELECT
+	post_great.post_id,COUNT(post_great.great_id) 
+	FROM
+	post_great GROUP BY post_great.post_id DESC
+	</select>
+	
+	<resultMap type="com.pxxy.DTO.PostByGreatReadedDTO" id="Query_postViewByGreatReaded_resultMap">  
+	    <association property="post"  javaType="post" resultMap="BaseResultMap"/>
+	    <association property="post_bar"  javaType="com.pxxy.pojo.post_bar" resultMap="com.pxxy.mapper.post_barMapper.BaseResultMap"/>
+		
+		<collection property="post_pictureList" ofType="post_picture">  
+            <id property="pictureId" column="picture_id" />
+            <result column="picture_belong" property="pictureBelong"/>
+			<result column="picture_name" property="pictureName"/>
+        </collection>
+	</resultMap>
+	<select id="queryPostViewByGreatReaded" resultMap="Query_postViewByGreatReaded_resultMap">
+		SELECT 
+			post.post_id,
+			post.post_bar_id, 
+			post.post_title,
+			post.post_content,
+			post.post_author,
+			post.post_user_id,
+			post.post_category,
+			post.post_creattime,
+			post_bar.bar_id,
+			post_bar.bar_name,
+			post_picture.picture_name,
+			post_picture.picture_id
+		FROM post 
+ 		inner JOIN post_bar on post.post_bar_id=post_bar.bar_id
+ 		inner JOIN user on post.post_user_id = user.user_id
+		LEFT JOIN post_picture on post.post_id=post_picture.picture_belong
+		WHERE post.post_id = #{postId}
+	</select>
+	<!-- ====================底部=====首页预览帖子========================== -->
 	
 	<resultMap type="com.pxxy.DTO.PostUserDTO" id="Query_postViewDTO_resultMap">  
 	    <association property="post"  javaType="post" resultMap="BaseResultMap"/>
@@ -183,6 +222,12 @@
 		AND 
 		post_great.user_id = #{userId} 
 	</select>
+	
+	<insert id="commentAdd">
+		INSERT INTO post_topic (topic_id, post_id, user_id, b_user_id, topic_content) 
+		VALUES 
+		(#{topicId}, #{postId}, #{userId}, #{bUserId}, #{topicContent})
+	</insert>
 	
 	<insert id="greatAdd">
 		INSERT INTO post_great (post_great.great_id, post_great.post_id, post_great.user_id)

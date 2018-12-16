@@ -22,13 +22,8 @@ public class PostUserDTO {
 	private DTOreaded DTOreaded;
 	private DTOBarAndPic DTOBarAndPic;
 	private DTOtopic DTOtopic;
-	
-	
-	
-	
-	public PostUserDTO() {
-		super();
-	}
+	private PostByGreatReadedDTO postByGreatReadedDTO;
+	private List<PostByGreatReadedDTO> postByGreatReadedDTOList;
 	public post getPost() {
 		return post;
 	}
@@ -83,7 +78,6 @@ public class PostUserDTO {
 	public void setPost_barList(List<post_bar> post_barList) {
 		this.post_barList = post_barList;
 	}
-	
 	public List<post_great> getPost_greatList() {
 		return post_greatList;
 	}
@@ -126,6 +120,53 @@ public class PostUserDTO {
 	public void setDTOtopic(DTOtopic dTOtopic) {
 		DTOtopic = dTOtopic;
 	}
+	public PostByGreatReadedDTO getPostByGreatReadedDTO() {
+		return postByGreatReadedDTO;
+	}
+	public void setPostByGreatReadedDTO(PostByGreatReadedDTO postByGreatReadedDTO) {
+		this.postByGreatReadedDTO = postByGreatReadedDTO;
+	}
+	public List<PostByGreatReadedDTO> getPostByGreatReadedDTOList() {
+		return postByGreatReadedDTOList;
+	}
+	public void setPostByGreatReadedDTOList(List<PostByGreatReadedDTO> postByGreatReadedDTOList) {
+		this.postByGreatReadedDTOList = postByGreatReadedDTOList;
+	}
+	
+	
+	public PostUserDTO(com.pxxy.pojo.post post, com.pxxy.pojo.post_bar post_bar, com.pxxy.pojo.user user,
+			com.pxxy.pojo.post_great post_great, com.pxxy.pojo.post_readed post_readed,
+			com.pxxy.pojo.post_topic post_topic, List<post_picture> post_pictureList, List<com.pxxy.pojo.post> postList,
+			List<com.pxxy.pojo.post_bar> post_barList, List<com.pxxy.pojo.post_great> post_greatList,
+			List<com.pxxy.pojo.post_readed> post_readedList, List<com.pxxy.pojo.post_topic> post_topicList,
+			com.pxxy.DTO.DTOgreat dTOgreat, com.pxxy.DTO.DTOreaded dTOreaded, com.pxxy.DTO.DTOBarAndPic dTOBarAndPic,
+			com.pxxy.DTO.DTOtopic dTOtopic, PostByGreatReadedDTO postByGreatReadedDTO,
+			List<PostByGreatReadedDTO> postByGreatReadedDTOList) {
+		super();
+		this.post = post;
+		this.post_bar = post_bar;
+		this.user = user;
+		this.post_great = post_great;
+		this.post_readed = post_readed;
+		this.post_topic = post_topic;
+		this.post_pictureList = post_pictureList;
+		this.postList = postList;
+		this.post_barList = post_barList;
+		this.post_greatList = post_greatList;
+		this.post_readedList = post_readedList;
+		this.post_topicList = post_topicList;
+		DTOgreat = dTOgreat;
+		DTOreaded = dTOreaded;
+		DTOBarAndPic = dTOBarAndPic;
+		DTOtopic = dTOtopic;
+		this.postByGreatReadedDTO = postByGreatReadedDTO;
+		this.postByGreatReadedDTOList = postByGreatReadedDTOList;
+	}
+	
+	public PostUserDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	@Override
 	public String toString() {
 		return "PostUserDTO [post=" + post + ", post_bar=" + post_bar + ", user=" + user + ", post_great=" + post_great
@@ -133,7 +174,8 @@ public class PostUserDTO {
 				+ post_pictureList + ", postList=" + postList + ", post_barList=" + post_barList + ", post_greatList="
 				+ post_greatList + ", post_readedList=" + post_readedList + ", post_topicList=" + post_topicList
 				+ ", DTOgreat=" + DTOgreat + ", DTOreaded=" + DTOreaded + ", DTOBarAndPic=" + DTOBarAndPic
-				+ ", DTOtopic=" + DTOtopic + "]";
+				+ ", DTOtopic=" + DTOtopic + ", postByGreatReadedDTO=" + postByGreatReadedDTO
+				+ ", postByGreatReadedDTOList=" + postByGreatReadedDTOList + "]";
 	}
 	
 }

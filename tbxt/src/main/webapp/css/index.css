@@ -140,6 +140,7 @@
 	width: 510px;
 	height: 30px;
 	float: left;
+	margin-top: 5px;
 }
 
 .right-sec_tiezi_author_info {
@@ -148,9 +149,11 @@
 }
 
 .right-sec_tiezi_info {
-	width: 510px;
+	width: 530px;
 	height: 220px;
+	margin-top:30px;
 }
+
 .right-sec_tiezi_photo_box{
 	clear:both;
 }
@@ -314,6 +317,11 @@
 	width:660px; 
 	float:left;
 }
+#huati_box{
+	width:400px; 
+	float:left;
+	margin-bottom:20px;
+}
 .photo_xx{
 	max-width: 100%;
 }
@@ -354,6 +362,9 @@
 	float:left;
 	outline-style:ridge;
 	/* background-color:#009688; */
+}
+#great_icon_jb{
+	font-size: 25px; 
 }
 #great_icon{
 	font-size: 25px; 

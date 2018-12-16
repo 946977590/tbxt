@@ -1,5 +1,7 @@
 package com.pxxy.service;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.pxxy.DTO.DTOgreat;
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.pojo.post;
@@ -17,4 +19,7 @@ public interface postService {
     post_great judgeGreat(String postId,String userId);			//点赞判断
     void greatAdd(String greatId,String postId,String userId);	//点赞
     void delGreat(String greatId);		//取消点赞
+    void commentAdd(String topicId,String postId,String userId,String bUserId,String topicContent);//增加评论
+    
+    PostUserDTO queryTopPostView();	//贴吧首页热门推荐
 }

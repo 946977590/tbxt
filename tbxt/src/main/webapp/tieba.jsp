@@ -345,6 +345,10 @@
 					<legend>热门动态</legend>
 				</fieldset>
 				<div class="right-sec_tiezi">
+					<div class="loading_icon">
+						<i class="layui-icon layui-icon-loading"></i>
+					</div>
+					
 					<post_view_component  /> 
 				</div>
 
@@ -372,15 +376,19 @@
 			<div class="comments-form" action="">
 				<div class="layui-form-item layui-form-text"
 					style="background-color: #FFFFFF">
-					<textarea id="comments_textarea" placeholder="写点什么啊"></textarea>
+					<textarea placeholder="发贴记得遵守贴吧相关规则奥~" id="comments_textarea"
+							v-model="comments_topicContent" class="layui-textarea"></textarea>
 				</div>
-				<button id="btn_comments_tj" v-on:click="" class="layui-btn">提交</button>
+				<button id="btn_comments_tj" @click="tijiao_comments_click" class="layui-btn">提交</button>
 			</div>
 		</div>
 
 		<!-- ==========================帖子layer页面===================== -->
 		<div>
 			<div class="lay-blog" id="tiezi_Box" style="display: none;" >
+				<div class="loading_icon">
+						<i class="layui-icon layui-icon-loading"></i>
+				</div>
 			<div class="container-wrap">
 				<div class="container container-message container-details">
 					<div class="contar-wrap">
@@ -402,14 +410,17 @@
 									alt=""> 
 								<div class="count layui-clear">
 									<span class="pull-left">阅读 <em>{{readed}}</em></span> <span
-										class="pull-right like"><i class="layui-icon layui-icon-praise" @click="judge_great"></i><em v-if="great">{{great}}</em></span>
+										class="pull-right like"><i class="layui-icon layui-icon-praise" @click="judge_great" id="great_icon_jb"></i><em v-if="great">{{great}}</em></span>
 								</div>
 							</div>
 						</div>
 						<a name="comment"> </a>
 						<div class="comt layui-clear">
-							<a href="javascript:;" class="pull-left" @click="open_comment_w">评论</a> <a
-								href="javascript:;" v-on:click="" class="pull-right">写评论</a>
+							<a href="javascript:;" class="pull-left">评论</a> <a
+								href="javascript:;" v-on:click="" class="pull-right"  @click="open_comment_w">写评论</a>
+						</div>
+						<div id="comments_shafa">
+								<i class="layui-icon layui-icon-reply-fill" style="font-size: 25px;color: rgb(153, 153, 153);">目前还没人评论哟，快来抢沙发~</i>
 						</div>
 						<div id="LAY-msg-box" v-if="post_topicList">
 							<div class="info-item" v-for="item in post_topicList" :key="item">

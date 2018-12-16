@@ -1,5 +1,8 @@
 package com.pxxy.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +13,7 @@ import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.DTOgreat;
 import com.pxxy.DTO.DTOreaded;
 import com.pxxy.DTO.DTOtopic;
+import com.pxxy.DTO.PostByGreatReadedDTO;
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.mapper.postMapper;
 import com.pxxy.service.postService;
@@ -78,6 +82,27 @@ public class postServiceImpl implements postService {
 	public DTOgreat queryPostLayer_great(String postId) {
 		DTOgreat DTO_great = postMapper.queryPostLayer_great(postId);
 		return DTO_great;
+	}
+
+	public void commentAdd(String topicId, String postId, String userId, String bUserId, String topicContent) {
+		postMapper.commentAdd(topicId, postId, userId, bUserId, topicContent);
+	}
+	
+	//贴吧首页热门推荐
+	public PostUserDTO queryTopPostView() {
+		PostUserDTO postUserDTO = new PostUserDTO() ;
+		PostByGreatReadedDTO postByGreatReadedDTO = new PostByGreatReadedDTO();
+		List<PostByGreatReadedDTO> postByGreatReadedDTOList = new ArrayList<PostByGreatReadedDTO>();
+		//获取相关postId数组集合
+		ArrayList postIdList = (ArrayList) postMapper.queryTopPostId();
+		//根据相关id获取对应的post
+		for(int i=0;i<postIdList.size();i++) {
+			String postId = (String) postIdList.get(i);
+			postByGreatReadedDTO = postMapper.queryPostViewByGreatReaded(postId);
+			postByGreatReadedDTOList.add(postByGreatReadedDTO);
+		}
+		postUserDTO.setPostByGreatReadedDTOList(postByGreatReadedDTOList);
+		return postUserDTO;
 	}
 
 }

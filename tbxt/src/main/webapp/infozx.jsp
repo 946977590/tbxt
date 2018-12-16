@@ -102,7 +102,7 @@
 				<li class="layui-timeline-item"><i
 					class="layui-icon layui-timeline-axis"></i>
 					<div class="layui-timeline-content layui-text">
-						<div class="layui-timeline-title">2018年,天外飞牛用户加入最左,欢迎你成为我们大家庭的一份子</div>
+						<div class="layui-timeline-title">2018年,{{userNickname}}用户加入最左,欢迎你成为我们大家庭的一份子</div>
 					</div>
 				</li>
 				</ul>

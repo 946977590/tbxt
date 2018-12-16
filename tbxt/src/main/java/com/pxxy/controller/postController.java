@@ -56,6 +56,7 @@ public class postController {
 		post post = new post();
 		user sessionUser = (user) session.getAttribute("user"); // session未登录，则不可发帖
 		String user_id = sessionUser.getUserId();
+		String postId = UUID.randomUUID().toString();
 		System.out.println("获取的files==="+files.length);
 		if(files!=null && files.length>0){  
             //循环获取file数组中得文件  
@@ -74,7 +75,7 @@ public class postController {
                 post_picture.setPictureCreattime(ctime);
                 post_picture.setPictureId(pictureId);
                 post_picture.setPictureIsdelete("0");
-                post_picture.setPictureBelong(user_id);
+                post_picture.setPictureBelong(postId);
                 int a = post_pictureService.insert(post_picture);
                 System.out.println("插入"+a+"post图片!!");
                 
@@ -93,7 +94,6 @@ public class postController {
 		System.out.println("postController====postContent==" + postContent);
 		if (sessionUser.getUserNickname() != null) {
 			String postAuthor = sessionUser.getUserNickname();
-			String postId = UUID.randomUUID().toString();
 			Date date = new Date();
 			String ctime = date.toLocaleString().toString();
 			post.setPostAuthor(postAuthor);
@@ -354,6 +354,52 @@ public class postController {
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		res = gson.toJson(DTO_great);
 		System.out.println("DTO_greatDTO_greatDTO_great==="+DTO_great);
+		pw.write(res);
+		pw.flush();
+		pw.close();
+    }
+    
+  //评论
+    @RequestMapping(value = "/CommentsAdd", method = RequestMethod.POST)
+	@ResponseBody
+	public void CommentsAdd(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam String postId,@RequestParam(required=false) String bUserId,@RequestParam String topicContent
+			) throws IOException {
+    	response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter pw = response.getWriter();
+		String res = "";
+		HttpSession session = request.getSession();
+		user sessionUser = (user) session.getAttribute("user"); // session未登录，则不可发帖
+		if(sessionUser != null) {
+			String userId = sessionUser.getUserId();
+			String topicId = UUID.randomUUID().toString();
+			postService.commentAdd(topicId, postId, userId, bUserId, topicContent);
+			res = "success";
+		}else {
+			res = "session_null";
+		}
+		pw.write(res);
+		pw.flush();
+		pw.close();
+    }
+    
+  //评论
+    @RequestMapping(value = "/queryTopPostView", method = RequestMethod.POST)
+	@ResponseBody
+	public void queryTopPostView(HttpServletRequest request, HttpServletResponse response
+			) throws IOException {
+    	response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter pw = response.getWriter();
+		String res = "";
+		Gson gson = new Gson();
+		PostUserDTO postUserDTO = postService.queryTopPostView();
+		if(postUserDTO != null) {
+			res = gson.toJson(postUserDTO);
+		}else {
+			res = "error";
+		}
 		pw.write(res);
 		pw.flush();
 		pw.close();

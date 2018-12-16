@@ -47,60 +47,112 @@ var sjx_post_component = Vue.extend({
 //首页中间部分帖子预览展示
 var post_view_component = Vue.extend({
 	template:`
-		<div class="right-sec_tiezi_info">
+	<div >
+		<div class="right-sec_tiezi_info" v-if="list" v-for="pitem in list" :key="pitem">
 			<a href="" class="right-sec_tieba_name"
-				style="font-size: 20px; float: left; margin-left: 20px;" v-if="list">{{list.post_bar.barName}}</a>
+				style="font-size: 20px; float: left; margin-left: 20px;" >{{pitem.post_bar.barName}}</a>
 			<br />
 			<br />
-			<a href="javascript:;" class="right-sec_tiezi_title"
-				style="font-size: 15px; float: left;; margin-left: 20px; color: #009688;" v-on:click="open_tiezi(list.post.postId)" v-if="list">{{list.post.postTitle}}</a> <br />
+		<a href="javascript:;" class="right-sec_tiezi_title"
+				style="font-size: 15px; float: left; margin-left: 20px; color: #009688;" v-on:click="open_tiezi(pitem.post.postId)" >{{pitem.post.postTitle}}</a> <br />
 			<br />
 			<div class="right-sec_tiezi_content">
 				<a href=""
-					style="font-size: 13px; float: left; display: inline; margin-left: 20px; color: #8D8D8D" v-if="list">{{list.post.postContent}}</a>
+					style="font-size: 13px; float: left; display: inline; margin-left: 20px; color: #8D8D8D" >{{pitem.post.postContent}}</a>
 			</div>
-			<div class="right-sec_tiezi_photo_box" v-if="list">
-				<img class="right-sec_tiezi_photo" v-for="item in pictureList" :key="item" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " />
+			<div class="right-sec_tiezi_photo_box" >
+				<img class="right-sec_tiezi_photo" v-for="item in pitem.post_pictureList" :key="item" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " />
 			</div>
-		</div>
-		<div class="right-sec_tiezi_author_info_box">
-			<div class="right-sec_tiezi_author_info" style="color: #C2C2C2;">
+			
+			<div class="right-sec_tiezi_author_info_box">
+				<div class="right-sec_tiezi_author_info" style="color: #C2C2C2;">
 				<a class="layui-icon layui-icon-username"
-					style="font-size: 14px;" v-if="list">{{list.post.postAuthor}}</a> <a
-					class="layui-icon layui-icon-tree" style="font-size: 14px;" v-if="list">{{post_data}}</a>
+					style="font-size: 14px;" >{{pitem.post.postAuthor}}</a> <a
+					class="layui-icon layui-icon-tree" style="font-size: 14px;" >{{pitem.post.postCreattime}}</a>
+				</div>
 			</div>
 		</div>
+		
+	</div>	
 	`,
 		data(){
 		      return {
-		        list:'',
-		        post_data:'',
-		        postid:''
+		    	  list:{},
+		    	  postByGreatReadedDTOList:{
+						post_pictureList:{
+							pictureId:'',
+							pictureName:''
+						},
+						post:{
+							postId: '',
+							postBarId: '',
+							postUserId: '',
+							postTitle: '',
+							postContent: '',
+							postAuthor: '',
+							postCreattime: ''
+						},
+						post_bar:{
+							barId: '',
+							barName: ''
+						}
+					},
 		      }
 		    },
 	  created(){
-	        	var url = 'http://localhost:8080/tbxt/GetpostViewByTest';
+	        	var url = 'http://localhost:8080/tbxt/queryTopPostView';
 				this.$http.post(url, {
 					emulateJSON : true
 				}).then(function(res) {
-					if(res.body=='Getpost_error'){
-						toastr.error("获取个人动态信息失败!");
+					if(res.body=='error'){
+						toastr.error("获取数据异常!");
 					}else{
-//						console.log("中间帖子预览"+JSON.stringify(res.body));
-						this.list = res.body;
-						this.pictureList = res.body.post_pictureList;
-						this.post_data = this.list.post.postCreattime.substr(0,this.list.post.postCreattime.length-8);
+						this.list = res.body.postByGreatReadedDTOList;
+//						console.log(JSON.stringify(this.list));
+						this.postByGreatReadedDTOList = res.body.postByGreatReadedDTOList[0];
+						this.postByGreatReadedDTOList.pictureList = res.body.postByGreatReadedDTOList[0].post_pictureList;
+						this.postByGreatReadedDTOList.post = res.body.postByGreatReadedDTOList[0].post;
+						this.postByGreatReadedDTOList.post_bar = res.body.postByGreatReadedDTOList[0].post_bar;
+						/*if(this.postByGreatReadedDTOList.post != null){
+							this.post_data = this.postByGreatReadedDTOList.post.postCreattime.substr(0,this.postByGreatReadedDTOList.post.postCreattime.length-8);
+						}*/
 //						console.log("this.post_data=="+this.pictureList[0].pictureName);
+						$(".loading_icon").hide();
 					} 
 				}, function(err) {
 					// 处理失败的结果
 					console.log(err)
 					toastr.error("获取个人动态信息失败!");
 				})	
+				
 	        },
 	        methods:{
 	        	// 打开帖子
 				open_tiezi : function(postid) {
+					//监测该贴是否被点赞
+					var url2 = 'http://localhost:8080/tbxt/greatJudge';
+					var data = {
+							'postId': postid
+					}
+					this.$http.post(url2, data,{
+						emulateJSON : true
+					}).then(function(res) {
+						 switch(res.body){
+						     case 'great_0':
+						       document.getElementById("great_icon_jb").style.color="#999999"; 
+						       break;
+						     case 'great_1':
+						       document.getElementById("great_icon_jb").style.color="#009688";
+						       break;
+						     default:
+						       break;
+					   }
+					}, function(err) {
+						// 处理失败的结果
+						console.log(err)
+						toastr.error("获取个人动态信息失败!");
+					})
+					
 //					console.log("chuancan");
 //					console.log("获取的帖子id是==="+postid)
 					this.$options.methods.GetPostById(postid);
@@ -127,11 +179,15 @@ var post_view_component = Vue.extend({
 					vm.$http.post(url,data,{
 						emulateJSON : true,
 					}).then(function(res) {
-//						console.log("res.body=="+JSON.stringify(res.body));
+						console.log("res.body=="+JSON.stringify(res.body));
 						vm.postList = res.body
-						vm.readed = res.body.DTOreaded.post_readedList.length
+						if(res.body.DTOreaded != null){
+							vm.readed = res.body.DTOreaded.post_readedList.length
+						}else{
+							vm.readed = '0'
+						}
 						if(res.body.DTOgreat == null){
-							vm.great = "0"
+							vm.great = '0'
 						}else{
 							vm.great = res.body.DTOgreat.post_greatList.length
 						}
@@ -140,8 +196,12 @@ var post_view_component = Vue.extend({
 						}
 						if(res.body.DTOtopic != null){
 							vm.post_topicList = res.body.DTOtopic.post_topicList;
+							$("#comments_shafa").hide();
+						}else{
+							vm.post_topicList=false;
 						}
 						vm.pass_postId = postid;
+						$(".loading_icon").hide();
 					}, function(err) {
 						// 处理失败的结果
 						console.log(err)
@@ -232,10 +292,22 @@ var post_view_component = Vue.extend({
 						发贴请遵守 <a href="" style="font-weight: bold">贴吧相关协议</a>
 					</legend>
 				</fieldset>
-				
-				
 			</div>
+
 			<div class="fatie_left">
+			
+				<div id="huati_box" class="layui-form">
+				<label class="layui-form-label">话题类别</label>
+				<div class="layui-input-block">
+					<select name="city" lay-verify="">
+					  <option value="">请选择话题类别</option>
+					  <option value="010">插入我的新话题</option>
+					  <option value="021">LPL夺冠</option>
+					  <option value="0571">湖人总冠军~</option>
+					</select> 
+				</div>	    
+				</div>
+			
 				<div class="layui-form-item">
 					<label class="layui-form-label">取个标题吧</label>
 					<div class="layui-input-block">
@@ -252,6 +324,7 @@ var post_view_component = Vue.extend({
 					</div>
 				</div>
 			</div>
+			
 
 			<div class="fatie_right">
 				<div class="fatie_photo_box" id="fatie_photo_box">
@@ -330,6 +403,7 @@ var post_view_component = Vue.extend({
 						/*setTimeout(function(){
 							location.href="/tbxt/tieba.jsp";
 						},1000);*/
+						layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
 					}else if(res.body=='sessionError'){
 						toastr.error("未登录状态!");
 					}else{
@@ -521,6 +595,7 @@ var vm = new Vue(
 				toplable_list : [ '网页', '新闻', '贴吧', '知道', '视频', '音乐', '图片',
 						'地图', '文库' ],
 				sjx_postList :[],
+				GreatIcon_color :'',
 				register_result : null,
 				postList:{
 					DTOBarAndPic:{
@@ -531,12 +606,32 @@ var vm = new Vue(
 						}
 					}
 				},
+				postByGreatReadedDTOList:{
+					post_pictureList:{
+						pictureId:'',
+						pictureName:''
+					},
+					post:{
+						postId: '',
+						postBarId: '',
+						postUserId: '',
+						postTitle: '',
+						postContent: '',
+						postAuthor: '',
+						postCreattime: ''
+					},
+					post_bar:{
+						barId: '',
+						barName: ''
+					}
+				},
 				readed:'',
 				great:'',
 				post_topicList:{
 					userId:'',
 					topicContent:''
 				},
+				comments_topicContent:'',
 				pictureList:'',
 				pass_postId:''
 			},
@@ -606,8 +701,6 @@ var vm = new Vue(
 						}else{
 							toastr.error("退出异常!");
 						}
-						
-
 					}, function(err) {
 						// 处理失败的结果
 						console.log(err)
@@ -625,7 +718,7 @@ var vm = new Vue(
 						}else{
 							layui.use(['layer'],function () {
 								var layer = layui.layer,$=layui.$;
-								layer.open({
+								var index = layer.open({
 										type:1,//类型
 										area:['1330px','600px'],//定义宽和高
 										title:'发表新帖',//题目
@@ -664,7 +757,7 @@ var vm = new Vue(
 				open_comment_w : function() {
 					layui.use([ 'layer' ], function() {
 						var layer = layui.layer, $ = layui.$;
-						layer.open({
+						var index = layer.open({
 							type : 1,// 类型
 							area : [ '800px', '450px' ],// 定义宽和高
 							title : '评论界面',// 题目
@@ -672,6 +765,53 @@ var vm = new Vue(
 							content : $('#comments_Box')
 						// 打开的内容
 						});
+					})
+				},
+				//评论功能
+				tijiao_comments_click : function(index_comments){
+					var url = 'http://localhost:8080/tbxt/CommentsAdd';
+					var postId = vm.pass_postId
+					var topicContent = vm.comments_topicContent
+					console.log("评论功能===获取topicContent=="+vm.comments_topicContent);
+					console.log("评论功能===postId，topicContent=="+postId+"=="+topicContent);
+					var data = {
+						'postId': postId,
+						'topicContent':topicContent
+					}
+					this.$http.post(url, data,{
+						emulateJSON : true
+					}).then(function(res) {
+					console.log("====="+res.body);
+						 switch(res.body){
+						     case 'success':
+						       toastr.success("评论成功!");
+						       
+						       $("#comments_shafa").hide();
+						       var url2 = 'http://localhost:8080/tbxt/GetpostByPostId';
+								vm.$http.post(url2,data,{
+									emulateJSON : true,
+								}).then(function(res) {
+									if(res.body.DTOtopic != null){
+										vm.post_topicList = res.body.DTOtopic.post_topicList;
+									}
+								}, function(err) {
+									// 处理失败的结果
+									console.log(err)
+									toastr.error("数据异常!");
+								})	
+								layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+						       break;
+						     case 'session_null':
+						       toastr.success("未登录!");
+						       break;  
+						     default:
+						       toastr.error("评论出现异常!");
+						       break;
+					   }
+					}, function(err) {
+						// 处理失败的结果
+						console.log(err)
+						toastr.error("获取个人动态信息失败!");
 					})
 				},
 				// 打开注册模态框
@@ -703,12 +843,14 @@ var vm = new Vue(
 //						console.log("成功进入点赞判断逻辑");
 						 switch(res.body){
 						     case 'great_0':
-						       toastr.success("点赞成功!");
+						       document.getElementById("great_icon_jb").style.color="#999999"; 
 						       this.$options.methods.great_add(postId);
+						       toastr.success("点赞成功!");
 						       break;
 						     case 'great_1':
-						       toastr.success("取消点赞!");
+						       document.getElementById("great_icon_jb").style.color="#009688";
 						       this.$options.methods.great_del(postId);
+						       toastr.success("取消点赞!");
 						       break;
 						     case 'session_null':
 						       toastr.error("账号检测请登录!");
@@ -726,7 +868,7 @@ var vm = new Vue(
 				//点赞
 				great_add : function(postId){
 					var url = 'http://localhost:8080/tbxt/greatAdd';
-					console.log("click_great点赞id==="+postId);
+//					console.log("click_great点赞id==="+postId);
 					var data = {
 							'postId': postId,
 					}
@@ -734,13 +876,13 @@ var vm = new Vue(
 						emulateJSON : true
 					}).then(function(res) {
 						 switch(res.body){
-						 
 						     case 'great_add':
 						    	 var url2 = 'http://localhost:8080/tbxt/GetgreatNum';
 						    	 vm.$http.post(url2, data,{
 										emulateJSON : true
 									}).then(function(res) {
 //										console.log("二次异步得到点赞==="+JSON.stringify(res.body));
+										document.getElementById("great_icon_jb").style.color="#009688";
 										vm.great = res.body.post_greatList.length
 									}, function(err) {
 										// 处理失败的结果
@@ -778,6 +920,7 @@ var vm = new Vue(
 										emulateJSON : true
 									}).then(function(res) {
 //										console.log("二次异步得到点赞==="+JSON.stringify(res.body));
+										document.getElementById("great_icon_jb").style.color="#999999";
 										if(res.body == null || res.body == 'null'){
 											vm.great = '0'
 										}else{
@@ -808,7 +951,7 @@ var vm = new Vue(
 
 layui.use('layedit', function() {
 	var layedit = layui.layedit;
-	layedit.build('comments_textarea'); // 建立编辑器
+	layedit.build('comments_textarea2'); // 建立编辑器,使v-model失效,暂时不用
 });
 
 layui.use([ 'carousel', 'form' ], function() {

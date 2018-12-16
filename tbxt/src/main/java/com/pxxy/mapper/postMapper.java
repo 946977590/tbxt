@@ -1,11 +1,14 @@
 package com.pxxy.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.DTOgreat;
 import com.pxxy.DTO.DTOreaded;
 import com.pxxy.DTO.DTOtopic;
+import com.pxxy.DTO.PostByGreatReadedDTO;
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.pojo.post;
 import com.pxxy.pojo.post_great;
@@ -41,4 +44,10 @@ public interface postMapper {
     void greatAdd(@Param("greatId")String greatId,@Param("postId")String postId,@Param("userId")String userId);	//点赞
     
     void delGreat(String greatId);		//删除点赞
+    
+    void commentAdd(@Param("topicId")String topicId,@Param("postId")String postId,@Param("userId")String userId,@Param("bUserId")String bUserId,@Param("topicContent")String topicContent);//增加评论
+    
+    List<?> queryTopPostId();
+    
+    PostByGreatReadedDTO queryPostViewByGreatReaded(String postId);
 }
