@@ -78,4 +78,23 @@ public class Post_test {
 		}
 		System.out.println("postUserDTO=="+postUserDTO);
 	}
+	
+	@Test
+	public void test16() {
+		PostUserDTO postUserDTO = new PostUserDTO();
+		PostByGreatReadedDTO postByGreatReadedDTO = new PostByGreatReadedDTO();
+		//获取相关postId数组集合
+		String barId = "123";
+		ArrayList postIdList = (ArrayList) postMapper.queryBarPostId(barId);
+		List<PostByGreatReadedDTO> postByGreatReadedDTOList = new ArrayList<PostByGreatReadedDTO>();
+		System.out.println("Service层======postIdList==="+postIdList);
+		//根据相关id获取对应的post
+		for(int i=0;i<postIdList.size();i++) {
+			String postId = (String) postIdList.get(i);
+			postByGreatReadedDTO = postMapper.queryPostViewByGreatReaded(postId);
+			postByGreatReadedDTOList.add(postByGreatReadedDTO);
+			postUserDTO.setPostByGreatReadedDTOList(postByGreatReadedDTOList);
+		}
+		System.out.println("postUserDTO=="+postUserDTO);
+	}
 }

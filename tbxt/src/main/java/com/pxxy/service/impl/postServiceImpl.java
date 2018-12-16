@@ -104,5 +104,22 @@ public class postServiceImpl implements postService {
 		postUserDTO.setPostByGreatReadedDTOList(postByGreatReadedDTOList);
 		return postUserDTO;
 	}
+	
+	//贴吧首页热门推荐
+	public PostUserDTO queryBarPostView(String barId) {
+		PostUserDTO postUserDTO = new PostUserDTO() ;
+		PostByGreatReadedDTO postByGreatReadedDTO = new PostByGreatReadedDTO();
+		List<PostByGreatReadedDTO> postByGreatReadedDTOList = new ArrayList<PostByGreatReadedDTO>();
+		//获取相关postId数组集合
+		ArrayList postIdList = (ArrayList) postMapper.queryBarPostId(barId);
+		//根据相关id获取对应的post
+		for(int i=0;i<postIdList.size();i++) {
+			String postId = (String) postIdList.get(i);
+			postByGreatReadedDTO = postMapper.queryPostViewByGreatReaded(postId);
+			postByGreatReadedDTOList.add(postByGreatReadedDTO);
+		}
+		postUserDTO.setPostByGreatReadedDTOList(postByGreatReadedDTOList);
+		return postUserDTO;
+	}
 
 }

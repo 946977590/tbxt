@@ -60,6 +60,13 @@
 	border-right: 1px solid #DCDCDC;
 	border-left: 1px solid #DCDCDC;
 }
+.bar_right-sec{
+	width: 1000px;
+	height: 2000px;
+	float: left;
+	border-left: 1px solid #DCDCDC;
+	border-right: 1px solid #DCDCDC;
+}
 .right-sec {
 	width: 512px;
 	height: 2000px;
@@ -152,6 +159,7 @@
 	width: 530px;
 	height: 220px;
 	margin-top:30px;
+	/* border-right: 1px solid #DCDCDC; */
 }
 
 .right-sec_tiezi_photo_box{

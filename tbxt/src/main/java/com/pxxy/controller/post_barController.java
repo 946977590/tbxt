@@ -54,7 +54,6 @@ public class post_barController {
 			post_bar.setBarSign(barSign);
 			post_bar.setBarName(barName);
 			post_bar.setBarPicture(barPicture);
-			System.out.println("post_bar=="+post_bar);
 			if(post_bar !=null) {
 				int a = post_barService.insert(post_bar);
 				System.out.println("controller=====post成功插入"+a+"条数据");

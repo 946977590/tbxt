@@ -41,7 +41,6 @@ public class userController {
 		PrintWriter pw = response.getWriter();
 		String xx = request.getParameter("userEmail");
 		String result = "";
-		System.out.println("xx==="+xx);
 		try {
 			if(userEmail != null && !userEmail.isEmpty() 
 				&& userNickname != null && !userNickname.isEmpty()
@@ -57,7 +56,6 @@ public class userController {
 				user.setUserPassword(userPassword);
 				user.setUserLevel("0");
 				user.setUserIsdelete("0");
-				System.out.println("ctime===="+ctime);
 				user.setUserCreattime(ctime);
 				userService.insert(user);
 				session.setAttribute("user", user);
@@ -130,7 +128,6 @@ public class userController {
 			HttpSession session = request.getSession();
 			PrintWriter pw = response.getWriter();
 			session.removeAttribute("user");
-			System.out.println("Ö´ÐÐÍË³ö=------");
 			pw.write("logoutSuccess");
 		}
 }

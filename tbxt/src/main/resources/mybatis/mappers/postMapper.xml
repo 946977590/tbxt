@@ -73,6 +73,13 @@
 	post_great GROUP BY post_great.post_id DESC
 	</select>
 	
+	<select id="queryBarPostId" resultType="java.lang.String">
+	SELECT 
+		post.post_id
+	FROM post 
+	WHERE post.post_bar_id = #{barId}
+	</select>
+	
 	<resultMap type="com.pxxy.DTO.PostByGreatReadedDTO" id="Query_postViewByGreatReaded_resultMap">  
 	    <association property="post"  javaType="post" resultMap="BaseResultMap"/>
 	    <association property="post_bar"  javaType="com.pxxy.pojo.post_bar" resultMap="com.pxxy.mapper.post_barMapper.BaseResultMap"/>

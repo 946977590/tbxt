@@ -22,4 +22,5 @@ public interface postService {
     void commentAdd(String topicId,String postId,String userId,String bUserId,String topicContent);//增加评论
     
     PostUserDTO queryTopPostView();	//贴吧首页热门推荐
+    PostUserDTO queryBarPostView(String barId);	//贴吧内容详情
 }

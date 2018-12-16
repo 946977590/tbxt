@@ -10,11 +10,13 @@
 	<!--定义Controller扫描包,用户扫描Controller并创建代理对象 -->
 	<context:component-scan base-package="com.pxxy.controller"/>
 	<!-- 使用注释来配置需要Spring IOC容器托管的对象以及对象之间的依赖关系 -->
-    <mvc:annotation-driven />
+    <!-- – 直接配置对应的视图访问路径 -->
+	<mvc:view-controller path="/infozx" view-name="infozx" />
 	<!-- 1、重定向 -->
 	<!-- <mvc:view-controller path="/" view-name="redirect:/admin/index"/> -->
 	<mvc:view-controller path="/intoBackground" view-name="intoBackground"/>   
     <mvc:view-controller path="/intoUserList" view-name="user/userList"/>
+	<mvc:annotation-driven />
 	
 	<!-- 配置Spring MVC 的视图解析器 (渲染视图完成模型和视图的绑定)-->
     <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">

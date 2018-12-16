@@ -50,4 +50,5 @@ public interface postMapper {
     List<?> queryTopPostId();
     
     PostByGreatReadedDTO queryPostViewByGreatReaded(String postId);
+    List<?> queryBarPostId(String barId);
 }

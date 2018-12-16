@@ -213,6 +213,352 @@ var post_view_component = Vue.extend({
 				
 	        },
 	})
+	
+	
+/*============================头部======吧内post详情展示===========================*/
+var post_barView_component = Vue.extend({
+		template:`
+		<div >
+			<div class="right-sec_tiezi_info" v-if="list" v-for="pitem in list" :key="pitem">
+				<a href="" class="right-sec_tieba_name"
+					style="font-size: 20px; float: left; margin-left: 20px;" >{{pitem.post_bar.barName}}</a>
+				<br />
+				<br />
+			<a href="javascript:;" class="right-sec_tiezi_title"
+					style="font-size: 15px; float: left; margin-left: 20px; color: #009688;" v-on:click="open_tiezi(pitem.post.postId)" >{{pitem.post.postTitle}}</a> <br />
+				<br />
+				<div class="right-sec_tiezi_content">
+					<a href=""
+						style="font-size: 13px; float: left; display: inline; margin-left: 20px; color: #8D8D8D" >{{pitem.post.postContent}}</a>
+				</div>
+				<div class="right-sec_tiezi_photo_box" >
+					<img class="right-sec_tiezi_photo" v-for="item in pitem.post_pictureList" :key="item" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " />
+				</div>
+				
+				<div class="right-sec_tiezi_author_info_box">
+					<div class="right-sec_tiezi_author_info" style="color: #C2C2C2;">
+					<a class="layui-icon layui-icon-username"
+						style="font-size: 14px;" >{{pitem.post.postAuthor}}</a> <a
+						class="layui-icon layui-icon-tree" style="font-size: 14px;" >{{pitem.post.postCreattime}}</a>
+					</div>
+				</div>
+			</div>
+			
+		</div>	
+		`,
+			data(){
+			      return {
+			    	  list:{},
+			    	  postByGreatReadedDTOList:{
+							post_pictureList:{
+								pictureId:'',
+								pictureName:''
+							},
+							post:{
+								postId: '',
+								postBarId: '',
+								postUserId: '',
+								postTitle: '',
+								postContent: '',
+								postAuthor: '',
+								postCreattime: ''
+							},
+							post_bar:{
+								barId: '',
+								barName: ''
+							}
+						},
+			      }
+			    },
+		  created(){
+		        	var url = 'http://localhost:8080/tbxt/queryTopPostView';
+					this.$http.post(url, {
+						emulateJSON : true
+					}).then(function(res) {
+						if(res.body=='error'){
+							toastr.error("获取数据异常!");
+						}else{
+							this.list = res.body.postByGreatReadedDTOList;
+//							console.log(JSON.stringify(this.list));
+							this.postByGreatReadedDTOList = res.body.postByGreatReadedDTOList[0];
+							this.postByGreatReadedDTOList.pictureList = res.body.postByGreatReadedDTOList[0].post_pictureList;
+							this.postByGreatReadedDTOList.post = res.body.postByGreatReadedDTOList[0].post;
+							this.postByGreatReadedDTOList.post_bar = res.body.postByGreatReadedDTOList[0].post_bar;
+							/*if(this.postByGreatReadedDTOList.post != null){
+								this.post_data = this.postByGreatReadedDTOList.post.postCreattime.substr(0,this.postByGreatReadedDTOList.post.postCreattime.length-8);
+							}*/
+//							console.log("this.post_data=="+this.pictureList[0].pictureName);
+							$(".loading_icon").hide();
+						} 
+					}, function(err) {
+						// 处理失败的结果
+						console.log(err)
+						toastr.error("获取个人动态信息失败!");
+					})	
+					
+		        },
+		        methods:{
+		        	// 打开帖子
+					open_tiezi : function(postid) {
+						//监测该贴是否被点赞
+						var url2 = 'http://localhost:8080/tbxt/greatJudge';
+						var data = {
+								'postId': postid
+						}
+						this.$http.post(url2, data,{
+							emulateJSON : true
+						}).then(function(res) {
+							 switch(res.body){
+							     case 'great_0':
+							       document.getElementById("great_icon_jb").style.color="#999999"; 
+							       break;
+							     case 'great_1':
+							       document.getElementById("great_icon_jb").style.color="#009688";
+							       break;
+							     default:
+							       break;
+						   }
+						}, function(err) {
+							// 处理失败的结果
+							console.log(err)
+							toastr.error("获取个人动态信息失败!");
+						})
+						
+//						console.log("chuancan");
+//						console.log("获取的帖子id是==="+postid)
+						this.$options.methods.GetPostById(postid);
+//						bus.$emit("postid",postid)   //$emit这个方法会触发一个事件
+						layui.use([ 'layer' ], function() {
+							var layer = layui.layer, $ = layui.$;
+							layer.open({
+								type : 1,// 类型
+								area : [ '1330px', '600px' ],// 定义宽和高
+								title : '帖子详情',// 题目
+								shadeClose : false,// 点击遮罩层关闭
+								content : $('#tiezi_Box')
+							// 打开的内容
+							});
+						})
+					},
+					//传递postid获取相关参数
+					GetPostById :function(postid){
+//						console.log("jieshou=="+postid);
+						var data = {
+								'postId': postid
+						}
+						var url = 'http://localhost:8080/tbxt/GetpostByPostId';
+						vm.$http.post(url,data,{
+							emulateJSON : true,
+						}).then(function(res) {
+							console.log("res.body=="+JSON.stringify(res.body));
+							vm.postList = res.body
+							if(res.body.DTOreaded != null){
+								vm.readed = res.body.DTOreaded.post_readedList.length
+							}else{
+								vm.readed = '0'
+							}
+							if(res.body.DTOgreat == null){
+								vm.great = '0'
+							}else{
+								vm.great = res.body.DTOgreat.post_greatList.length
+							}
+							if(res.body.DTOBarAndPic.post_pictureList != null){
+								vm.pictureList = res.body.DTOBarAndPic.post_pictureList
+							}
+							if(res.body.DTOtopic != null){
+								vm.post_topicList = res.body.DTOtopic.post_topicList;
+								$("#comments_shafa").hide();
+							}else{
+								vm.post_topicList=false;
+							}
+							vm.pass_postId = postid;
+							$(".loading_icon").hide();
+						}, function(err) {
+							// 处理失败的结果
+							console.log(err)
+							toastr.error("获取帖子动态信息失败!");
+						})	
+					},
+					
+					
+					
+		        },
+		})
+	
+		var component1 = Vue.extend({
+				template:`
+					<div >
+		<div class="right-sec_tiezi_info" v-if="list" v-for="pitem in list" :key="pitem">
+			<a href="" class="right-sec_tieba_name"
+				style="font-size: 20px; float: left; margin-left: 20px;" >{{pitem.post_bar.barName}}</a>
+			<br />
+			<br />
+		<a href="javascript:;" class="right-sec_tiezi_title"
+				style="font-size: 15px; float: left; margin-left: 20px; color: #009688;" v-on:click="open_tiezi(pitem.post.postId)" >{{pitem.post.postTitle}}</a> <br />
+			<br />
+			<div class="right-sec_tiezi_content">
+				<a href=""
+					style="font-size: 13px; float: left; display: inline; margin-left: 20px; color: #8D8D8D" >{{pitem.post.postContent}}</a>
+			</div>
+			<div class="right-sec_tiezi_photo_box" >
+				<img class="right-sec_tiezi_photo" v-for="item in pitem.post_pictureList" :key="item" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " />
+			</div>
+			
+			<div class="right-sec_tiezi_author_info_box">
+				<div class="right-sec_tiezi_author_info" style="color: #C2C2C2;">
+				<a class="layui-icon layui-icon-username"
+					style="font-size: 14px;" >{{pitem.post.postAuthor}}</a> <a
+					class="layui-icon layui-icon-tree" style="font-size: 14px;" >{{pitem.post.postCreattime}}</a>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+				`,
+		data(){
+		      return {
+		    	  list:{},
+		    	  barId:'',
+		    	  postByGreatReadedDTOList:{
+						post_pictureList:{
+							pictureId:'',
+							pictureName:''
+						},
+						post:{
+							postId: '',
+							postBarId: '',
+							postUserId: '',
+							postTitle: '',
+							postContent: '',
+							postAuthor: '',
+							postCreattime: ''
+						},
+						post_bar:{
+							barId: '',
+							barName: ''
+						}
+					},
+		      }
+		    },
+	  created(){
+//		    	console.log("creattttt");
+		    	var data={
+		    		'barId' : '123'
+		    		}
+	        	var url = 'http://localhost:8080/tbxt/queryBarPostView';
+				this.$http.post(url,data,{
+					emulateJSON : true
+				}).then(function(res) {
+					if(res.body=='error'){
+						toastr.error("获取数据异常!");
+					}else{
+						this.list = res.body.postByGreatReadedDTOList;
+//					console.log(JSON.stringify(this.list));
+						this.postByGreatReadedDTOList = res.body.postByGreatReadedDTOList[0];
+						this.postByGreatReadedDTOList.pictureList = res.body.postByGreatReadedDTOList[0].post_pictureList;
+						this.postByGreatReadedDTOList.post = res.body.postByGreatReadedDTOList[0].post;
+						this.postByGreatReadedDTOList.post_bar = res.body.postByGreatReadedDTOList[0].post_bar;
+						/*if(this.postByGreatReadedDTOList.post != null){
+							this.post_data = this.postByGreatReadedDTOList.post.postCreattime.substr(0,this.postByGreatReadedDTOList.post.postCreattime.length-8);
+						}*/
+//								console.log("this.post_data=="+this.pictureList[0].pictureName);
+						$(".loading_icon").hide();
+					} 
+				}, function(err) {
+					// 处理失败的结果
+					console.log(err)
+					toastr.error("获取个人动态信息失败!");
+				})	
+				
+	        },
+	        methods:{
+	        	// 打开帖子
+				open_tiezi : function(postid) {
+					//监测该贴是否被点赞
+					var url2 = 'http://localhost:8080/tbxt/greatJudge';
+					var data = {
+							'postId': postid
+					}
+					this.$http.post(url2, data,{
+						emulateJSON : true
+					}).then(function(res) {
+						 switch(res.body){
+						     case 'great_0':
+						       document.getElementById("great_icon_jb").style.color="#999999"; 
+						       break;
+						     case 'great_1':
+						       document.getElementById("great_icon_jb").style.color="#009688";
+						       break;
+						     default:
+						       break;
+					   }
+					}, function(err) {
+						// 处理失败的结果
+						console.log(err)
+						toastr.error("获取个人动态信息失败!");
+					})
+					
+//							console.log("chuancan");
+//							console.log("获取的帖子id是==="+postid)
+					this.$options.methods.GetPostById(postid);
+//							bus.$emit("postid",postid)   //$emit这个方法会触发一个事件
+					layui.use([ 'layer' ], function() {
+						var layer = layui.layer, $ = layui.$;
+						layer.open({
+							type : 1,// 类型
+							area : [ '1330px', '600px' ],// 定义宽和高
+							title : '帖子详情',// 题目
+							shadeClose : false,// 点击遮罩层关闭
+							content : $('#tiezi_Box')
+						// 打开的内容
+						});
+					})
+				},
+				//传递postid获取相关参数
+				GetPostById :function(postid){
+//							console.log("jieshou=="+postid);
+					var data = {
+							'postId': postid
+					}
+					var url = 'http://localhost:8080/tbxt/GetpostByPostId';
+					vm.$http.post(url,data,{
+						emulateJSON : true,
+					}).then(function(res) {
+						console.log("res.body=="+JSON.stringify(res.body));
+						vm.postList = res.body
+						if(res.body.DTOreaded != null){
+							vm.readed = res.body.DTOreaded.post_readedList.length
+						}else{
+							vm.readed = '0'
+						}
+						if(res.body.DTOgreat == null){
+							vm.great = '0'
+						}else{
+							vm.great = res.body.DTOgreat.post_greatList.length
+						}
+						if(res.body.DTOBarAndPic.post_pictureList != null){
+							vm.pictureList = res.body.DTOBarAndPic.post_pictureList
+						}
+						if(res.body.DTOtopic != null){
+							vm.post_topicList = res.body.DTOtopic.post_topicList;
+							$("#comments_shafa").hide();
+						}else{
+							vm.post_topicList=false;
+						}
+						vm.pass_postId = postid;
+						$(".loading_icon").hide();
+					}, function(err) {
+						// 处理失败的结果
+						console.log(err)
+						toastr.error("获取帖子动态信息失败!");
+					})	
+				},
+	        },
+			})
+			Vue.component('component1',component1)
+		
+	/*============================尾部======吧内post详情展示===========================*/
+	
 //个人信息页面Layer
 	var myinfo_component = Vue.extend({
 	template:`<div id="my_info_Box" style="display: none;">
@@ -580,12 +926,12 @@ var post_view_component = Vue.extend({
         }
 })
 Vue.component('toplable_a',toplable_component)
+Vue.component('post_barView_component',post_barView_component)
 Vue.component('sjx_post_component',sjx_post_component)
 Vue.component('myinfo_component',myinfo_component)
 Vue.component('creat_post_component',creat_post_component)
 Vue.component('register_component',register_component)
 Vue.component('login_component',login_component)
-
 // 1.创建一个组件构造器
 var vm = new Vue(
 		{
@@ -636,7 +982,8 @@ var vm = new Vue(
 				pass_postId:''
 			},
 		 components: {
-			 'post_view_component':post_view_component
+			 'post_view_component':post_view_component,
+			 /*'post_barView_component':post_barView_component*/
 				  },
 			//vue载入后执行获取session方法
 			mounted(){ 
@@ -785,7 +1132,6 @@ var vm = new Vue(
 						 switch(res.body){
 						     case 'success':
 						       toastr.success("评论成功!");
-						       
 						       $("#comments_shafa").hide();
 						       var url2 = 'http://localhost:8080/tbxt/GetpostByPostId';
 								vm.$http.post(url2,data,{

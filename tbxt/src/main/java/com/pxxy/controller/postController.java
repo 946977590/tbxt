@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,7 +58,7 @@ public class postController {
 		user sessionUser = (user) session.getAttribute("user"); // session未登录，则不可发帖
 		String user_id = sessionUser.getUserId();
 		String postId = UUID.randomUUID().toString();
-		System.out.println("获取的files==="+files.length);
+//		System.out.println("获取的files==="+files.length);
 		if(files!=null && files.length>0){  
             //循环获取file数组中得文件  
             for(int i = 0;i<files.length;i++){  
@@ -77,7 +78,7 @@ public class postController {
                 post_picture.setPictureIsdelete("0");
                 post_picture.setPictureBelong(postId);
                 int a = post_pictureService.insert(post_picture);
-                System.out.println("插入"+a+"post图片!!");
+//                System.out.println("插入"+a+"post图片!!");
                 
                 if (!filepath.getParentFile().exists()) {
 
@@ -91,7 +92,7 @@ public class postController {
                 }
             }  
         }  
-		System.out.println("postController====postContent==" + postContent);
+//		System.out.println("postController====postContent==" + postContent);
 		if (sessionUser.getUserNickname() != null) {
 			String postAuthor = sessionUser.getUserNickname();
 			Date date = new Date();
@@ -106,7 +107,7 @@ public class postController {
 			post.setPostCreattime(ctime);
 			if (post != null) {
 				int a = postService.creatPost(post);
-				System.out.println("controller=====post成功插入" + a + "条数据");
+//				System.out.println("controller=====post成功插入" + a + "条数据");
 				pw.write("success");
 			} else {
 				pw.write("error");
@@ -141,7 +142,7 @@ public class postController {
                 post_picture.setPictureIsdelete("0");
                 post_picture.setPictureBelong("暂无");
                 int a = post_pictureService.insert(post_picture);
-                System.out.println("插入"+a+"post图片");
+//                System.out.println("插入"+a+"post图片");
                 
                 if (!filepath.getParentFile().exists()) {
 
@@ -209,7 +210,7 @@ public class postController {
 	@ResponseBody
     public String IoReadImage(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(required = false) String pictureName) throws IOException {
-		System.out.println("====ppp");
+//		System.out.println("====ppp");
 		pictureName = new String(pictureName.getBytes("ISO8859-1"), "UTF-8");//瑙ｅ喅鍥剧墖涓枃璺緞涔辩爜
 		String linkurl = "D:\\AUPLOAD\\images\\" + pictureName;
 		FileInputStream in = new FileInputStream(linkurl);
@@ -244,7 +245,7 @@ public class postController {
 //		if(postUserDTO.getDTOgreat() == null) {
 //			postUserDTO.setDTOgreat(dTOgreat);
 //		}
-		System.out.println(postUserDTO);
+//		System.out.println(postUserDTO);
 		Gson gson = new GsonBuilder().serializeNulls().create();	//防止Gson转Json对象空属性丢失
 		String res = gson.toJson(postUserDTO);
 		pw.write(res);
@@ -266,10 +267,10 @@ public class postController {
 		user sessionUser = (user) session.getAttribute("user"); // session未登录，则不可发帖
 		if(sessionUser != null) {
 			userId = sessionUser.getUserId();
-			System.out.println("页面获取的postId为==="+postId);
-			System.out.println("页面获取的userId为==="+userId);
+//			System.out.println("页面获取的postId为==="+postId);
+//			System.out.println("页面获取的userId为==="+userId);
 			post_great great = postService.judgeGreat(postId, userId);
-			System.out.println("great===="+great);
+//			System.out.println("great===="+great);
 			if(great !=null) {
 				res="great_1";
 			}else {
@@ -327,7 +328,7 @@ public class postController {
 			if(great!=null) {
 				String greatId = great.getGreatId();
 				postService.delGreat(greatId);
-				System.out.println("点赞数据删除成功");
+//				System.out.println("点赞数据删除成功");
 				res = "great_del";
 			}else {
 				res = "del_error";
@@ -349,7 +350,7 @@ public class postController {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = response.getWriter();
 		String res = "";
-		System.out.println("点赞postId==="+postId);
+//		System.out.println("点赞postId==="+postId);
 		DTOgreat DTO_great = postService.queryPostLayer_great(postId);
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		res = gson.toJson(DTO_great);
@@ -384,7 +385,7 @@ public class postController {
 		pw.close();
     }
     
-  //评论
+  //贴吧首页post推荐
     @RequestMapping(value = "/queryTopPostView", method = RequestMethod.POST)
 	@ResponseBody
 	public void queryTopPostView(HttpServletRequest request, HttpServletResponse response
@@ -395,6 +396,27 @@ public class postController {
 		String res = "";
 		Gson gson = new Gson();
 		PostUserDTO postUserDTO = postService.queryTopPostView();
+		if(postUserDTO != null) {
+			res = gson.toJson(postUserDTO);
+		}else {
+			res = "error";
+		}
+		pw.write(res);
+		pw.flush();
+		pw.close();
+    }
+    
+    //贴吧内部post详情
+    @RequestMapping(value = "/queryBarPostView", method = RequestMethod.POST)
+	@ResponseBody
+	public void queryBarPostView(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam String barId) throws IOException {
+    	response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter pw = response.getWriter();
+		String res = "";
+		Gson gson = new Gson();
+		PostUserDTO postUserDTO = postService.queryBarPostView(barId);
 		if(postUserDTO != null) {
 			res = gson.toJson(postUserDTO);
 		}else {

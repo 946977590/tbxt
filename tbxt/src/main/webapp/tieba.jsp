@@ -348,7 +348,6 @@
 					<div class="loading_icon">
 						<i class="layui-icon layui-icon-loading"></i>
 					</div>
-					
 					<post_view_component  /> 
 				</div>
 
