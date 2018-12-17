@@ -23,4 +23,5 @@ public interface postService {
     
     PostUserDTO queryTopPostView();	//贴吧首页热门推荐
     PostUserDTO queryBarPostView(String barId);	//贴吧内容详情
+    PostUserDTO queryAllBar(); 			//查询所有贴吧
 }

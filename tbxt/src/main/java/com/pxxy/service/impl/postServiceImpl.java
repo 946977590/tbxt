@@ -48,6 +48,7 @@ public class postServiceImpl implements postService {
 		return postUserDTO;
 	}
 
+	//post的Layer详情数据
 	public PostUserDTO queryPostLayer(String postId) {
 		DTOBarAndPic DTO_BarAndPic = postMapper.queryPostLayer_BarAndPic(postId);
 		DTOtopic DTO_Topic = postMapper.queryPostLayer_Topic(postId);
@@ -105,7 +106,7 @@ public class postServiceImpl implements postService {
 		return postUserDTO;
 	}
 	
-	//贴吧首页热门推荐
+	//吧内容详情
 	public PostUserDTO queryBarPostView(String barId) {
 		PostUserDTO postUserDTO = new PostUserDTO() ;
 		PostByGreatReadedDTO postByGreatReadedDTO = new PostByGreatReadedDTO();
@@ -119,6 +120,12 @@ public class postServiceImpl implements postService {
 			postByGreatReadedDTOList.add(postByGreatReadedDTO);
 		}
 		postUserDTO.setPostByGreatReadedDTOList(postByGreatReadedDTOList);
+		return postUserDTO;
+	}
+
+	public PostUserDTO queryAllBar() {
+		// TODO Auto-generated method stub
+		PostUserDTO postUserDTO = postMapper.queryAllBar();
 		return postUserDTO;
 	}
 

@@ -427,4 +427,25 @@ public class postController {
 		pw.close();
     }
     
+    //查询所有贴吧  ==首页左侧
+    @RequestMapping(value = "/queryAllBar", method = RequestMethod.POST)
+	@ResponseBody
+	public void queryAllBar(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+    	response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter pw = response.getWriter();
+		String res = "";
+		Gson gson = new Gson();
+		PostUserDTO postUserDTO = postService.queryAllBar();
+		if(postUserDTO != null) {
+			res = gson.toJson(postUserDTO);
+		}else {
+			res = "error";
+		}
+		pw.write(res);
+		pw.flush();
+		pw.close();
+    }
+    
 }

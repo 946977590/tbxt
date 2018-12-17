@@ -148,6 +148,7 @@
 	height: 30px;
 	float: left;
 	margin-top: 5px;
+	border-bottom: 1px solid #DCDCDC;
 }
 
 .right-sec_tiezi_author_info {
@@ -160,6 +161,21 @@
 	height: 220px;
 	margin-top:30px;
 	/* border-right: 1px solid #DCDCDC; */
+
+}
+
+.right-sec_tiezi_info_barinfo {
+	width:495px;
+	height:auto;
+	float:left;
+	/* margin-top:30px; */
+	border: 1px solid #DCDCDC;
+	
+	/* border-right: 1px solid #DCDCDC; */
+}
+.right-sec_tiezi_barinfo{
+	width: 1000px;
+	height: 260px;
 }
 
 .right-sec_tiezi_photo_box{
@@ -185,6 +201,7 @@
 	height: 260px;
 }
 
+
 #my_tieba_box {
 	width: 210px;
 	height: 450px;
@@ -207,7 +224,7 @@
 	margin-left: 60px;
 }
 
-.tb_cate_boxs {
+#tb_cate_boxs {
 	width: 78px;
 	height: 38px;
 	float: left;

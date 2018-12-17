@@ -130,30 +130,14 @@
 							</div>
 						</div>
 						<div id="like_tiebas_content">
-							<div class="tb_cate_boxs">
+							<!-- <div class="tb_cate_boxs">
 								<button class="layui-btn layui-btn-radius layui-btn-normal">萍院吧</button>
 							</div>
 							<div class="tb_cate_boxs">
 								<button class="layui-btn layui-btn-radius layui-btn-normal">李毅吧</button>
-							</div>
-							<div class="tb_cate_boxs">
-								<button class="layui-btn layui-btn-radius layui-btn-normal">李毅吧</button>
-							</div>
-							<div class="tb_cate_boxs">
-								<button class="layui-btn layui-btn-radius layui-btn-normal">李毅吧</button>
-							</div>
-							<div class="tb_cate_boxs">
-								<button class="layui-btn layui-btn-radius layui-btn-normal">李毅吧</button>
-							</div>
-							<div class="tb_cate_boxs">
-								<button class="layui-btn layui-btn-radius layui-btn-normal">李毅吧</button>
-							</div>
-							<div class="tb_cate_boxs">
-								<button class="layui-btn layui-btn-radius layui-btn-normal">李毅吧</button>
-							</div>
-							<div class="tb_cate_boxs">
-								<button class="layui-btn layui-btn-radius layui-btn-normal">李毅吧</button>
-							</div>
+							</div> -->
+							<commponent2 />
+							
 						</div>
 						<div>
 							<i class="layui-icon layui-icon-more"

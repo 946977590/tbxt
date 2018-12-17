@@ -46,19 +46,15 @@ public class Post_test {
 	
 	@Test
 	public void test13() {
-		ArrayList postIdList = (ArrayList) postMapper.queryTopPostId();
-		for(int i=0;i<postIdList.size();i++) {
-			String postId = (String) postIdList.get(i);
-			postIdList.set(i, postId);
-		}
-		System.out.println("postIdList=="+postIdList.get(0));
+		PostUserDTO postUserDTO = postMapper.queryAllBar();
+		System.out.println("postUserDTO=="+postUserDTO);
 	}
 	
 	@Test
 	public void test14() {
-		String postId = "89de8ef1-d8f6-4457-8fcd-733fe01e2c33";
+		String postId = "7eff2242-a10c-4300-b6fa-764868dcf35f";
 		PostByGreatReadedDTO postByGreatReadedDTO = postMapper.queryPostViewByGreatReaded(postId);
-		System.out.println("postByGreatReadedDTO===="+postByGreatReadedDTO);
+		System.out.println("postByGreatReadedDTO===="+postByGreatReadedDTO.getPost_pictureList());
 	}
 	
 	@Test

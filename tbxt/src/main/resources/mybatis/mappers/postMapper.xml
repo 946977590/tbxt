@@ -108,9 +108,24 @@
  		inner JOIN post_bar on post.post_bar_id=post_bar.bar_id
  		inner JOIN user on post.post_user_id = user.user_id
 		LEFT JOIN post_picture on post.post_id=post_picture.picture_belong
-		WHERE post.post_id = #{postId}
+		WHERE post.post_id = #{postId} LIMIT 3
 	</select>
 	<!-- ====================底部=====首页预览帖子========================== -->
+	
+	<!-- ==============查询所有贴吧============= -->
+	<resultMap type="com.pxxy.DTO.PostUserDTO" id="QueryAllBarResultMap">  
+        <collection property="post_barList" ofType="post_bar">  
+            <id property="barId" column="bar_id" />
+            <result property="barName" column="bar_name"/>
+        </collection>
+	</resultMap>
+	<select id="queryAllBar" resultMap="QueryAllBarResultMap">
+		SELECT 
+		post_bar.bar_id,
+		post_bar.bar_name
+		FROM post_bar 
+		WHERE 1=1
+	</select>
 	
 	<resultMap type="com.pxxy.DTO.PostUserDTO" id="Query_postViewDTO_resultMap">  
 	    <association property="post"  javaType="post" resultMap="BaseResultMap"/>
