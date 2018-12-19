@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<link rel="stylesheet" href="layui/css/layui.css" />
+<link rel="stylesheet" href="css/userlist.css" />
+<script type="text/javascript" src="js/vue.min.js"></script>
+<script type="text/javascript" src="js/vue-resource.js"></script>
+<script type="text/javascript" src="layui/layui.js"></script>
+<script src="js/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+	<div id="barCreat">
+		<div id="whloe1">
+			<div class="barInputBox">
+				<div class="layui-form-item">
+					<label class="layui-form-label">贴吧名称</label>
+					<div class="layui-input-block">
+						<input type="text" v-model="barOJB.barName" lay-verify="title"
+							autocomplete="off" placeholder="给贴吧起个名字吧" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">贴吧分类</label>
+					<div class="layui-input-block">
+						<input type="text" v-model="barOJB.barCategory" lay-verify="required"
+							placeholder="请输入" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">贴吧宣言</label>
+					<div class="layui-input-block">
+						<input type="text" v-model="barOJB.barSign" lay-verify="required"
+							placeholder="请输入" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+
+				<form class="layui-form" action="">
+					<div class="layui-form-item">
+						<label class="layui-form-label">选择吧主</label>
+						<div class="layui-input-block">
+							<select id="barLeader" lay-filter="aihao">
+								<option value="请选择"></option>
+								<option value="0">user1</option>
+								<option value="1">user2</option>
+								<option value="2">user2</option>
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div id="img_btn_box">
+				<button type="button" class="layui-btn layui-btn-danger" id="test7" >
+					<i class="layui-icon"></i>上传贴吧logo
+				</button>
+				<input type="file" id="file1" style="display:none">
+			</div>
+			<div id="img_box">
+				<img class="layui-upload-img" id="demo1">
+			</div>
+		</div>
+		<div class="qr_creat">
+			<button type="button" class="layui-btn" @click="AddBar">
+				<i class="layui-icon layui-icon-edit"></i>确认创建
+			</button>
+		</div>
+	</div>
+
+	<script src="js/list.js"></script>
+	<script src="js/backStage/barCreat.js"></script>
+</body>
+</html>

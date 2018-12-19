@@ -1,0 +1,64 @@
+form input.layui-input[disabled]{ background:#f2f2f2; color:#595963!important; }
+.user_left{ width:45%; float: left; margin:20px 0 0 5%; }
+.user_right{ width:25%; float: left; margin:20px 0 0 5%; text-align: center; }
+.user_right p{ margin:10px 0 25px; font-size: 12px; text-align: center; color: #FF5722;}
+.user_right img#userFace{ width:200px; height:200px; }
+.layui-table,.layui-table th{ text-align:center; }
+
+/*用户列表*/
+.news_list .layui-btn,.news_list .layui-btn+.layui-btn{ margin:2px 5px; }
+#page{ text-align:right; }
+
+/*修改密码*/
+.changePwd{ width:30%; margin:3% 0 0 5%; }
+
+
+/*适配*/
+@media screen and (max-width:1050px){
+	/*用户信息*/
+	.user_left,.user_right,.changePwd{ width:100%; float:none; margin-left: 0; }
+	.user_right{ margin-bottom: 20px; }
+}
+@media screen and (max-width: 750px){
+	/*用户信息*/
+	.user_left,.user_right,.changePwd{ width:100%; float:none; margin-left: 0; }
+	.user_right{ margin-bottom: 20px; }
+}
+@media screen and (max-width:432px){
+	/*用户信息*/
+	.user_left,.user_right,.changePwd{ width:100%; float:none; margin-left: 0; }
+	.user_right{ margin-bottom: 20px; }
+}
+
+.barInputBox{
+	width: 400px;
+	float: left;
+}
+#test7{
+	
+}
+#img_btn_box{
+	float: left;
+	width: 130px;
+	height: 100px;
+	margin-left: 40px;
+	margin-top: 60px;
+}
+
+#img_box{
+	
+}
+.layui-upload-img{
+	width: 180px;
+	height: 180px;
+	margin-right: 350px;
+	float:right;
+	border:solid #DEDEDE;
+}
+.qr_creat{
+	margin-left: 450px;
+}
+#whloe1{
+	width: 1150px;
+	height: 230px;
+}

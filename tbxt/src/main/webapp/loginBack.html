@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>最左后台管理</title>
+<link href="css/loginstyle.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="layui/css/layui.css" rel="stylesheet" type="text/css" media="all"/>
+<script type="text/javascript" src="js/vue.min.js"></script>
+<script type="text/javascript" src="layui/layui.js"></script>
+<script type="text/javascript" src="js/vue-resource.js"></script>
+</head>
+<body>
+<div class="login" id="login">
+	<h2>后台管理系统</h2>
+	<div class="login-top">
+		<h1>最左—拉近你我</h1>
+		<form>
+			<input type="text" v-model="userEmail">
+			<input type="password" v-model="passWord">
+	    </form>
+	    <div class="forgot">
+	    	<input type="submit" value="登陆" @click="login">
+	    </div>
+	</div>
+</div>	
+
+<script type="text/javascript" src="js/backStage/login.js"></script>
+</body>
+</html>

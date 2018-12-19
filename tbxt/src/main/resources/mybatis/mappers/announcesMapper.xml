@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pxxy.mapper.announcesMapper">
+  <resultMap id="BaseResultMap" type="com.pxxy.pojo.announces">
+    <id column="announce_id" jdbcType="VARCHAR" property="announceId" />
+    <result column="announce_title" jdbcType="VARCHAR" property="announceTitle" />
+    <result column="announce_content" jdbcType="VARCHAR" property="announceContent" />
+    <result column="announce_modifytime" jdbcType="VARCHAR" property="announceModifytime" />
+    <result column="announce_creattime" jdbcType="VARCHAR" property="announceCreattime" />
+    <result column="announce_isdelete" jdbcType="VARCHAR" property="announceIsdelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    announce_id, announce_title, announce_content, announce_modifytime, announce_creattime, 
+    announce_isdelete
+  </sql>
+  
+  <resultMap id="AllAnnounceResultMap" type="com.pxxy.DTO.PostUserDTO">
+    <collection property="announceList" ofType="com.pxxy.pojo.announces">
+    	<id column="announce_id" jdbcType="VARCHAR" property="announceId" />
+	    <result column="announce_title" jdbcType="VARCHAR" property="announceTitle" />
+	    <result column="announce_content" jdbcType="VARCHAR" property="announceContent" />
+	    <result column="announce_modifytime" jdbcType="VARCHAR" property="announceModifytime" />
+	    <result column="announce_creattime" jdbcType="VARCHAR" property="announceCreattime" />
+	    <result column="announce_isdelete" jdbcType="VARCHAR" property="announceIsdelete" />
+    </collection>
+  </resultMap>
+   <select id="selectAllAnnounce" resultMap="AllAnnounceResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from announces
+    where announce_isdelete = '0'
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from announces
+    where announce_id = #{announceId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from announces
+    where announce_id = #{announceId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pxxy.pojo.announces">
+    insert into announces (announce_id, announce_title, announce_content, 
+      announce_modifytime, announce_creattime, 
+      announce_isdelete)
+    values (#{announceId,jdbcType=VARCHAR}, #{announceTitle,jdbcType=VARCHAR}, #{announceContent,jdbcType=VARCHAR}, 
+      #{announceModifytime,jdbcType=VARCHAR}, #{announceCreattime,jdbcType=VARCHAR}, 
+      #{announceIsdelete,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pxxy.pojo.announces">
+    insert into announces
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="announceId != null">
+        announce_id,
+      </if>
+      <if test="announceTitle != null">
+        announce_title,
+      </if>
+      <if test="announceContent != null">
+        announce_content,
+      </if>
+      <if test="announceModifytime != null">
+        announce_modifytime,
+      </if>
+      <if test="announceCreattime != null">
+        announce_creattime,
+      </if>
+      <if test="announceIsdelete != null">
+        announce_isdelete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="announceId != null">
+        #{announceId,jdbcType=VARCHAR},
+      </if>
+      <if test="announceTitle != null">
+        #{announceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="announceContent != null">
+        #{announceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="announceModifytime != null">
+        #{announceModifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="announceCreattime != null">
+        #{announceCreattime,jdbcType=VARCHAR},
+      </if>
+      <if test="announceIsdelete != null">
+        #{announceIsdelete,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pxxy.pojo.announces">
+    update announces
+    <set>
+      <if test="announceTitle != null">
+        announce_title = #{announceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="announceContent != null">
+        announce_content = #{announceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="announceModifytime != null">
+        announce_modifytime = #{announceModifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="announceCreattime != null">
+        announce_creattime = #{announceCreattime,jdbcType=VARCHAR},
+      </if>
+      <if test="announceIsdelete != null">
+        announce_isdelete = #{announceIsdelete,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where announce_id = #{announceId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pxxy.pojo.announces">
+    update announces
+    set announce_title = #{announceTitle,jdbcType=VARCHAR},
+      announce_content = #{announceContent,jdbcType=VARCHAR},
+      announce_modifytime = #{announceModifytime,jdbcType=VARCHAR},
+      announce_creattime = #{announceCreattime,jdbcType=VARCHAR},
+      announce_isdelete = #{announceIsdelete,jdbcType=VARCHAR}
+    where announce_id = #{announceId,jdbcType=VARCHAR}
+  </update>
+</mapper>
