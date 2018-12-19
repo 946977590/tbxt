@@ -16,6 +16,7 @@ import com.pxxy.DTO.DTOtopic;
 import com.pxxy.DTO.PostByGreatReadedDTO;
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.mapper.postMapper;
+import com.pxxy.mapper.announcesMapper;
 import com.pxxy.service.postService;
 
 @Service
@@ -23,6 +24,9 @@ public class postServiceImpl implements postService {
 
 	@Autowired 
 	private postMapper postMapper;
+	
+	@Autowired 
+	private announcesMapper announcesMapper;
 	
 	public int creatPost(post record) {
 		int a = postMapper.insert(record);
@@ -126,6 +130,16 @@ public class postServiceImpl implements postService {
 	public PostUserDTO queryAllBar() {
 		// TODO Auto-generated method stub
 		PostUserDTO postUserDTO = postMapper.queryAllBar();
+		return postUserDTO;
+	}
+
+	public PostUserDTO selectAllPostInBack() {
+		PostUserDTO postUserDTO = postMapper.selectAllPostInBack();	//后台查询所有帖子
+		return postUserDTO;
+	}
+
+	public PostUserDTO selectAllAnnounce() {
+		PostUserDTO postUserDTO = announcesMapper.selectAllAnnounce();
 		return postUserDTO;
 	}
 

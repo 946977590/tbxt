@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import com.pxxy.DTO.DTOgreat;
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.pojo.post;
+import com.pxxy.pojo.post_bar;
 import com.pxxy.pojo.post_great;
 import com.pxxy.pojo.post_picture;
 
@@ -24,4 +25,7 @@ public interface postService {
     PostUserDTO queryTopPostView();	//贴吧首页热门推荐
     PostUserDTO queryBarPostView(String barId);	//贴吧内容详情
     PostUserDTO queryAllBar(); 			//查询所有贴吧
+    PostUserDTO selectAllPostInBack();	//后台查询所有帖子
+    PostUserDTO selectAllAnnounce();	//查询所有公告
+    
 }

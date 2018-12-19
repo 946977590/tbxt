@@ -52,4 +52,5 @@ public interface postMapper {
     PostByGreatReadedDTO queryPostViewByGreatReaded(String postId);
     List<?> queryBarPostId(String barId);
     PostUserDTO queryAllBar(); 			//查询所有贴吧
+    PostUserDTO selectAllPostInBack();	//后台查询所有帖子
 }

@@ -31,7 +31,7 @@
 							class="layui-badge-dot"></span></a></li>
 					<li class="layui-nav-item" id="my-info" lay-unselect=""><a
 						href="javascript:;"><img src="${path}img/psb.jpg"
-							class="layui-nav-img">{{userNickname}}</a>
+							class="layui-nav-img">{{userInfo.userNickname}}</a>
 						<dl class="layui-nav-child">
 							<dd>
 								<a href="javascript:;" @click="open_login">立即登陆</a>
@@ -102,15 +102,15 @@
 				<li class="layui-timeline-item"><i
 					class="layui-icon layui-timeline-axis"></i>
 					<div class="layui-timeline-content layui-text">
-						<div class="layui-timeline-title">2018年,{{userNickname}}用户加入最左,欢迎你成为我们大家庭的一份子</div>
+						<div class="layui-timeline-title">{{userInfo.userCreattime}},{{userInfo.userNickname}}用户加入最左,欢迎你成为我们大家庭的一份子</div>
 					</div>
 				</li>
 				</ul>
 				<div id="userimg">
 					<img id="userimg_touxiang" src="img/psb.jpg"/>
 					<a class="layui-icon layui-icon-username"style="font-size: 50px; color: #1E9FFF; float: left;margin-left: 25px; margin-top: 10px;"></a>
-						<span style="color:#666;float: left;margin-left: 15px;margin-top: 10px;">{{userNickname}}<span><br><br>
-						</span>会员等级:vip</span>
+						<span style="color:#666;float: left;margin-left: 15px;margin-top: 10px;">{{userInfo.userNickname}}<span><br><br>
+						</span>会员等级:<span v-if="userInfo.userLevel==0">萌新</span><span v-if="userInfo.userLevel==1">大佬</span></span>
 				</div>
 		</div>
 		</div>

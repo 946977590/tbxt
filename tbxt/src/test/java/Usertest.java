@@ -32,7 +32,12 @@ public class Usertest {
 	
 	@Test
 	public void testWrite() {
-		System.out.println("==009881=");
+		String userId1="014f8208-2618-4753-8fc8-4fae30efa9e1";
+		String userId2="hh";
+		user user1 = userMapper.selectByPrimaryKey(userId1);
+		user user2 = userMapper.selectByPrimaryKey(userId2);
+		System.out.println("==user1="+user1);
+		System.out.println("==user2="+user2);
 	}
 	
 	/*@Test

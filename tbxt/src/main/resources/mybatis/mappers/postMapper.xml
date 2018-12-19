@@ -18,6 +18,27 @@
     post_creattime, post_modifytime, post_isdelete
   </sql>
   
+  <resultMap id="AllPostResultMap" type="com.pxxy.DTO.PostUserDTO">
+    <collection property="postList" ofType="post"> 
+        	<id column="post_id" jdbcType="VARCHAR" property="postId" />
+		    <result column="post_bar_id" jdbcType="VARCHAR" property="postBarId" />
+		    <result column="post_user_id" jdbcType="VARCHAR" property="postUserId" />
+		    <result column="post_title" jdbcType="VARCHAR" property="postTitle" />
+		    <result column="post_content" jdbcType="VARCHAR" property="postContent" />
+		    <result column="post_author" jdbcType="VARCHAR" property="postAuthor" />
+		    <result column="post_category" jdbcType="VARCHAR" property="postCategory" />
+		    <result column="post_creattime" jdbcType="VARCHAR" property="postCreattime" />
+		    <result column="post_modifytime" jdbcType="VARCHAR" property="postModifytime" />
+		    <result column="post_isdelete" jdbcType="VARCHAR" property="postIsdelete" />
+	</collection>
+  </resultMap>
+  <select id="selectAllPostInBack" parameterType="java.lang.String" resultMap="AllPostResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from post
+    where 1=1
+  </select>
+  
   <resultMap type="com.pxxy.DTO.PostUserDTO" id="QueryDTO_resultMap">  
 	    <association property="post"  javaType="post" resultMap="BaseResultMap"/>
 	    <association property="post_bar"  javaType="com.pxxy.pojo.post_bar" resultMap="com.pxxy.mapper.post_barMapper.BaseResultMap"/>

@@ -32,15 +32,21 @@ var commponent2 = Vue.extend({
 				emulateJSON : true
 			}).then(function(res) {
 				if(res.body=='error'){
-					toastr.error("获取贴吧列表信息null!");
+					layer.msg('获取贴吧列表信息null!',{icon: 5},{
+                        offset:['40%'],
+                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                  }); 
 				}else{
 					this.barList = res.body.post_barList
 //					console.log(JSON.stringify(this.barList));
 				} 
 			}, function(err) {
 				// 处理失败的结果
-				console.log(err)
-				toastr.error("获取贴吧列表功能异常!");
+//				console.log(err)
+				layer.msg('获取贴吧列表功能异常!',{icon: 5},{
+                    offset:['40%'],
+                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+              }); 
 			})	
         },
         methods:{
@@ -83,7 +89,10 @@ var sjx_post_component = Vue.extend({
 				emulateJSON : true
 			}).then(function(res) {
 				if(res.body=='Getpost_error'){
-					toastr.error("获取个人动态信息失败!");
+					layer.msg('获取个人动态信息失败!',{icon: 7},{
+	                    offset:['40%'],
+	                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	              }); 
 				}else{
 					if(res.body.postList != null){
 						this.list = res.body.postList
@@ -94,7 +103,10 @@ var sjx_post_component = Vue.extend({
 			}, function(err) {
 				// 处理失败的结果
 				console.log(err)
-				toastr.error("获取个人动态信息失败!");
+				layer.msg('获取数据异常!',{icon: 5},{
+                    offset:['40%'],
+                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+              }); 
 			})	
         },
         methods:{
@@ -146,7 +158,10 @@ var post_view_component = Vue.extend({
 					emulateJSON : true
 				}).then(function(res) {
 					if(res.body=='error'){
-						toastr.error("获取数据异常!");
+						layer.msg('获取数据异常!',{icon: 5},{
+		                    offset:['40%'],
+		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		              }); 
 					}else{
 						this.list = res.body.postByGreatReadedDTOList;
 						$(".loading_icon").hide();
@@ -154,7 +169,10 @@ var post_view_component = Vue.extend({
 				}, function(err) {
 					// 处理失败的结果
 					console.log(err)
-					toastr.error("获取个人动态信息失败!");
+					layer.msg('获取数据异常!',{icon: 5},{
+	                    offset:['40%'],
+	                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	              }); 
 				})	
 				
 	        },
@@ -181,8 +199,10 @@ var post_view_component = Vue.extend({
 					   }
 					}, function(err) {
 						// 处理失败的结果
-						console.log(err)
-						toastr.error("获取个人动态信息失败!");
+						layer.msg('获取个人动态信息失败!',{icon: 7},{
+		                    offset:['40%'],
+		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		              }); 
 					})
 					this.$options.methods.GetPostById(postid);
 //					bus.$emit("postid",postid)   //$emit这个方法会触发一个事件
@@ -232,8 +252,11 @@ var post_view_component = Vue.extend({
 						vm.pass_postId = postid;
 					}, function(err) {
 						// 处理失败的结果
-						console.log(err)
-						toastr.error("获取帖子动态信息失败!");
+//						console.log(err)
+						layer.msg('获取帖子动态信息失败!',{icon: 5},{
+		                    offset:['40%'],
+		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		              }); 
 					})	
 				},
 				
@@ -310,7 +333,10 @@ var post_view_component = Vue.extend({
 					emulateJSON : true
 				}).then(function(res) {
 					if(res.body=='error'){
-						toastr.error("获取数据异常!");
+						layer.msg('获取数据异常!',{icon: 5},{
+		                    offset:['40%'],
+		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		              }); 
 					}else{
 						this.list = res.body.postByGreatReadedDTOList;
 //						console.log(JSON.stringify(this.list));
@@ -326,8 +352,11 @@ var post_view_component = Vue.extend({
 					} 
 				}, function(err) {
 					// 处理失败的结果
-					console.log(err)
-					toastr.error("获取个人动态信息失败!");
+//					console.log(err)
+					layer.msg('获取个人动态信息失败!',{icon: 5},{
+	                    offset:['40%'],
+	                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	              }); 
 				})	
 				
 	        },
@@ -354,8 +383,11 @@ var post_view_component = Vue.extend({
 					   }
 					}, function(err) {
 						// 处理失败的结果
-						console.log(err)
-						toastr.error("获取个人动态信息失败!");
+//						console.log(err)
+						layer.msg('获取个人动态信息失败!',{icon: 5},{
+		                    offset:['40%'],
+		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		              }); 
 					})
 					
 //							console.log("chuancan");
@@ -384,7 +416,7 @@ var post_view_component = Vue.extend({
 					vm.$http.post(url,data,{
 						emulateJSON : true,
 					}).then(function(res) {
-						console.log("res.body=="+JSON.stringify(res.body));
+//						console.log("res.body=="+JSON.stringify(res.body));
 						vm.postList = res.body
 						if(res.body.DTOreaded != null){
 							vm.readed = res.body.DTOreaded.post_readedList.length
@@ -409,8 +441,11 @@ var post_view_component = Vue.extend({
 						$(".loading_icon").hide();
 					}, function(err) {
 						// 处理失败的结果
-						console.log(err)
-						toastr.error("获取帖子动态信息失败!");
+//						console.log(err)
+						layer.msg('获取帖子动态信息失败!',{icon: 5},{
+		                    offset:['40%'],
+		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		              });
 					})	
 				},
 	        },
@@ -418,76 +453,6 @@ var post_view_component = Vue.extend({
 			Vue.component('component1',component1)
 		
 	/*============================尾部======吧内post详情展示===========================*/
-	
-//个人信息页面Layer
-	var myinfo_component = Vue.extend({
-	template:`<div id="my_info_Box" style="display: none;">
-			<form class="layui-form" action="">
-				<fieldset class="layui-elem-field layui-field-title"
-					style="margin-top: 20px; margin-left: 90px; width: 800px;">
-					<legend>展示自我</legend>
-				</fieldset>
-				<div class="layui-form-item">
-					<label class="layui-form-label">用户名</label>
-					<div class="layui-input-block">
-						<input type="text" name="my_info_user_name" id="my_info_user_name"
-							lay-verify="title" autocomplete="off" class="layui-input">
-					</div>
-				</div>
-
-				<div class="layui-form-item">
-					<label class="layui-form-label">邮箱</label>
-					<div class="layui-input-block">
-						<input type="text" name="my_info_user_email"
-							id="my_info_user_email" lay-verify="required" autocomplete="off"
-							class="layui-input">
-					</div>
-				</div>
-
-				<div class="layui-form-item">
-					<label class="layui-form-label">性别</label>
-					<div class="layui-input-inline">
-						<input type="radio" name="sex" value="男" title="男" checked="">
-						<input type="radio" name="sex" value="女" title="女">
-					</div>
-				</div>
-
-				<div class="layui-form-item">
-					<label class="layui-form-label">会员等级</label>
-					<div class="layui-input-block">
-						<input type="text" name="my_info_user_level"
-							id="my_info_user_level" lay-verify="required" autocomplete="off"
-							class="layui-input">
-					</div>
-				</div>
-
-				<div class="layui-form-item layui-form-text">
-					<label class="layui-form-label">个性说明</label>
-					<div class="layui-input-block">
-						<textarea placeholder="写点什么介绍介绍自己吧~" id="my_info_gexing_textarea"
-							class="layui-textarea"></textarea>
-					</div>
-				</div>
-
-				<div class="layui-form-item">
-					<div class="layui-input-block">
-						<button id="btn_bc" class="layui-btn" lay-submit=""
-							lay-filter="demo1">保存修改</button>
-					</div>
-				</div>
-
-			</form>
-		</div>`,
-	data(){
-	      return {
-	      }
-	    },
-  mounted(){
-        },
-        methods:{
-        	
-        }
-})
 //发帖页面Layer
 	var creat_post_component = Vue.extend({
 	template:`<div id="fatie_Box" style="display: none;">
@@ -534,7 +499,7 @@ var post_view_component = Vue.extend({
 
 			<div class="fatie_right">
 				<div class="fatie_photo_box" id="fatie_photo_box">
-					<input type="file" id="file1" name="file1"  style="display: none">
+					<input type="file" id="file1"  style="display: none">
 					<input type="file" id="file2"  style="display: none">
 					<input type="file" id="file3"  style="display: none">
 					<input type="file" id="file4"  style="display: none">
@@ -575,51 +540,70 @@ var post_view_component = Vue.extend({
         methods:{
         	//发帖
 			tie_creat: function(){
-				var file1 = document.getElementById("file1");
-				var file2 = document.getElementById("file2");
-				var file3 = document.getElementById("file3");
-				var file4 = document.getElementById("file4");
-				var file5 = document.getElementById("file5");
-				var file6 = document.getElementById("file6");
-				var file7 = document.getElementById("file7");
-				var file8 = document.getElementById("file8");
-				var file9 = document.getElementById("file9");
-				var formData=new FormData();
-				formData.append('postTitle', this.creat_tie_title);
-				formData.append('postContent', this.creat_tie_content);
-//				console.log("file1.files[0]=="+file1.files[0]);
-//				console.log("file1.files[1]=="+file2.files[0]);
-				formData.append('files', file1.files[0]);
-				formData.append('files', file2.files[0]);
-				formData.append('files', file3.files[0]);
-				formData.append('files', file4.files[0]);
-				formData.append('files', file5.files[0]);
-				formData.append('files', file6.files[0]);
-				formData.append('files', file7.files[0]);
-				formData.append('files', file8.files[0]);
-				formData.append('files', file9.files[0]);
-				var url = 'http://localhost:8080/tbxt/postCreat';
-				this.$http.post(url, formData, {
-					emulateJSON : true
-				}).then(function(res) {
-					// 处理成功的结果
-//					console.log(res.body)
-					if(res.body=='success'){
-						toastr.success("发帖成功!");
-						/*setTimeout(function(){
-							location.href="/tbxt/tieba.jsp";
-						},1000);*/
-						layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
-					}else if(res.body=='sessionError'){
-						toastr.error("未登录状态!");
-					}else{
-						toastr.error("发帖出现错误!");
-					}
-				}, function(err) {
-					// 处理失败的结果
-					console.log(err)
-					toastr.error("登陆失败!");
-				})
+				if(this.creat_tie_title == '' || this.creat_tie_content == ''){
+					layer.msg('标题或内容不能为空!',{icon: 7},{
+                        offset:['40%'],
+                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                  });
+				}else{
+					var file1 = document.getElementById("file1");
+					var file2 = document.getElementById("file2");
+					var file3 = document.getElementById("file3");
+					var file4 = document.getElementById("file4");
+					var file5 = document.getElementById("file5");
+					var file6 = document.getElementById("file6");
+					var file7 = document.getElementById("file7");
+					var file8 = document.getElementById("file8");
+					var file9 = document.getElementById("file9");
+					var formData=new FormData();
+					formData.append('postTitle', this.creat_tie_title);
+					formData.append('postContent', this.creat_tie_content);
+//					console.log("file1.files[0]=="+file1.files[0]);
+//					console.log("file1.files[1]=="+file2.files[0]);
+					formData.append('files', file1.files[0]);
+					formData.append('files', file2.files[0]);
+					formData.append('files', file3.files[0]);
+					formData.append('files', file4.files[0]);
+					formData.append('files', file5.files[0]);
+					formData.append('files', file6.files[0]);
+					formData.append('files', file7.files[0]);
+					formData.append('files', file8.files[0]);
+					formData.append('files', file9.files[0]);
+					var url = 'http://localhost:8080/tbxt/postCreat';
+					this.$http.post(url, formData, {
+						emulateJSON : true
+					}).then(function(res) {
+						// 处理成功的结果
+//						console.log(res.body)
+						if(res.body=='success'){
+							layer.msg('发帖成功!',{icon: 1},{
+			                    offset:['40%'],
+			                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			              });
+							/*setTimeout(function(){
+								location.href="/tbxt/tieba.jsp";
+							},1000);*/
+							layer.close(layer.index-1); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+						}else if(res.body=='sessionError'){
+							layer.msg('未登录状态!',{icon: 7},{
+		                        offset:['40%'],
+		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                  });
+						}else{
+							layer.msg('发帖出现错误!',{icon: 5},{
+		                        offset:['40%'],
+		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                  });
+						}
+					}, function(err) {
+						// 处理失败的结果
+						layer.msg('登陆失败!',{icon: 5},{
+	                        offset:['40%'],
+	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                  });
+						
+					})
+				}
 				
 			},
         }
@@ -701,17 +685,27 @@ var post_view_component = Vue.extend({
 					// 处理成功的结果
 					console.log(res.body)
 					if(res.body=='register_success'){
-						toastr.success("注册成功!");
+						layer.msg('注册成功!',{icon: 6},{
+	                          offset:['40%'],
+	                          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                    });
 						setTimeout(function(){
 							location.href="/tbxt/tieba.jsp";
-						},1000);
+						},500);
 					}else{
-						toastr.error("注册失败!");
+						layer.msg('该邮箱已注册!',{icon: 7},{
+	                          offset:['40%'],
+	                          anim:1,
+	                          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                    }); 
 					}
 				}, function(err) {
 					// 处理失败的结果
-					console.log(err)
-					toastr.error("注册失败!");
+//					console.log(err)
+					layer.msg('注册失败!',{icon: 5},{
+	                          offset:['40%'],
+	                          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                    }); 
 				})
 
 			},
@@ -769,17 +763,26 @@ var post_view_component = Vue.extend({
 					// 处理成功的结果
 					console.log(res.body)
 					if(res.body=='loginSuccess'){
-						toastr.success("登陆成功!");
+						layer.msg('登陆成功!',{icon: 6},{
+	                          offset:['40%'],
+	                          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                    }); 
 						setTimeout(function(){
 							location.href="/tbxt/tieba.jsp";
 						},500);
 					}else{
-						toastr.error("邮箱或者密码错误!");
+						layer.msg('邮箱或者密码错误!',{icon: 7},{
+	                          offset:['40%'],
+	                          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                    }); 
 					}
 				}, function(err) {
 					// 处理失败的结果
-					console.log(err)
-					toastr.error("登陆失败!");
+//					console.log(err)
+					layer.msg('登陆失败!',{icon: 5},{
+                        offset:['40%'],
+                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                  }); 
 				})
 
 			},
@@ -787,7 +790,6 @@ var post_view_component = Vue.extend({
 })
 Vue.component('toplable_a',toplable_component)
 Vue.component('sjx_post_component',sjx_post_component)
-Vue.component('myinfo_component',myinfo_component)
 Vue.component('creat_post_component',creat_post_component)
 Vue.component('register_component',register_component)
 Vue.component('login_component',login_component)
@@ -796,7 +798,14 @@ var vm = new Vue(
 		{
 			el : '#mainIndex',
 			data : {
-				userNickname : '',
+				userInfo:{
+					userNickname : '',
+					userLevel:'',
+					userEmail:'',
+					userGender:'',
+					userCreattime:'',
+					userPassword:'',
+				},
 				toplable_list : [ '网页', '新闻', '贴吧', '知道', '视频', '音乐', '图片',
 						'地图', '文库' ],
 				sjx_postList :[],
@@ -858,9 +867,15 @@ var vm = new Vue(
 			            },
 			          success:function(data){
 			        	  if(data.length>0){
-			        		  that.userNickname = data;
+			        		 data = JSON.parse(data);
+			        		 that.userInfo.userNickname = data.userNickname;
+			        		 that.userInfo.userLevel = data.userLevel;
+			        		 that.userInfo.userEmail = data.userEmail;
+			        		 that.userInfo.userGender = data.userGender;
+			        		 that.userInfo.userCreattime = data.userCreattime.substr(0, data.userCreattime.length - 8);  ;
+			        		 that.userInfo.userPassword = data.userPassword;
 			        	  }else{
-			        		  that.userNickname = '未登录'
+			        		  that.userInfo.userNickname = '未登录'
 			        	  }
 			          }
 			        })
@@ -901,17 +916,25 @@ var vm = new Vue(
 						// 处理成功的结果
 						console.log("注销==="+res.body)
 						if(res.body=='logoutSuccess'){
-							toastr.success("成功退出!");
+							layer.msg('成功退出!',{icon: 1},{
+		                        offset:['40%'],
+		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                  }); 
 							setTimeout(function(){
 								location.href="/tbxt/tieba.jsp";
 							},1000);
 						}else{
-							toastr.error("退出异常!");
+							layer.msg('退出异常',{icon: 5},{
+		                        offset:['40%'],
+		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                  }); 
 						}
 					}, function(err) {
 						// 处理失败的结果
-						console.log(err)
-						toastr.error("退出异常!");
+						layer.msg('退出异常',{icon: 5},{
+	                        offset:['40%'],
+	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                  }); 
 					})
 				},
 				//打开发帖页面
@@ -921,7 +944,10 @@ var vm = new Vue(
 						emulateJSON : true
 					}).then(function(res) {
 						if(res.body=='Getpost_error'){
-							toastr.error("请先登录!");
+							layer.msg('请先登录',{icon: 7},{
+		                        offset:['40%'],
+		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                  }); 
 						}else{
 							layui.use(['layer'],function () {
 								var layer = layui.layer,$=layui.$;
@@ -936,8 +962,10 @@ var vm = new Vue(
 						} 
 					}, function(err) {
 						// 处理失败的结果
-						console.log(err)
-						toastr.error("获取个人动态信息失败!");
+						layer.msg('获取个人动态信息失败',{icon: 5},{
+	                        offset:['40%'],
+	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                  }); 
 					})	
 				},
 				//打开个人动态页面
@@ -947,7 +975,10 @@ var vm = new Vue(
 						emulateJSON : true
 					}).then(function(res) {
 						if(res.body=='Getpost_error'){
-							toastr.error("请先登录!");
+							layer.msg('请先登录!',{icon: 7},{
+		                        offset:['40%'],
+		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                  });
 						}else{
 							setTimeout(function(){ 
 								location.href="/tbxt/infozx.jsp";
@@ -956,8 +987,10 @@ var vm = new Vue(
 						} 
 					}, function(err) {
 						// 处理失败的结果
-						console.log(err)
-						toastr.error("获取个人动态信息失败!");
+						layer.msg('获取个人动态信息失败',{icon: 5},{
+	                        offset:['40%'],
+	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                  });
 					})	
 				},
 				// 打开评论框
@@ -967,7 +1000,10 @@ var vm = new Vue(
 					this.$http.post(url).then(function(res) {
 						// 处理成功的结果
 						if(res.body==''){
-							toastr.error("检测到账号未登录!");
+							layer.msg('检测到账号未登录',{icon: 7},{
+		                        offset:['40%'],
+		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                  });
 						}else{
 							layui.use([ 'layer' ], function() {
 								var layer = layui.layer, $ = layui.$;
@@ -984,7 +1020,10 @@ var vm = new Vue(
 					}, function(err) {
 						// 处理失败的结果
 						console.log(err)
-						toastr.error("评论功能出现异常!");
+						layer.msg('评论功能出现异常',{icon: 5},{
+	                        offset:['40%'],
+	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                  });
 					})
 					
 				},
@@ -993,8 +1032,8 @@ var vm = new Vue(
 					var url = 'http://localhost:8080/tbxt/CommentsAdd';
 					var postId = vm.pass_postId
 					var topicContent = vm.comments_topicContent
-					console.log("评论功能===获取topicContent=="+vm.comments_topicContent);
-					console.log("评论功能===postId，topicContent=="+postId+"=="+topicContent);
+//					console.log("评论功能===获取topicContent=="+vm.comments_topicContent);
+//					console.log("评论功能===postId，topicContent=="+postId+"=="+topicContent);
 					var data = {
 						'postId': postId,
 						'topicContent':topicContent
@@ -1002,12 +1041,15 @@ var vm = new Vue(
 					this.$http.post(url, data,{
 						emulateJSON : true
 					}).then(function(res) {
-					console.log("====="+res.body);
+//					console.log("====="+res.body);
 						 switch(res.body){
 						     case 'success':
-						       toastr.success("评论成功!");
-						       $("#comments_shafa").hide();
-						       var url2 = 'http://localhost:8080/tbxt/GetpostByPostId';
+						       layer.msg('评论成功！',{icon: 1},{
+			                        offset:['40%'],
+			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                  });
+//						       console.log("kkkkkkkkkkkk")
+		                	  var url2 = 'http://localhost:8080/tbxt/GetpostByPostId';
 								vm.$http.post(url2,data,{
 									emulateJSON : true,
 								}).then(function(res) {
@@ -1016,22 +1058,48 @@ var vm = new Vue(
 									}
 								}, function(err) {
 									// 处理失败的结果
-									console.log(err)
-									toastr.error("数据异常!");
+//										console.log(err)
+									layer.msg('数据异常！',{icon: 5},{
+					                        offset:['40%'],
+					                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+					                  });
 								})	
-								layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+//								console.log("rrrrrrrrrrr")
+								layer.close(layer.index-1); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
 						       break;
 						     case 'session_null':
-						       toastr.error("未登录!");
+						       layer.msg('未登录！',{icon: 7},{
+			                        offset:['40%'],
+			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                  });
 						       break;  
 						     default:
-						       toastr.error("评论出现异常!");
+						     layer.msg('评论出现异常！',{icon: 5},{
+			                        offset:['40%'],
+			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                  });
 						       break;
 					   }
 					}, function(err) {
 						// 处理失败的结果
-						console.log(err)
-						toastr.error("获取个人动态信息失败!");
+						 layer.msg('获取个人动态信息失败！',{icon: 7},{
+		                        offset:['40%'],
+		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                  });
+					})
+				},
+				//打开公告
+				open_gonggao : function(){
+					layui.use([ 'layer' ], function() {
+						var layer = layui.layer, $ = layui.$;
+						layer.open({
+							type : 1,// 类型
+							area : [ '500px', '450px' ],// 定义宽和高
+							title : '公告',// 题目
+							shadeClose : false,// 点击遮罩层关闭
+							content : $('#gonggao_Box')
+						// 打开的内容
+						});
 					})
 				},
 				// 打开注册模态框
@@ -1065,24 +1133,39 @@ var vm = new Vue(
 						     case 'great_0':
 						       document.getElementById("great_icon_jb").style.color="#999999"; 
 						       this.$options.methods.great_add(postId);
-						       toastr.success("点赞成功!");
+						       layer.msg('点赞成功!',{icon: 1},{
+			                        offset:['40%'],
+			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                  });
 						       break;
 						     case 'great_1':
 						       document.getElementById("great_icon_jb").style.color="#009688";
 						       this.$options.methods.great_del(postId);
-						       toastr.success("取消点赞!");
+						       layer.msg('取消点赞!！',{icon: 1},{
+			                        offset:['40%'],
+			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                  });
 						       break;
 						     case 'session_null':
-						       toastr.error("账号检测请登录!");
+						       layer.msg('账号检测请登录!',{icon: 7},{
+			                        offset:['40%'],
+			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                  });
 						       break;
 						     default:
-						       toastr.error("数据异常!");
+						     layer.msg('数据异常!',{icon: 5},{
+			                        offset:['40%'],
+			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                  });
 						       break;
 					   }
 					}, function(err) {
 						// 处理失败的结果
 						console.log(err)
-						toastr.error("获取个人动态信息失败!");
+						layer.msg('数据异常!',{icon: 5},{
+	                        offset:['40%'],
+	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                  });
 					})
 				},
 				//点赞
@@ -1106,21 +1189,33 @@ var vm = new Vue(
 										vm.great = res.body.post_greatList.length
 									}, function(err) {
 										// 处理失败的结果
-										console.log(err)
-										toastr.error("获取个人动态信息失败!");
+//										console.log(err)
+										layer.msg('获取个人动态信息失败!',{icon: 7},{
+					                        offset:['40%'],
+					                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+					                  });
 									})	 
 						       break;
 						     case 'session_null':
-						       toastr.success("未登录!");
+						       layer.msg('未登录!',{icon: 7},{
+			                        offset:['40%'],
+			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                  });
 						       break;
 						     default:
-						       toastr.error("数据异常!");
+						     layer.msg('数据异常!',{icon: 5},{
+			                        offset:['40%'],
+			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                  });
 						       break;
 					   }
 					}, function(err) {
 						// 处理失败的结果
-						console.log(err)
-						toastr.error("获取个人动态信息失败!");
+//						console.log(err)
+						 layer.msg('获取个人动态信息失败!',{icon: 7},{
+		                        offset:['40%'],
+		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                  });
 					})	
 				},
 				//取消点赞
@@ -1149,20 +1244,32 @@ var vm = new Vue(
 									}, function(err) {
 										// 处理失败的结果
 										console.log(err)
-										toastr.error("获取个人动态信息失败!");
+										layer.msg('获取个人动态信息失败!',{icon: 7},{
+					                        offset:['40%'],
+					                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+					                  });
 									})	 
 						       break;
 						     case 'del_error':
-						       toastr.success("点赞异常!");
+						       layer.msg('"点赞异常!',{icon: 5},{
+			                        offset:['40%'],
+			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                  });
 						       break; 
 						     default:
-						       toastr.error("数据异常!");
+						     layer.msg('"数据异常!',{icon: 5},{
+			                        offset:['40%'],
+			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                  });
 						       break;
 					   }
 					}, function(err) {
 						// 处理失败的结果
-						console.log(err)
-						toastr.error("获取个人动态信息失败!");
+//						console.log(err)
+						layer.msg('获取个人动态信息失败',{icon: 7},{
+	                        offset:['40%'],
+	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                  });
 					})	
 				},
 				
@@ -1191,7 +1298,6 @@ layui.use([ 'carousel', 'form' ], function() {
 })
 layui.use('element', function() {
 	var element = layui.element; // 导航的hover效果、二级菜单等功能，需要依赖element模块
-
 	//监听导航点击
 	element.on('nav(demo)', function(elem) {
 		//console.log(elem)

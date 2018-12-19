@@ -17,6 +17,8 @@ public class PostUserDTO {
 	private List<post_great> post_greatList;
 	private List<post_readed> post_readedList;
 	private List<post_topic> post_topicList;
+	private List<user> userList;
+	private List<announces> announceList;
 	
 	private DTOgreat DTOgreat;
 	private DTOreaded DTOreaded;
@@ -132,40 +134,17 @@ public class PostUserDTO {
 	public void setPostByGreatReadedDTOList(List<PostByGreatReadedDTO> postByGreatReadedDTOList) {
 		this.postByGreatReadedDTOList = postByGreatReadedDTOList;
 	}
-	
-	
-	public PostUserDTO(com.pxxy.pojo.post post, com.pxxy.pojo.post_bar post_bar, com.pxxy.pojo.user user,
-			com.pxxy.pojo.post_great post_great, com.pxxy.pojo.post_readed post_readed,
-			com.pxxy.pojo.post_topic post_topic, List<post_picture> post_pictureList, List<com.pxxy.pojo.post> postList,
-			List<com.pxxy.pojo.post_bar> post_barList, List<com.pxxy.pojo.post_great> post_greatList,
-			List<com.pxxy.pojo.post_readed> post_readedList, List<com.pxxy.pojo.post_topic> post_topicList,
-			com.pxxy.DTO.DTOgreat dTOgreat, com.pxxy.DTO.DTOreaded dTOreaded, com.pxxy.DTO.DTOBarAndPic dTOBarAndPic,
-			com.pxxy.DTO.DTOtopic dTOtopic, PostByGreatReadedDTO postByGreatReadedDTO,
-			List<PostByGreatReadedDTO> postByGreatReadedDTOList) {
-		super();
-		this.post = post;
-		this.post_bar = post_bar;
-		this.user = user;
-		this.post_great = post_great;
-		this.post_readed = post_readed;
-		this.post_topic = post_topic;
-		this.post_pictureList = post_pictureList;
-		this.postList = postList;
-		this.post_barList = post_barList;
-		this.post_greatList = post_greatList;
-		this.post_readedList = post_readedList;
-		this.post_topicList = post_topicList;
-		DTOgreat = dTOgreat;
-		DTOreaded = dTOreaded;
-		DTOBarAndPic = dTOBarAndPic;
-		DTOtopic = dTOtopic;
-		this.postByGreatReadedDTO = postByGreatReadedDTO;
-		this.postByGreatReadedDTOList = postByGreatReadedDTOList;
+	public List<user> getUserList() {
+		return userList;
 	}
-	
-	public PostUserDTO() {
-		super();
-		// TODO Auto-generated constructor stub
+	public void setUserList(List<user> userList) {
+		this.userList = userList;
+	}
+	public List<announces> getAnnounceList() {
+		return announceList;
+	}
+	public void setAnnounceList(List<announces> announceList) {
+		this.announceList = announceList;
 	}
 	@Override
 	public String toString() {
@@ -173,9 +152,9 @@ public class PostUserDTO {
 				+ ", post_readed=" + post_readed + ", post_topic=" + post_topic + ", post_pictureList="
 				+ post_pictureList + ", postList=" + postList + ", post_barList=" + post_barList + ", post_greatList="
 				+ post_greatList + ", post_readedList=" + post_readedList + ", post_topicList=" + post_topicList
-				+ ", DTOgreat=" + DTOgreat + ", DTOreaded=" + DTOreaded + ", DTOBarAndPic=" + DTOBarAndPic
-				+ ", DTOtopic=" + DTOtopic + ", postByGreatReadedDTO=" + postByGreatReadedDTO
-				+ ", postByGreatReadedDTOList=" + postByGreatReadedDTOList + "]";
+				+ ", userList=" + userList + ", announceList=" + announceList + ", DTOgreat=" + DTOgreat
+				+ ", DTOreaded=" + DTOreaded + ", DTOBarAndPic=" + DTOBarAndPic + ", DTOtopic=" + DTOtopic
+				+ ", postByGreatReadedDTO=" + postByGreatReadedDTO + ", postByGreatReadedDTOList="
+				+ postByGreatReadedDTOList + "]";
 	}
-	
 }

@@ -1,5 +1,6 @@
 package com.pxxy.mapper;
 
+import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.pojo.user;
 
 public interface userMapper {
@@ -16,4 +17,6 @@ public interface userMapper {
     int updateByPrimaryKey(user record);
     
     user queryByUserEmail(String userEmail);
+    user queryByManaUserEmail(String userEmail);
+    PostUserDTO queryAllUser();
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pxxy.pojo.user;
+import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.mapper.userMapper;
 import com.pxxy.service.userService;
 
@@ -25,6 +26,17 @@ public class userServiceImpl implements userService {
 		user user = userMapper.queryByUserEmail(userEmail);
 		System.out.println("login查询出来的user是=="+user);
 		return user;
+	}
+
+	public user queryByManaUserEmail(String userEmail) {
+		user user = userMapper.queryByManaUserEmail(userEmail);
+		return user;
+	}
+
+	public PostUserDTO queryAllUser() {
+		// TODO Auto-generated method stub
+		PostUserDTO postUserDTO = userMapper.queryAllUser();
+		return postUserDTO;
 	}
 
 }

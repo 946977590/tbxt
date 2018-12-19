@@ -31,7 +31,7 @@
 							class="layui-badge-dot"></span></a></li>
 					<li class="layui-nav-item" id="my-info" lay-unselect=""><a
 						href="javascript:;"><img src="${path}img/psb.jpg"
-							class="layui-nav-img">{{userNickname}}</a>
+							class="layui-nav-img">{{userInfo.userNickname}}</a>
 						<dl class="layui-nav-child">
 							<dd>
 								<a href="javascript:;" @click="open_login">立即登陆</a>
@@ -56,7 +56,7 @@
 				<ul class="layui-nav layui-bg-green">
 					<!-- <toplable_a v-for="(item,index) of toplable_list" :key="index"
 						:content="item" :index="index"> </toplable_a> -->
-					<li class="layui-nav-item" ><a href="javascript:;"  style="font-size: 20px;float:right;margin-right: 30px;" class="layui-icon layui-icon-female">最左社区</a></li>
+					<li class="layui-nav-item" ><a href="javascript:;"  style="font-size: 20px;float:right;margin-right: 30px;" class="layui-icon layui-icon-flag">最左社区</a></li>
 					<li class="layui-nav-item" style="float:right;margin-right: 40px;"><a href="javascript:;"  style="font-size: 20px;margin-left: 50px;" class="layui-icon layui-icon-edit" @click="open_fatie">发帖</a></li>
 					<li class="layui-nav-item" style="float:right;"><a href="javascript:;"  style="font-size: 20px;margin-left: 50px;" class="layui-icon layui-icon-search">寻吧</a></li>
 					<li class="layui-nav-item" style="float:right;"><a href="javascript:;"  style="font-size: 20px;margin-left: 50px;" class="layui-icon layui-icon-log" @click="open_myinfozx">我的动态</a></li>
@@ -68,7 +68,9 @@
 		
 		<!-- ====================================top_box===================================== -->
 		<div id="head_inner">
-			<div class="seacher_logo"></div>
+			<div class="seacher_logo">
+				<span id="zuizuo">最左</span><i id="seacheRlogo" class="layui-icon layui-icon-user">拉近你我</i>
+			</div>
 			<div class="seacher_ipt">
 				<input type="text" placeholder="搜你所想" class="layui-input">
 			</div>
@@ -118,9 +120,9 @@
 						<img src="img/psb.jpg"
 							style="width: 80px; height: 80px; float: left; margin-left: 10px; border-style: groove; border-color: #EFEFEF;" />
 						<a class="layui-icon layui-icon-username"
-							style="font-size: 30px; color: #1E9FFF; float: left; margin-left: 10px;"></a><span>{{userNickname}}</span>
+							style="font-size: 30px; color: #1E9FFF; float: left; margin-left: 10px;"></a><span>{{userInfo.userNickname}}</span>
 						<br>
-						<br> <br> <span>会员等级:vip</span>
+						<br> <br> <span>会员等级: <span v-if="userInfo.userLevel==0">萌新</span><span v-if="userInfo.userLevel==1">大佬</span></span> </span>
 					</div>
 					<div id="like_tiebas">
 						<div id="like_tiebas_titile_box">
@@ -156,17 +158,17 @@
 					<div id="tieba_category_content">
 						<div id="movie_cate">
 							<div class="cate_titile">
-								<a class="layui-icon layui-icon-website" style="color: #1E9FFF;"></a><span>看电影</span>
+								<a class="layui-icon layui-icon-website" style="color: #1E9FFF;"></a><span>爱电影</span>
 							</div>
 							<br />
 							<br />
 							<div class="zi_cate_content">
 								<a class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a>
+									class="zi_cate_content_name">欧美电影</a> <a
+									class="zi_cate_content_name">内地电影</a> <a
+									class="zi_cate_content_name">日本电影</a> <a
+									class="zi_cate_content_name">台湾电影</a> <a
+									class="zi_cate_content_name">韩国电影</a>
 							</div>
 						</div>
 						<div id="mingxing_cate">
@@ -177,12 +179,12 @@
 							<br />
 							<br />
 							<div class="zi_cate_content">
-								<a class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a>
+								<a class="zi_cate_content_name">港台明星</a> <a
+									class="zi_cate_content_name">内地明星</a> <a
+									class="zi_cate_content_name">韩国明星</a> <a
+									class="zi_cate_content_name">台湾明星</a> <a
+									class="zi_cate_content_name">时尚人物</a> <a
+									class="zi_cate_content_name">欧美明星</a>
 							</div>
 						</div>
 						<div id="tiyu_cate">
@@ -192,12 +194,13 @@
 							<br />
 							<br />
 							<div class="zi_cate_content">
-								<a class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a>
+								<a class="zi_cate_content_name">篮球</a> <a
+									class="zi_cate_content_name">足球</a> <a
+									class="zi_cate_content_name">乒乓球</a> <a
+									class="zi_cate_content_name">网球</a> <a
+									class="zi_cate_content_name">健身</a> <a
+									class="zi_cate_content_name">舞蹈</a><a
+									class="zi_cate_content_name">健美</a>
 							</div>
 						</div>
 						<div id="xiaoshuo_cate">
@@ -207,12 +210,12 @@
 							<br />
 							<br />
 							<div class="zi_cate_content">
-								<a class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a>
+								<a class="zi_cate_content_name">奇幻</a> <a
+									class="zi_cate_content_name">言情</a> <a
+									class="zi_cate_content_name">灵异</a> <a
+									class="zi_cate_content_name">穿越</a> <a
+									class="zi_cate_content_name">修真</a> <a
+									class="zi_cate_content_name">历史</a>
 							</div>
 						</div>
 						<div id="zongyi_cate">
@@ -223,12 +226,12 @@
 							<br />
 							<br />
 							<div class="zi_cate_content">
-								<a class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a>
+								<a class="zi_cate_content_name">内地综艺</a> <a
+									class="zi_cate_content_name">台湾综艺</a> <a
+									class="zi_cate_content_name">韩国综艺</a> <a
+									class="zi_cate_content_name">体育综艺</a> <a
+									class="zi_cate_content_name">日本综艺</a> <a
+									class="zi_cate_content_name">欧美综艺</a>
 							</div>
 						</div>
 						<div id="dianshiju_cate">
@@ -239,12 +242,12 @@
 							<br />
 							<br />
 							<div class="zi_cate_content">
-								<a class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a> <a
-									class="zi_cate_content_name">香港电影</a>
+								<a class="zi_cate_content_name">韩剧</a> <a
+									class="zi_cate_content_name">美剧</a> <a
+									class="zi_cate_content_name">港剧</a> <a
+									class="zi_cate_content_name">台剧</a> <a
+									class="zi_cate_content_name">大陆剧</a> <a
+									class="zi_cate_content_name">日剧</a>
 							</div>
 						</div>
 						<div id="cate_more">
@@ -313,10 +316,10 @@
 					<img src="${path}img/gonggao02.jpg"
 						style="width: 220px; height: 90px; margin-top: 10px;" />
 					<ul class="gonggao_list">
-						<li class="gonggao_list_item"><a href=""
-							class="gonggao_list_item_name">贴吧开展“恋童”专项清理行动
+						<li class="gonggao_list_item"><a href="javascript:;"
+							class="gonggao_list_item_name" @click="open_gonggao">贴吧开展“恋童”专项清理行动
 								贴吧开展“恋童”专项清理行动贴吧开展“恋童”专项清理行动</a></li>
-						<li class="gonggao_list_item"><a href=""
+						<li class="gonggao_list_item"><a href="javascript:;"
 							class="gonggao_list_item_name">贴吧开展“网络相约自残自杀”专项清理行动</a></li>
 					</ul>
 				</div>
@@ -330,7 +333,7 @@
 				</fieldset>
 				<div class="right-sec_tiezi">
 					<div class="loading_icon">
-						<i class="layui-icon layui-icon-loading"></i>
+						<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop" style="display: inline-block;"></i>
 					</div>
 					<post_view_component  /> 
 				</div>
@@ -351,7 +354,76 @@
 		<div><creat_post_component /></div>
 
 		<!-- ==========================个人信息页面模态框===================== -->
-		 <div><myinfo_component /></div>
+		 <div id="my_info_Box" style="display: none;">
+			<form class="layui-form" action="">
+				<fieldset class="layui-elem-field layui-field-title"
+					style="margin-top: 20px; margin-left: 90px; width: 800px;">
+					<legend>展示自我</legend>
+				</fieldset>
+				<div class="layui-form-item">
+					<label class="layui-form-label">用户名</label>
+					<div class="layui-input-block">
+						<input type="text" id="my_info_user_name"
+						v-model="userInfo.userNickname"	lay-verify="title" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label class="layui-form-label">邮箱</label>
+					<div class="layui-input-block">
+						<input type="text" 
+						v-model="userInfo.userEmail"id="my_info_user_email" disabled="readonly"  lay-verify="required" autocomplete="off"
+							class="layui-input">
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label class="layui-form-label">性别</label>
+					<div class="layui-input-inline">
+						<div v-if="userInfo.userGender==0">
+							<input type="radio" name="sex" value="男" title="男" >
+							<input type="radio" name="sex" value="女" title="女" checked="">
+						</div>
+						<div v-if="userInfo.userGender==1">
+							<input type="radio" name="sex" value="男" title="男" checked="">
+							<input type="radio" name="sex" value="女" title="女" >
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label class="layui-form-label">会员等级</label>
+					<div class="layui-input-block">
+						<div v-if="userInfo.userLevel==0">
+							<input type="text" value="萌新" disabled="readonly" 
+							id="my_info_user_level" lay-verify="required" autocomplete="off"
+							class="layui-input">
+						</div>
+						<div v-if="userInfo.userLevel==1">
+							<input type="text" value="大佬"
+							id="my_info_user_level" lay-verify="required" autocomplete="off"
+							class="layui-input">
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-form-item layui-form-text">
+					<label class="layui-form-label">个性说明</label>
+					<div class="layui-input-block">
+						<textarea placeholder="写点什么介绍介绍自己吧~" id="my_info_gexing_textarea"
+							class="layui-textarea"></textarea>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button id="btn_bc" class="layui-btn" lay-submit=""
+							lay-filter="demo1">保存修改</button>
+					</div>
+				</div>
+
+			</form>
+		</div>
 		
 
 		<!-- ==========================评论区页面===================== -->
@@ -364,6 +436,13 @@
 				</div>
 				<button id="btn_comments_tj" @click="tijiao_comments_click" class="layui-btn">提交</button>
 			</div>
+		</div>
+		
+		<!-- ==========================公告页面===================== -->
+		<div id="gonggao_Box" style="display: none;">
+			<h5 style="text-align: left;padding:20px; color:rgb(141, 141, 141);">
+				<span>贴吧开展“恋童”专项清理行动 贴吧开展贴吧开展“恋童”专项清理行动 贴吧开展贴吧开展“恋童”专项清理行动 贴吧开展</span>
+			</h5>
 		</div>
 
 		<!-- ==========================帖子layer页面===================== -->
@@ -387,6 +466,7 @@
 										发布于：<span>{{postList.DTOBarAndPic.post.postCreattime}}</span>
 									</h5>
 								</div>
+								<p class="comment_title">{{postList.DTOBarAndPic.post.postTitle}}</p>
 								<p class="comment_content">{{postList.DTOBarAndPic.post.postContent}}</p>
 								<img v-for="item in pictureList" :key="item" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " 
 								style="width: 200px;padding:5px; height: 130px;float: left;margin-left: 1px;"

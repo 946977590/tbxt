@@ -448,4 +448,19 @@ public class postController {
 		pw.close();
     }
     
+    //后台查询所有帖子
+    @RequestMapping(value = "/selectAllPostInBack", method = RequestMethod.POST)
+   	@ResponseBody
+   	public PostUserDTO selectAllPostInBack() {
+    	PostUserDTO postUserDTO = postService.selectAllPostInBack();
+    	return postUserDTO;
+    }
+    
+  //后台查询所有公告
+    @RequestMapping(value = "/selectAllAnnounces", method = RequestMethod.POST)
+   	@ResponseBody
+   	public PostUserDTO selectAllAnnounces() {
+    	PostUserDTO postUserDTO = postService.selectAllAnnounce();
+    	return postUserDTO;
+    }
 }

@@ -12,6 +12,29 @@
     <result column="user_modifytime" jdbcType="VARCHAR" property="userModifytime" />
     <result column="user_isdelete" jdbcType="VARCHAR" property="userIsdelete" />
   </resultMap>
+  
+  <resultMap id="UserResultMap" type="com.pxxy.DTO.PostUserDTO">
+    <collection property="userList" ofType="com.pxxy.pojo.user">
+    	<id column="user_id" jdbcType="VARCHAR" property="userId" />
+	    <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
+	    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+	    <result column="user_nickname" jdbcType="VARCHAR" property="userNickname" />
+	    <result column="user_gender" jdbcType="VARCHAR" property="userGender" />
+	    <result column="user_level" jdbcType="VARCHAR" property="userLevel" />
+	    <result column="user_creattime" jdbcType="VARCHAR" property="userCreattime" />
+	    <result column="user_modifytime" jdbcType="VARCHAR" property="userModifytime" />
+	    <result column="user_isdelete" jdbcType="VARCHAR" property="userIsdelete" />
+    </collection>
+  </resultMap>
+  
+  <select id="queryAllUser"  resultMap="UserResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_isdelete = '0' OR user_isdelete = '1'
+  </select>
+  
+  
   <sql id="Base_Column_List">
     user_id, user_email, user_password, user_nickname, user_gender, user_level, user_creattime, 
     user_modifytime, user_isdelete
@@ -22,6 +45,14 @@
     from user
     where user_email = #{userEmail,jdbcType=VARCHAR}
   </select>
+  
+  <select id="queryByManaUserEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_email = #{userEmail,jdbcType=VARCHAR} and user_isdelete = '9'
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

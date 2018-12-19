@@ -16,6 +16,28 @@
     bar_id, bar_name, bar_leader, bar_picture, bar_sign, bar_category, bar_creattime, 
     bar_modifytime, bar_isdelete
   </sql>
+  
+   <resultMap id="postBarResultMap" type="com.pxxy.DTO.PostUserDTO">
+    <collection property="post_barList" ofType="com.pxxy.pojo.post_bar">
+    	<id column="bar_id" jdbcType="VARCHAR" property="barId" />
+	    <result column="bar_name" jdbcType="VARCHAR" property="barName" />
+	    <result column="bar_leader" jdbcType="VARCHAR" property="barLeader" />
+	    <result column="bar_picture" jdbcType="VARCHAR" property="barPicture" />
+	    <result column="bar_sign" jdbcType="VARCHAR" property="barSign" />
+	    <result column="bar_category" jdbcType="VARCHAR" property="barCategory" />
+	    <result column="bar_creattime" jdbcType="VARCHAR" property="barCreattime" />
+	    <result column="bar_modifytime" jdbcType="VARCHAR" property="barModifytime" />
+	    <result column="bar_isdelete" jdbcType="VARCHAR" property="barIsdelete" />
+    </collection>
+  </resultMap>
+  <select id="selectAllBar" resultMap="postBarResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from post_bar
+    where 1=1
+  </select>
+  
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

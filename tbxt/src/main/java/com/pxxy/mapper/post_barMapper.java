@@ -1,5 +1,6 @@
 package com.pxxy.mapper;
 
+import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.pojo.post_bar;
 
 public interface post_barMapper {
@@ -14,4 +15,5 @@ public interface post_barMapper {
     int updateByPrimaryKeySelective(post_bar record);
 
     int updateByPrimaryKey(post_bar record);
+    PostUserDTO selectAllBar();	//²éÑ¯ËùÓÐÌù°É
 }
