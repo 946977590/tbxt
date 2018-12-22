@@ -7,16 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pxxy.pojo.post;
+import com.pxxy.pojo.post_bar;
 import com.pxxy.pojo.post_great;
 import com.pxxy.pojo.post_picture;
+import com.pxxy.pojo.post_readed;
 import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.DTOgreat;
 import com.pxxy.DTO.DTOreaded;
 import com.pxxy.DTO.DTOtopic;
 import com.pxxy.DTO.PostByGreatReadedDTO;
 import com.pxxy.DTO.PostUserDTO;
-import com.pxxy.mapper.postMapper;
-import com.pxxy.mapper.announcesMapper;
+import com.pxxy.mapper.*;
 import com.pxxy.service.postService;
 
 @Service
@@ -24,6 +25,18 @@ public class postServiceImpl implements postService {
 
 	@Autowired 
 	private postMapper postMapper;
+	
+	@Autowired 
+	private post_barMapper post_barMapper;
+	
+	@Autowired 
+	private post_greatMapper post_greatMapper;
+	
+	@Autowired 
+	private post_readedMapper post_readedMapper;
+	
+	@Autowired 
+	private post_pictureMapper post_pictureMapper;
 	
 	@Autowired 
 	private announcesMapper announcesMapper;
@@ -40,10 +53,20 @@ public class postServiceImpl implements postService {
 		return 0;
 	}
 
-	public PostUserDTO queryPostByUserId(String postId) {
+	public PostUserDTO queryPostByUserId(String userId) {
 		// TODO Auto-generated method stub
 		System.out.println("service===进入queryPostByUserId方法");
-		PostUserDTO PostUserDTO = postMapper.queryPostByUserId(postId);
+		PostUserDTO PostUserDTO = postMapper.queryPostByUserId(userId);
+		DTOreaded DTOreaded = new DTOreaded();
+		DTOgreat DTOgreat = new DTOgreat();
+		int countRead = post_readedMapper.CountReadByuser(userId);
+		int countGreat = post_greatMapper.CountGreatByUser(userId);
+		int countPost = postMapper.CountPostByUser(userId);
+		DTOreaded.setCountRead(countRead);
+		DTOgreat.setCountGreat(countGreat);
+		DTOgreat.setCountPost(countPost);
+		if(DTOreaded != null)PostUserDTO.setDTOreaded(DTOreaded);
+		if(DTOgreat != null)PostUserDTO.setDTOgreat(DTOgreat);
 		return PostUserDTO;
 	}
 	
@@ -54,10 +77,14 @@ public class postServiceImpl implements postService {
 
 	//post的Layer详情数据
 	public PostUserDTO queryPostLayer(String postId) {
+		List<post_picture> Piclist = post_pictureMapper.selectByPostId(postId);
 		DTOBarAndPic DTO_BarAndPic = postMapper.queryPostLayer_BarAndPic(postId);
+		DTO_BarAndPic.setPost_pictureList(Piclist);
 		DTOtopic DTO_Topic = postMapper.queryPostLayer_Topic(postId);
 		DTOgreat DTO_great = postMapper.queryPostLayer_great(postId);
-		DTOreaded DTO_readed = postMapper.queryPostLayer_readed(postId);
+		int CountRead = post_readedMapper.CountReaded(postId);
+		DTOreaded DTO_readed = new DTOreaded();
+		DTO_readed.setCountRead(CountRead);
 		PostUserDTO postDTO = new PostUserDTO();
 		if(DTO_BarAndPic!=null) {
 			postDTO.setDTOBarAndPic(DTO_BarAndPic);
@@ -133,14 +160,53 @@ public class postServiceImpl implements postService {
 		return postUserDTO;
 	}
 
-	public PostUserDTO selectAllPostInBack() {
-		PostUserDTO postUserDTO = postMapper.selectAllPostInBack();	//后台查询所有帖子
-		return postUserDTO;
-	}
-
+	
 	public PostUserDTO selectAllAnnounce() {
 		PostUserDTO postUserDTO = announcesMapper.selectAllAnnounce();
 		return postUserDTO;
+	}
+
+	public post selectByPrimaryKey(String postId) {
+		post post = postMapper.selectByPrimaryKey(postId);
+		return post;
+	}
+
+	public DTOBarAndPic selectAllPostInBack() {
+		DTOBarAndPic DTOBarAndPic = new DTOBarAndPic();
+		DTOBarAndPic DTOBarAndPic1 = postMapper.selectAllPostInBack();	//后台查询所有帖子
+		List<post> postList = DTOBarAndPic1.getPostList();
+		for(int i=0;i<DTOBarAndPic1.getPostList().size();i++) {
+			String barId = DTOBarAndPic1.getPostList().get(i).getPostBarId();
+			post_bar post_bar = post_barMapper.queryBarNameById(barId);
+			postList.get(i).setPostCategory(post_bar.getBarName());
+		}
+		DTOBarAndPic.setPostList(postList);
+		return DTOBarAndPic;
+	}
+
+	public int updateByPrimaryKeySelective(post record) {
+		int i = postMapper.updateByPrimaryKeySelective(record);
+		return i;
+	}
+
+	public List<post_picture> queryAllPic() {
+		List<post_picture> list = post_pictureMapper.queryAllPic();
+		return list;
+	}
+
+	public int deletePic(post_picture post_picture) {
+		int i = post_pictureMapper.updateByPrimaryKeySelective(post_picture);
+		return i;
+	}
+
+	public int PostreadAdd(post_readed record) {
+		int i = post_readedMapper.insert(record);
+		return i;
+	}
+
+	public List<post_readed> judgeRead(String userId, String postId) {
+		List<post_readed> post_readedList = post_readedMapper.judgeRead(userId,postId);
+		return post_readedList;
 	}
 
 }

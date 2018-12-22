@@ -69,16 +69,16 @@
 		<div id="tie_read_great">
 			<button id="fatie_number1" class="layui-btn layui-btn-primary ">
 				<a id="great_icon" class="layui-icon layui-icon-edit">发帖</a>
-				<br><span id="great_icon2">1231</span>
+				<br><span id="great_icon2">{{PerSonPostCount}}</span>
 			</button>	
 			<button id="read_number1" class="layui-btn layui-btn-primary ">
 				<a id="great_icon" class="layui-icon layui-icon-star">已读</a>
-				<br><span id="great_icon2">1231</span>
+				<br><span id="great_icon2">{{PerSonReadCount}}</span>
 			</button>	
 				
 			<button id="great_number1" class="layui-btn layui-btn-primary ">
 				<a id="great_icon" class="layui-icon layui-icon-praise">获赞</a>
-				<br><span id="great_icon2">1231</span>
+				<br><span id="great_icon2">{{PerSonGreadCount}}</span>
 			</button>
 			
 			
@@ -132,6 +132,40 @@
 
 		<!-- ==========================个人信息页面模态框===================== -->
 		 <div><myinfo_component /></div>
+		 
+		 <!-- ==========================帖子layer页面===================== -->
+		<div>
+			<div class="lay-blog" id="tiezi_Box" style="display: none;" >
+			<div class="container-wrap">
+				<div class="container container-message container-details">
+					<div class="contar-wrap">
+						<div class="item">
+							<div class="item-box  layer-photos-demo1 layer-photos-demo">
+								<div class="layui-input-block" id="user_post_img">
+									<img class="info-img" src="img/psb.jpg" style="float: left;"
+										alt="">
+									<h5 style="text-align: left;">
+										<span>{{postList.DTOBarAndPic.post.postAuthor}}</span>
+									</h5>
+									<h5 style="text-align: left;">
+										发布于：<span>{{postList.DTOBarAndPic.post.postCreattime}}</span>
+									</h5>
+								</div>
+								<p class="comment_title">{{postList.DTOBarAndPic.post.postTitle}}</p>
+								<p class="comment_content">{{postList.DTOBarAndPic.post.postContent}}</p>
+								<img v-for="item in pictureList" :key="item" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " 
+								style="width: 200px;padding:5px; height: 130px;float: left;margin-left: 1px;"
+									alt=""> 
+								<div class="count layui-clear">
+									<span class="pull-left">阅读 <em>{{readed}}</em></span> <span
+										class="pull-right like"><i class="layui-icon layui-icon-praise" @click="judge_great" id="great_icon_jb"></i><em v-if="great">{{great}}</em></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		
 	</div>
 	

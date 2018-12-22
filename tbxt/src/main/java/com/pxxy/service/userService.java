@@ -6,8 +6,9 @@ import com.pxxy.pojo.user;
 public interface userService {
 	
 	 int insert(user user);	//添加用户
-	 
+	 user selectByPrimaryKey(String userId);
 	 user queryByUserEmail(String uerEmail); //用户登陆
 	 user queryByManaUserEmail(String userEmail);
 	 PostUserDTO queryAllUser();	//查询除管理员之外所有会员
+	 int updateByPrimaryKeySelective(user record);
 }

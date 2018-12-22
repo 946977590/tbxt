@@ -15,6 +15,24 @@
     from post_readed
     where readed_id = #{readedId,jdbcType=VARCHAR}
   </select>
+  
+  <select id="judgeRead" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from post_readed
+    where user_id = #{userId,jdbcType=VARCHAR} AND post_id = #{postId}
+  </select>
+  
+  <select id="CountReaded" resultType="Integer">
+  	SELECT COUNT(post_readed.readed_id)
+	FROM post_readed where post_readed.post_id = #{postId}
+  </select>
+  
+  <select id="CountReadByuser" resultType="Integer">
+	SELECT COUNT(post_readed.readed_id)
+	FROM post_readed where post_readed.user_id= #{userId}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from post_readed
     where readed_id = #{readedId,jdbcType=VARCHAR}

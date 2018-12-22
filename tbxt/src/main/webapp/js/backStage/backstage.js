@@ -39,6 +39,7 @@ var vm = new Vue({
 		this.$nextTick(function () {
 			var url = '/tbxt/requestSession';
 			this.$http.post(url).then(function(res) {
+//				console.log(res.body.userNickname);
 				// 处理成功的结果
 				if(res.body==''){
 					layer.msg('检测到账号未登录',{icon: 7},{

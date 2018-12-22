@@ -39,4 +39,13 @@ public class userServiceImpl implements userService {
 		return postUserDTO;
 	}
 
+	public user selectByPrimaryKey(String userId) {
+		user user = userMapper.selectByPrimaryKey(userId);
+		return user;
+	}
+
+	public int updateByPrimaryKeySelective(user record) {
+		int i = userMapper.updateByPrimaryKeySelective(record);
+		return i;
+	}
 }

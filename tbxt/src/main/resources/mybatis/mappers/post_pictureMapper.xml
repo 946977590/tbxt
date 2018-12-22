@@ -15,6 +15,11 @@
     picture_isdelete
   </sql>
   
+  <select id="queryAllPic" resultMap="BaseResultMap">
+  	SELECT post_picture.picture_id,post_picture.picture_name
+	FROM post_picture where post_picture.picture_isdelete='0'
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -22,10 +27,10 @@
     where picture_id = #{pictureId,jdbcType=VARCHAR}
   </select>
   
-  <select id="selectByPostId" parameterType="java.lang.String" resultType="post_picture">
+  <select id="selectByPostId" parameterType="java.lang.String" resultMap="BaseResultMap">
     select * 
     from post_picture 
-    where picture_belong = #{postId,jdbcType=VARCHAR} 
+    where picture_belong = #{postId,jdbcType=VARCHAR} AND picture_isdelete = '0'
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

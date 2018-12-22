@@ -26,22 +26,22 @@
 		<div class="layui-form news_list">
 			<table class="layui-table">
 				<colgroup>
-					<col width="50">
+					<col width="5%">
+					<col width="12%">
 					<col>
-					<col width="18%">
-					<col width="8%">
 					<col width="12%">
-					<col width="18%">
 					<col width="12%">
-					<col width="18%">
+					<col width="12%">
+					<col width="12%">
+					<col width="12%">
 				</colgroup>
 				<thead>
 					<tr>
-						<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
+						<th @click="checkAll"><input type="checkbox"   lay-skin="primary" lay-filter="allChoose" ></th>
 						<th>标题</th>
 						<th>内容</th>
 						<th>作者</th>
-						<th>分类</th>
+						<th>所属贴吧</th>
 						<th>创建时间</th>
 						<th>文章状态</th>
 						<th>操作</th>
@@ -49,7 +49,7 @@
 				</thead>
 				<tbody class="users_content">
 					<tr v-for="item in postList" :key="item">
-						<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
+						<th><input type="checkbox" name="chk" value="item.postId" lay-skin="primary" lay-filter="allChoose" ></th>
 						<th>{{item.postTitle}}</th>
 						<th>{{item.postContent}}</th>
 						<th>{{item.postAuthor}}</th>
@@ -57,14 +57,25 @@
 						<th>{{item.postCreattime}}</th>
 						<th v-if="item.postIsdelete==0">未封禁</th>
 						<th v-if="item.postIsdelete==1">已封禁</th>
-						<th><a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-							<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-							<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+						<th><a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail" @click="queryInfo(item.postId)">查看</a>
+							<a v-if="item.postIsdelete==1" class="layui-btn layui-btn layui-btn-xs" lay-event="del" @click="Rebanned(item.postId)">解封</a>
+							<a v-if="item.postIsdelete==0" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" @click="banned(item.postId)">封禁</a>
 						</th>
 					</tr>	
 				</tbody>
 			</table>
 		</div>
+		
+	
+		<div id="my_info_Box" style="display: none;">
+		<fieldset class="layui-elem-field layui-field-title"
+			style="margin-top: 10px; margin-left: 10px; width: 450px;">
+			<legend>帖子详情</legend>
+		</fieldset>
+			<p style="margin-left:15px;color: rgb(0, 150, 136);">{{postTitle}}</p>
+			<p style="margin-left:15px;color: rgb(141, 141, 141);">{{postContent}}</p>
+		</div> 
+		
 	</div>	
 	<script src="js/list.js"></script>
 	<script src="js/backStage/postList.js"></script>	

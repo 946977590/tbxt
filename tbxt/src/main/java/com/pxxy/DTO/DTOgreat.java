@@ -7,6 +7,23 @@ import com.pxxy.pojo.post_great;
 public class DTOgreat {
 
 	private List<post_great> post_greatList;
+	private int CountGreat;
+	private int CountPost;
+	public int getCountGreat() {
+		return CountGreat;
+	}
+
+	public int getCountPost() {
+		return CountPost;
+	}
+
+	public void setCountPost(int countPost) {
+		CountPost = countPost;
+	}
+
+	public void setCountGreat(int countGreat) {
+		CountGreat = countGreat;
+	}
 
 	public List<post_great> getPost_greatList() {
 		return post_greatList;

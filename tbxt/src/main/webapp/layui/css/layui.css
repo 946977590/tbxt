@@ -2720,7 +2720,8 @@ a cite {
 .layui-table {
 	width: 100%;
 	background-color: #fff;
-	color: #666
+	color: #666;
+	table-layout:fixed;
 }
 
 .layui-table tr {
@@ -2730,7 +2731,14 @@ a cite {
 
 .layui-table th {
 	text-align: left;
-	font-weight: 400
+	font-weight: 400;
+	word-break:keep-all;/* 不换行 */  
+
+    white-space:nowrap;/* 不换行 */    
+
+    overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */   
+
+    text-overflow:ellipsis;
 }
 
 .layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click,
@@ -2746,7 +2754,7 @@ a cite {
 	.layui-table[lay-skin=row] {
 	border-width: 1px;
 	border-style: solid;
-	border-color: #e6e6e6
+	border-color: #e6e6e6;
 }
 
 .layui-table td, .layui-table th {

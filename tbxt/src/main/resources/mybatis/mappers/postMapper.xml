@@ -1,60 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pxxy.mapper.postMapper">
-  <resultMap id="BaseResultMap" type="com.pxxy.pojo.post">
-    <id column="post_id" jdbcType="VARCHAR" property="postId" />
-    <result column="post_bar_id" jdbcType="VARCHAR" property="postBarId" />
-    <result column="post_user_id" jdbcType="VARCHAR" property="postUserId" />
-    <result column="post_title" jdbcType="VARCHAR" property="postTitle" />
-    <result column="post_content" jdbcType="VARCHAR" property="postContent" />
-    <result column="post_author" jdbcType="VARCHAR" property="postAuthor" />
-    <result column="post_category" jdbcType="VARCHAR" property="postCategory" />
-    <result column="post_creattime" jdbcType="VARCHAR" property="postCreattime" />
-    <result column="post_modifytime" jdbcType="VARCHAR" property="postModifytime" />
-    <result column="post_isdelete" jdbcType="VARCHAR" property="postIsdelete" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    post_id, post_bar_id, post_user_id, post_title, post_content, post_author, post_category, 
-    post_creattime, post_modifytime, post_isdelete
-  </sql>
-  
-  <resultMap id="AllPostResultMap" type="com.pxxy.DTO.PostUserDTO">
-    <collection property="postList" ofType="post"> 
-        	<id column="post_id" jdbcType="VARCHAR" property="postId" />
-		    <result column="post_bar_id" jdbcType="VARCHAR" property="postBarId" />
-		    <result column="post_user_id" jdbcType="VARCHAR" property="postUserId" />
-		    <result column="post_title" jdbcType="VARCHAR" property="postTitle" />
-		    <result column="post_content" jdbcType="VARCHAR" property="postContent" />
-		    <result column="post_author" jdbcType="VARCHAR" property="postAuthor" />
-		    <result column="post_category" jdbcType="VARCHAR" property="postCategory" />
-		    <result column="post_creattime" jdbcType="VARCHAR" property="postCreattime" />
-		    <result column="post_modifytime" jdbcType="VARCHAR" property="postModifytime" />
-		    <result column="post_isdelete" jdbcType="VARCHAR" property="postIsdelete" />
-	</collection>
-  </resultMap>
-  <select id="selectAllPostInBack" parameterType="java.lang.String" resultMap="AllPostResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from post
-    where 1=1
-  </select>
-  
-  <resultMap type="com.pxxy.DTO.PostUserDTO" id="QueryDTO_resultMap">  
-	    <association property="post"  javaType="post" resultMap="BaseResultMap"/>
-	    <association property="post_bar"  javaType="com.pxxy.pojo.post_bar" resultMap="com.pxxy.mapper.post_barMapper.BaseResultMap"/>
-		
-		<!-- <collection property="post_pictureList" ofType="post_picture">  
-            <id property="pictureId" column="picture_id" />
-            <result column="picture_belong" property="pictureBelong"/>
-			<result column="picture_name" property="pictureName"/>
-        </collection> -->
-        
-        <collection property="post_barList" ofType="post_bar"> 
-        	<id property="barId" column="bar_id" />
-			<result property="barName" column="bar_name"/>
-        </collection>
-        <collection property="postList" ofType="post"> 
-        	<id column="post_id" jdbcType="VARCHAR" property="postId" />
+	<resultMap id="BaseResultMap" type="com.pxxy.pojo.post">
+		<id column="post_id" jdbcType="VARCHAR" property="postId" />
+		<result column="post_bar_id" jdbcType="VARCHAR"
+			property="postBarId" />
+		<result column="post_user_id" jdbcType="VARCHAR"
+			property="postUserId" />
+		<result column="post_title" jdbcType="VARCHAR"
+			property="postTitle" />
+		<result column="post_content" jdbcType="VARCHAR"
+			property="postContent" />
+		<result column="post_author" jdbcType="VARCHAR"
+			property="postAuthor" />
+		<result column="post_category" jdbcType="VARCHAR"
+			property="postCategory" />
+		<result column="post_creattime" jdbcType="VARCHAR"
+			property="postCreattime" />
+		<result column="post_modifytime" jdbcType="VARCHAR"
+			property="postModifytime" />
+		<result column="post_isdelete" jdbcType="VARCHAR"
+			property="postIsdelete" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		post_id, post_bar_id, post_user_id, post_title, post_content, post_author,
+		post_category,
+		post_creattime, post_modifytime, post_isdelete
+	</sql>
+
+	<resultMap id="AllPostResultMap"
+		type="com.pxxy.DTO.DTOBarAndPic">
+		<collection property="postList" ofType="post">
+			<id column="post_id" jdbcType="VARCHAR" property="postId" />
+			<result column="post_bar_id" jdbcType="VARCHAR"
+				property="postBarId" />
+			<result column="post_user_id" jdbcType="VARCHAR"
+				property="postUserId" />
+			<result column="post_title" jdbcType="VARCHAR"
+				property="postTitle" />
+			<result column="post_content" jdbcType="VARCHAR"
+				property="postContent" />
+			<result column="post_author" jdbcType="VARCHAR"
+				property="postAuthor" />
+			<result column="post_category" jdbcType="VARCHAR"
+				property="postCategory" />
+			<result column="post_creattime" jdbcType="VARCHAR"
+				property="postCreattime" />
+			<result column="post_modifytime" jdbcType="VARCHAR"
+				property="postModifytime" />
+			<result column="post_isdelete" jdbcType="VARCHAR"
+				property="postIsdelete" />
+		</collection>
+	</resultMap>
+	<select id="selectAllPostInBack"
+		parameterType="java.lang.String" resultMap="AllPostResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from post
+		where 1=1
+	</select>
+
+	<resultMap type="com.pxxy.DTO.PostUserDTO"
+		id="QueryDTO_resultMap">
+		<association property="post" javaType="post"
+			resultMap="BaseResultMap" />
+		<association property="post_bar"
+			javaType="com.pxxy.pojo.post_bar"
+			resultMap="com.pxxy.mapper.post_barMapper.BaseResultMap" />
+
+		<!-- <collection property="post_pictureList" ofType="post_picture"> <id 
+			property="pictureId" column="picture_id" /> <result column="picture_belong" 
+			property="pictureBelong"/> <result column="picture_name" property="pictureName"/> 
+			</collection> -->
+
+		<collection property="post_barList" ofType="post_bar">
+			<id property="barId" column="bar_id" />
+			<result property="barName" column="bar_name" />
+		</collection>
+		<collection property="postList" ofType="post">
+			<id column="post_id" jdbcType="VARCHAR" property="postId" />
 			<result column="post_bar_id" property="postBarId" />
 			<result column="post_user_id" property="postUserId" />
 			<result column="post_title" property="postTitle" />
@@ -63,364 +87,405 @@
 			<result column="post_creattime" property="postCreattime" />
 			<result column="post_modifytime" property="postModifytime" />
 			<result column="post_isdelete" property="postIsdelete" />
-        </collection>
-        
-	</resultMap>  
+		</collection>
 
- 	<select id="queryPostByUserId"  resultMap="QueryDTO_resultMap">
-		SELECT 
-			post.post_id,
-			post.post_bar_id, 
-			post.post_title,
-			post.post_content,
-			post.post_author,
-			post.post_creattime,
-			post_bar.bar_id,
-			post_bar.bar_name
-			<!-- post_picture.picture_name,
-			post_picture.picture_id -->
-		FROM post 
- 		inner JOIN post_bar on post.post_bar_id=post_bar.bar_id
- 		inner JOIN user on post.post_user_id = user.user_id
+	</resultMap>
+
+	<select id="queryPostByUserId" resultMap="QueryDTO_resultMap">
+		SELECT
+		post.post_id,
+		post.post_bar_id,
+		post.post_title,
+		post.post_content,
+		post.post_author,
+		post.post_creattime,
+		post_bar.bar_id,
+		post_bar.bar_name
+		<!-- post_picture.picture_name, post_picture.picture_id -->
+		FROM post
+		inner JOIN post_bar on post.post_bar_id=post_bar.bar_id
+		inner JOIN user on post.post_user_id = user.user_id
 		<!-- inner JOIN post_picture on post.post_id=post_picture.picture_belong -->
 		WHERE user.user_id = #{userId} ORDER BY post.post_creattime DESC
 	</select>
-	
+
 	<!-- ====================头部=====首页预览帖子========================== -->
 	<select id="queryTopPostId" resultType="java.lang.String">
-	SELECT
-	post_great.post_id,COUNT(post_great.great_id) 
-	FROM
-	post_great GROUP BY post_great.post_id DESC
-	</select>
-	
-	<select id="queryBarPostId" resultType="java.lang.String">
-	SELECT 
+		SELECT
 		post.post_id
-	FROM post 
-	WHERE post.post_bar_id = #{barId}
+		FROM post RIGHT JOIN post_great
+		ON post.post_id = post_great.post_id
+		WHERE post.post_isdelete = '0'
+		GROUP BY post_great.post_id DESC
 	</select>
-	
-	<resultMap type="com.pxxy.DTO.PostByGreatReadedDTO" id="Query_postViewByGreatReaded_resultMap">  
-	    <association property="post"  javaType="post" resultMap="BaseResultMap"/>
-	    <association property="post_bar"  javaType="com.pxxy.pojo.post_bar" resultMap="com.pxxy.mapper.post_barMapper.BaseResultMap"/>
-		
-		<collection property="post_pictureList" ofType="post_picture">  
-            <id property="pictureId" column="picture_id" />
-            <result column="picture_belong" property="pictureBelong"/>
-			<result column="picture_name" property="pictureName"/>
-        </collection>
+
+	<select id="queryBarPostId" resultType="java.lang.String">
+		SELECT
+		post.post_id
+		FROM post
+		WHERE post.post_bar_id = #{barId} AND post.post_isdelete='0'
+	</select>
+
+	<resultMap type="com.pxxy.DTO.PostByGreatReadedDTO"
+		id="Query_postViewByGreatReaded_resultMap">
+		<association property="post" javaType="post"
+			resultMap="BaseResultMap" />
+		<association property="post_bar"
+			javaType="com.pxxy.pojo.post_bar"
+			resultMap="com.pxxy.mapper.post_barMapper.BaseResultMap" />
+
+		<collection property="post_pictureList"
+			ofType="post_picture">
+			<id property="pictureId" column="picture_id" />
+			<result column="picture_belong" property="pictureBelong" />
+			<result column="picture_name" property="pictureName" />
+		</collection>
 	</resultMap>
-	<select id="queryPostViewByGreatReaded" resultMap="Query_postViewByGreatReaded_resultMap">
-		SELECT 
-			post.post_id,
-			post.post_bar_id, 
-			post.post_title,
-			post.post_content,
-			post.post_author,
-			post.post_user_id,
-			post.post_category,
-			post.post_creattime,
-			post_bar.bar_id,
-			post_bar.bar_name,
-			post_picture.picture_name,
-			post_picture.picture_id
-		FROM post 
- 		inner JOIN post_bar on post.post_bar_id=post_bar.bar_id
- 		inner JOIN user on post.post_user_id = user.user_id
-		LEFT JOIN post_picture on post.post_id=post_picture.picture_belong
-		WHERE post.post_id = #{postId} LIMIT 3
+	<select id="queryPostViewByGreatReaded"
+		resultMap="Query_postViewByGreatReaded_resultMap">
+		SELECT
+		post.post_id,
+		post.post_bar_id,
+		post.post_title,
+		post.post_content,
+		post.post_author,
+		post.post_user_id,
+		post.post_category,
+		post.post_creattime,
+		post_bar.bar_id,
+		post_bar.bar_name,
+		post_picture.picture_name,
+		post_picture.picture_id
+		FROM post
+		inner JOIN post_bar on post.post_bar_id=post_bar.bar_id
+		inner JOIN user on post.post_user_id = user.user_id
+		LEFT JOIN post_picture
+		on post.post_id=post_picture.picture_belong
+		WHERE post.post_id =
+		#{postId} LIMIT 3
 	</select>
 	<!-- ====================底部=====首页预览帖子========================== -->
-	
+
 	<!-- ==============查询所有贴吧============= -->
-	<resultMap type="com.pxxy.DTO.PostUserDTO" id="QueryAllBarResultMap">  
-        <collection property="post_barList" ofType="post_bar">  
-            <id property="barId" column="bar_id" />
-            <result property="barName" column="bar_name"/>
-        </collection>
+	<resultMap type="com.pxxy.DTO.PostUserDTO"
+		id="QueryAllBarResultMap">
+		<collection property="post_barList" ofType="post_bar">
+			<id property="barId" column="bar_id" />
+			<result property="barName" column="bar_name" />
+		</collection>
 	</resultMap>
 	<select id="queryAllBar" resultMap="QueryAllBarResultMap">
-		SELECT 
+		SELECT
 		post_bar.bar_id,
 		post_bar.bar_name
-		FROM post_bar 
+		FROM post_bar
 		WHERE 1=1
 	</select>
-	
-	<resultMap type="com.pxxy.DTO.PostUserDTO" id="Query_postViewDTO_resultMap">  
-	    <association property="post"  javaType="post" resultMap="BaseResultMap"/>
-	    <association property="post_bar"  javaType="com.pxxy.pojo.post_bar" resultMap="com.pxxy.mapper.post_barMapper.BaseResultMap"/>
-		
-		<collection property="post_pictureList" ofType="post_picture">  
-            <id property="pictureId" column="picture_id" />
-            <result column="picture_belong" property="pictureBelong"/>
-			<result column="picture_name" property="pictureName"/>
-        </collection>
-	</resultMap>  
-	
-	<select id="queryPostViewByTest"  resultMap="Query_postViewDTO_resultMap">
-		SELECT 
-			post.post_id,
-			post.post_bar_id, 
-			post.post_title,
-			post.post_content,
-			post.post_author,
-			post.post_user_id,
-			post.post_creattime,
-			post_bar.bar_id,
-			post_bar.bar_name,
-			post_picture.picture_name,
-			post_picture.picture_id
-		FROM post 
- 		inner JOIN post_bar on post.post_bar_id=post_bar.bar_id
- 		inner JOIN user on post.post_user_id = user.user_id
-		inner JOIN post_picture on post.post_id=post_picture.picture_belong
-		WHERE user.user_id = #{userId} ORDER BY post.post_creattime
-	</select>
-	
-	<resultMap type="com.pxxy.DTO.DTOgreat" id="Query_postLayer_resultMap0">  
-        <collection property="post_greatList" ofType="post_great">  
-            <id property="greatId" column="great_id" />
-        </collection>
+
+	<resultMap type="com.pxxy.DTO.PostUserDTO"
+		id="Query_postViewDTO_resultMap">
+		<association property="post" javaType="post"
+			resultMap="BaseResultMap" />
+		<association property="post_bar"
+			javaType="com.pxxy.pojo.post_bar"
+			resultMap="com.pxxy.mapper.post_barMapper.BaseResultMap" />
+
+		<collection property="post_pictureList"
+			ofType="post_picture">
+			<id property="pictureId" column="picture_id" />
+			<result column="picture_belong" property="pictureBelong" />
+			<result column="picture_name" property="pictureName" />
+		</collection>
 	</resultMap>
-	<select id="queryPostLayer_great"  resultMap="Query_postLayer_resultMap0">
+
+	<select id="queryPostViewByTest"
+		resultMap="Query_postViewDTO_resultMap">
 		SELECT
-	post_great.great_id
-	FROM
-		post_great
-	WHERE
-	post_great.post_id = #{postId}
+		post.post_id,
+		post.post_bar_id,
+		post.post_title,
+		post.post_content,
+		post.post_author,
+		post.post_user_id,
+		post.post_creattime,
+		post_bar.bar_id,
+		post_bar.bar_name,
+		post_picture.picture_name,
+		post_picture.picture_id
+		FROM post
+		inner JOIN post_bar on post.post_bar_id=post_bar.bar_id
+		inner JOIN user on post.post_user_id = user.user_id
+		inner JOIN post_picture
+		on post.post_id=post_picture.picture_belong
+		WHERE user.user_id =
+		#{userId} ORDER BY post.post_creattime
 	</select>
-	
-	<resultMap type="com.pxxy.DTO.DTOreaded" id="Query_postLayer_resultMap1">  
-        <collection property="post_readedList" ofType="post_readed">  
-            <id property="readedId" column="readed_id" />
-        </collection>
-        
+
+	<resultMap type="com.pxxy.DTO.DTOgreat"
+		id="Query_postLayer_resultMap0">
+		<collection property="post_greatList" ofType="post_great">
+			<id property="greatId" column="great_id" />
+		</collection>
 	</resultMap>
-	<select id="queryPostLayer_readed"  resultMap="Query_postLayer_resultMap1">
+	<select id="queryPostLayer_great"
+		resultMap="Query_postLayer_resultMap0">
 		SELECT
-			post_readed.readed_id
+		post_great.great_id
 		FROM
-			post_readed
+		post_great
 		WHERE
-			post_readed.post_id = #{postId}
+		post_great.post_id = #{postId}
+	</select>
+
+	<select id="CountPostByUser" resultType="Integer">
+	SELECT COUNT(post.post_id)
+	FROM post where post.post_user_id = #{userId}
+	</select>
+
+	<resultMap type="com.pxxy.DTO.DTOreaded"
+		id="Query_postLayer_resultMap1">
+		<collection property="post_readedList" ofType="post_readed">
+			<id property="readedId" column="readed_id" />
+		</collection>
+
+	</resultMap>
+	<select id="queryPostLayer_readed"
+		resultMap="Query_postLayer_resultMap1">
+		SELECT
+		post_readed.readed_id
+		FROM
+		post_readed
+		WHERE
+		post_readed.post_id = #{postId}
+	</select>
+
+	<resultMap type="com.pxxy.DTO.DTOBarAndPic"
+		id="Query_postLayer_resultMap2">
+		<association property="post" javaType="post"
+			resultMap="BaseResultMap" />
+		<association property="post_bar"
+			javaType="com.pxxy.pojo.post_bar"
+			resultMap="com.pxxy.mapper.post_barMapper.BaseResultMap" />
+
+		<collection property="post_pictureList"
+			ofType="post_picture">
+			<id property="pictureId" column="picture_id" />
+			<result column="picture_belong" property="pictureBelong" />
+			<result column="picture_name" property="pictureName" />
+		</collection>
+	</resultMap>
+	<select id="queryPostLayer_BarAndPic"
+		resultMap="Query_postLayer_resultMap2">
+		SELECT
+		post.post_id,
+		post.post_bar_id,
+		post.post_title,
+		post.post_content,
+		post.post_author,
+		post.post_creattime,
+		user.user_id,
+		post_bar.bar_id,
+		post_bar.bar_name
+		FROM post
+		inner JOIN post_bar on post.post_bar_id=post_bar.bar_id
+		inner JOIN user on post.post_user_id = user.user_id
+		left JOIN post_picture on post_picture.picture_belong = post.post_id
+		WHERE post.post_id = #{postId}
 	</select>
 	
-	<resultMap type="com.pxxy.DTO.DTOBarAndPic" id="Query_postLayer_resultMap2">  
-	    <association property="post"  javaType="post" resultMap="BaseResultMap"/>
-	    <association property="post_bar"  javaType="com.pxxy.pojo.post_bar" resultMap="com.pxxy.mapper.post_barMapper.BaseResultMap"/>
-		
-		<collection property="post_pictureList" ofType="post_picture">  
-            <id property="pictureId" column="picture_id" />
-            <result column="picture_belong" property="pictureBelong"/>
-			<result column="picture_name" property="pictureName"/>
-        </collection>
+
+	<resultMap type="com.pxxy.DTO.DTOtopic"
+		id="Query_postLayer_resultMap3">
+		<collection property="post_topicList" ofType="post_topic">
+			<id property="topicId" column="topic_id" />
+			<result column="topic_content" property="topicContent" />
+			<result column="user_id" property="userId" />
+			<result column="b_user_id" property="bUserId" />
+		</collection>
 	</resultMap>
-	<select id="queryPostLayer_BarAndPic"  resultMap="Query_postLayer_resultMap2">
-		SELECT 
-			post.post_id,
-			post.post_bar_id, 
-			post.post_title,
-			post.post_content,
-			post.post_author,
-			post.post_creattime,
- 			post_picture.picture_name,
- 			post_picture.picture_id,
-			user.user_id,
-			post_bar.bar_id,
-			post_bar.bar_name
-		FROM post 
- 		inner JOIN post_bar on post.post_bar_id=post_bar.bar_id
- 		inner JOIN user on post.post_user_id = user.user_id                                                                 
-		left JOIN post_picture on post_picture.picture_belong = post.post_id 	
-		WHERE post.post_id 	= #{postId}
-	</select>
-	
-	<resultMap type="com.pxxy.DTO.DTOtopic" id="Query_postLayer_resultMap3">  
-		<collection property="post_topicList" ofType="post_topic">  
-            <id property="topicId" column="topic_id" />
-            <result column="topic_content" property="topicContent"/>
-			<result column="user_id" property="userId"/>
-			<result column="b_user_id" property="bUserId"/>
-        </collection>
-	</resultMap>
-	<select id="queryPostLayer_Topic"  resultMap="Query_postLayer_resultMap3">
+	<select id="queryPostLayer_Topic"
+		resultMap="Query_postLayer_resultMap3">
 		SELECT
 		post_topic.topic_id,
 		post_topic.topic_content,
 		post_topic.user_id,
 		post_topic.b_user_id
-	FROM
+		FROM
 		post
-	INNER JOIN post_topic ON post_topic.post_id = post.post_id
-	WHERE
-		post.post_id = #{postId} 
+		INNER JOIN post_topic ON post_topic.post_id = post.post_id
+		WHERE
+		post.post_id = #{postId}
 	</select>
-	
+
 	<select id="judgeGreat" resultType="com.pxxy.pojo.post_great">
-		SELECT * FROM post_great 
-		WHERE post_great.post_id = #{postId} 
-		AND 
-		post_great.user_id = #{userId} 
+		SELECT * FROM post_great
+		WHERE post_great.post_id = #{postId}
+		AND
+		post_great.user_id = #{userId}
 	</select>
-	
+
 	<insert id="commentAdd">
-		INSERT INTO post_topic (topic_id, post_id, user_id, b_user_id, topic_content) 
-		VALUES 
+		INSERT INTO post_topic (topic_id, post_id, user_id,
+		b_user_id, topic_content)
+		VALUES
 		(#{topicId}, #{postId}, #{userId}, #{bUserId}, #{topicContent})
 	</insert>
-	
+
 	<insert id="greatAdd">
-		INSERT INTO post_great (post_great.great_id, post_great.post_id, post_great.user_id)
-	VALUES
-	(
+		INSERT INTO post_great (post_great.great_id,
+		post_great.post_id, post_great.user_id)
+		VALUES
+		(
 		#{greatId},
 		#{postId},
 		#{userId}
-	)
+		)
 	</insert>
-	
+
 	<delete id="delGreat">
-		 delete from 
-		 post_great
-    	 where great_id = #{greatId}
+		delete from
+		post_great
+		where great_id = #{greatId}
 	</delete>
-	
-  <!-- ==============================分割线======================================== -->
-  
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from post
-    where post_id = #{postId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from post
-    where post_id = #{postId,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.pxxy.pojo.post">
-    insert into post (post_id, post_bar_id, post_user_id, 
-      post_title, post_content, post_author, 
-      post_category, post_creattime, post_modifytime, 
-      post_isdelete)
-    values (#{postId,jdbcType=VARCHAR}, #{postBarId,jdbcType=VARCHAR}, #{postUserId,jdbcType=VARCHAR}, 
-      #{postTitle,jdbcType=VARCHAR}, #{postContent,jdbcType=VARCHAR}, #{postAuthor,jdbcType=VARCHAR}, 
-      #{postCategory,jdbcType=VARCHAR}, #{postCreattime,jdbcType=VARCHAR}, #{postModifytime,jdbcType=VARCHAR}, 
-      #{postIsdelete,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.pxxy.pojo.post">
-    insert into post
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="postId != null">
-        post_id,
-      </if>
-      <if test="postBarId != null">
-        post_bar_id,
-      </if>
-      <if test="postUserId != null">
-        post_user_id,
-      </if>
-      <if test="postTitle != null">
-        post_title,
-      </if>
-      <if test="postContent != null">
-        post_content,
-      </if>
-      <if test="postAuthor != null">
-        post_author,
-      </if>
-      <if test="postCategory != null">
-        post_category,
-      </if>
-      <if test="postCreattime != null">
-        post_creattime,
-      </if>
-      <if test="postModifytime != null">
-        post_modifytime,
-      </if>
-      <if test="postIsdelete != null">
-        post_isdelete,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="postId != null">
-        #{postId,jdbcType=VARCHAR},
-      </if>
-      <if test="postBarId != null">
-        #{postBarId,jdbcType=VARCHAR},
-      </if>
-      <if test="postUserId != null">
-        #{postUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="postTitle != null">
-        #{postTitle,jdbcType=VARCHAR},
-      </if>
-      <if test="postContent != null">
-        #{postContent,jdbcType=VARCHAR},
-      </if>
-      <if test="postAuthor != null">
-        #{postAuthor,jdbcType=VARCHAR},
-      </if>
-      <if test="postCategory != null">
-        #{postCategory,jdbcType=VARCHAR},
-      </if>
-      <if test="postCreattime != null">
-        #{postCreattime,jdbcType=VARCHAR},
-      </if>
-      <if test="postModifytime != null">
-        #{postModifytime,jdbcType=VARCHAR},
-      </if>
-      <if test="postIsdelete != null">
-        #{postIsdelete,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pxxy.pojo.post">
-    update post
-    <set>
-      <if test="postBarId != null">
-        post_bar_id = #{postBarId,jdbcType=VARCHAR},
-      </if>
-      <if test="postUserId != null">
-        post_user_id = #{postUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="postTitle != null">
-        post_title = #{postTitle,jdbcType=VARCHAR},
-      </if>
-      <if test="postContent != null">
-        post_content = #{postContent,jdbcType=VARCHAR},
-      </if>
-      <if test="postAuthor != null">
-        post_author = #{postAuthor,jdbcType=VARCHAR},
-      </if>
-      <if test="postCategory != null">
-        post_category = #{postCategory,jdbcType=VARCHAR},
-      </if>
-      <if test="postCreattime != null">
-        post_creattime = #{postCreattime,jdbcType=VARCHAR},
-      </if>
-      <if test="postModifytime != null">
-        post_modifytime = #{postModifytime,jdbcType=VARCHAR},
-      </if>
-      <if test="postIsdelete != null">
-        post_isdelete = #{postIsdelete,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where post_id = #{postId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.pxxy.pojo.post">
-    update post
-    set post_bar_id = #{postBarId,jdbcType=VARCHAR},
-      post_user_id = #{postUserId,jdbcType=VARCHAR},
-      post_title = #{postTitle,jdbcType=VARCHAR},
-      post_content = #{postContent,jdbcType=VARCHAR},
-      post_author = #{postAuthor,jdbcType=VARCHAR},
-      post_category = #{postCategory,jdbcType=VARCHAR},
-      post_creattime = #{postCreattime,jdbcType=VARCHAR},
-      post_modifytime = #{postModifytime,jdbcType=VARCHAR},
-      post_isdelete = #{postIsdelete,jdbcType=VARCHAR}
-    where post_id = #{postId,jdbcType=VARCHAR}
-  </update>
+
+	<!-- ==============================分割线======================================== -->
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from post
+		where post_id = #{postId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from post
+		where post_id = #{postId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.pxxy.pojo.post">
+		insert into post (post_id, post_bar_id, post_user_id,
+		post_title, post_content, post_author,
+		post_category, post_creattime, post_modifytime,
+		post_isdelete)
+		values (#{postId,jdbcType=VARCHAR}, #{postBarId,jdbcType=VARCHAR},
+		#{postUserId,jdbcType=VARCHAR},
+		#{postTitle,jdbcType=VARCHAR}, #{postContent,jdbcType=VARCHAR}, #{postAuthor,jdbcType=VARCHAR},
+		#{postCategory,jdbcType=VARCHAR}, #{postCreattime,jdbcType=VARCHAR},
+		#{postModifytime,jdbcType=VARCHAR},
+		#{postIsdelete,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.pxxy.pojo.post">
+		insert into post
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="postId != null">
+				post_id,
+			</if>
+			<if test="postBarId != null">
+				post_bar_id,
+			</if>
+			<if test="postUserId != null">
+				post_user_id,
+			</if>
+			<if test="postTitle != null">
+				post_title,
+			</if>
+			<if test="postContent != null">
+				post_content,
+			</if>
+			<if test="postAuthor != null">
+				post_author,
+			</if>
+			<if test="postCategory != null">
+				post_category,
+			</if>
+			<if test="postCreattime != null">
+				post_creattime,
+			</if>
+			<if test="postModifytime != null">
+				post_modifytime,
+			</if>
+			<if test="postIsdelete != null">
+				post_isdelete,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="postId != null">
+				#{postId,jdbcType=VARCHAR},
+			</if>
+			<if test="postBarId != null">
+				#{postBarId,jdbcType=VARCHAR},
+			</if>
+			<if test="postUserId != null">
+				#{postUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="postTitle != null">
+				#{postTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="postContent != null">
+				#{postContent,jdbcType=VARCHAR},
+			</if>
+			<if test="postAuthor != null">
+				#{postAuthor,jdbcType=VARCHAR},
+			</if>
+			<if test="postCategory != null">
+				#{postCategory,jdbcType=VARCHAR},
+			</if>
+			<if test="postCreattime != null">
+				#{postCreattime,jdbcType=VARCHAR},
+			</if>
+			<if test="postModifytime != null">
+				#{postModifytime,jdbcType=VARCHAR},
+			</if>
+			<if test="postIsdelete != null">
+				#{postIsdelete,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.pxxy.pojo.post">
+		update post
+		<set>
+			<if test="postBarId != null">
+				post_bar_id = #{postBarId,jdbcType=VARCHAR},
+			</if>
+			<if test="postUserId != null">
+				post_user_id = #{postUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="postTitle != null">
+				post_title = #{postTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="postContent != null">
+				post_content = #{postContent,jdbcType=VARCHAR},
+			</if>
+			<if test="postAuthor != null">
+				post_author = #{postAuthor,jdbcType=VARCHAR},
+			</if>
+			<if test="postCategory != null">
+				post_category = #{postCategory,jdbcType=VARCHAR},
+			</if>
+			<if test="postCreattime != null">
+				post_creattime = #{postCreattime,jdbcType=VARCHAR},
+			</if>
+			<if test="postModifytime != null">
+				post_modifytime = #{postModifytime,jdbcType=VARCHAR},
+			</if>
+			<if test="postIsdelete != null">
+				post_isdelete = #{postIsdelete,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where post_id = #{postId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.pxxy.pojo.post">
+		update post
+		set post_bar_id = #{postBarId,jdbcType=VARCHAR},
+		post_user_id = #{postUserId,jdbcType=VARCHAR},
+		post_title = #{postTitle,jdbcType=VARCHAR},
+		post_content = #{postContent,jdbcType=VARCHAR},
+		post_author = #{postAuthor,jdbcType=VARCHAR},
+		post_category = #{postCategory,jdbcType=VARCHAR},
+		post_creattime = #{postCreattime,jdbcType=VARCHAR},
+		post_modifytime = #{postModifytime,jdbcType=VARCHAR},
+		post_isdelete = #{postIsdelete,jdbcType=VARCHAR}
+		where post_id = #{postId,jdbcType=VARCHAR}
+	</update>
 </mapper>

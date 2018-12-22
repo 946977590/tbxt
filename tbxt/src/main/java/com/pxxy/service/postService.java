@@ -1,16 +1,18 @@
 package com.pxxy.service;
 
-import org.apache.ibatis.annotations.Param;
+import java.util.List;
 
+import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.DTOgreat;
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.pojo.post;
-import com.pxxy.pojo.post_bar;
 import com.pxxy.pojo.post_great;
 import com.pxxy.pojo.post_picture;
+import com.pxxy.pojo.post_readed;
 
 public interface postService {
 
+	post selectByPrimaryKey(String postId);
 	int creatPost(post record);	//创建帖子
 	PostUserDTO queryPostByUserId(String postId);	//根据用户id查询相关post多表信息
 	PostUserDTO queryPostViewByTest(String userId);	//测试首页推荐post
@@ -25,7 +27,11 @@ public interface postService {
     PostUserDTO queryTopPostView();	//贴吧首页热门推荐
     PostUserDTO queryBarPostView(String barId);	//贴吧内容详情
     PostUserDTO queryAllBar(); 			//查询所有贴吧
-    PostUserDTO selectAllPostInBack();	//后台查询所有帖子
+    DTOBarAndPic selectAllPostInBack();	//后台查询所有帖子
     PostUserDTO selectAllAnnounce();	//查询所有公告
-    
+    int updateByPrimaryKeySelective(post record);	//更新post
+    List<post_picture> queryAllPic();
+    int deletePic(post_picture post_picture);
+    int PostreadAdd(post_readed record);		//已读功能
+    List<post_readed> judgeRead(String userId,String postId);	//判断该用户是否读过文章
 }

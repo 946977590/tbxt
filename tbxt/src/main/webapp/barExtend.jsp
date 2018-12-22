@@ -121,7 +121,8 @@
 				</fieldset>
 				<div class="right-sec_tiezi_barinfo">
 					<div class="loading_icon">
-						<i class="layui-icon layui-icon-loading"></i>
+					<i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-icon-loading" style="display:inline-block"></i>
+						<i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop" style="display:inline-block"></i>
 					</div>
 					<component1 /> 
 				</div>

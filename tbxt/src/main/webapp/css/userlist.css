@@ -62,3 +62,6 @@ form input.layui-input[disabled]{ background:#f2f2f2; color:#595963!important; }
 	width: 1150px;
 	height: 230px;
 }
+#desc{
+	width:400px;
+}

@@ -37,6 +37,12 @@
     where 1=1
   </select>
   
+  <select id="queryBarNameById" resultType="com.pxxy.pojo.post_bar">
+  	select 
+		post_bar.bar_name
+    from post_bar
+    where post_bar.bar_id = #{barId}
+  </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 

@@ -25,6 +25,16 @@
 		</blockquote>
 		<div class="layui-form news_list">
 			<table class="layui-table">
+				<colgroup>
+					<col width="5%">
+					<col width="12%">
+					<col width="12%">
+					<col>
+					<col width="12%">
+					<col width="12%">
+					<col width="12%">
+					<col width="12%">
+				</colgroup>
 				<thead>
 					<tr>
 						<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
@@ -49,8 +59,8 @@
 						<th v-if="item.barIsdelete==1">封禁中</th>
 						<th>
 							<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-							<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-							<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+							<a v-if="item.barIsdelete==1" class="layui-btn layui-btn layui-btn-xs" lay-event="del" @click="Rebanned(item.barId)">解封</a>
+							<a v-if="item.barIsdelete==0" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" @click="banned(item.barId)">封禁</a>
 						</th>
 					</tr>
 				</tbody>

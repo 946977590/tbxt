@@ -134,6 +134,8 @@
       </if>
     </trim>
   </insert>
+  
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.pxxy.pojo.user">
     update user
     <set>

@@ -18,7 +18,9 @@ public interface postMapper {
     int deleteByPrimaryKey(String postId);
 
     int insert(post record);
-
+    
+    int CountPostByUser(String userId);
+    
     int insertSelective(post record);
 
     post selectByPrimaryKey(String postId);
@@ -52,5 +54,5 @@ public interface postMapper {
     PostByGreatReadedDTO queryPostViewByGreatReaded(String postId);
     List<?> queryBarPostId(String barId);
     PostUserDTO queryAllBar(); 			//查询所有贴吧
-    PostUserDTO selectAllPostInBack();	//后台查询所有帖子
+    DTOBarAndPic selectAllPostInBack();	//后台查询所有帖子
 }

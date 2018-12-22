@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.util.UUID;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -29,11 +30,13 @@ import com.pxxy.service.postService;
 import com.pxxy.service.post_pictureService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.DTOgreat;
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.pojo.post;
 import com.pxxy.pojo.post_great;
 import com.pxxy.pojo.post_picture;
+import com.pxxy.pojo.post_readed;
 import com.pxxy.pojo.user;
 
 @Controller
@@ -173,6 +176,7 @@ public class postController {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = response.getWriter();
 		user sessionUser = (user) session.getAttribute("user"); // session未登录，则不可发帖
+		System.out.println("sessionUsersessionUser==="+sessionUser);
 		if(sessionUser!=null) {
 			String user_id = sessionUser.getUserId();
 			PostUserDTO PostUserDTO = postService.queryPostByUserId(user_id);
@@ -448,12 +452,12 @@ public class postController {
 		pw.close();
     }
     
-    //后台查询所有帖子
+  //后台查询所有帖子
     @RequestMapping(value = "/selectAllPostInBack", method = RequestMethod.POST)
    	@ResponseBody
-   	public PostUserDTO selectAllPostInBack() {
-    	PostUserDTO postUserDTO = postService.selectAllPostInBack();
-    	return postUserDTO;
+   	public DTOBarAndPic selectAllPostInBack() {
+    	DTOBarAndPic DTOBarAndPic = postService.selectAllPostInBack();
+    	return DTOBarAndPic;
     }
     
   //后台查询所有公告
@@ -463,4 +467,82 @@ public class postController {
     	PostUserDTO postUserDTO = postService.selectAllAnnounce();
     	return postUserDTO;
     }
+  //封禁帖子
+  	@RequestMapping(value="/BannedPost",method=RequestMethod.POST)
+  	@ResponseBody
+  	public String BannedPost(@RequestParam String postId) {
+  		post post = new post();
+  		post.setPostId(postId);
+  		post.setPostIsdelete("1");
+  		postService.updateByPrimaryKeySelective(post);
+  		return "banned";
+  	}
+  	//解除封禁
+  	@RequestMapping(value="/ReBannedPost",method=RequestMethod.POST)
+  	@ResponseBody
+  	public String ReBannedPost(@RequestParam String postId) {
+  		post post = new post();
+  		post.setPostId(postId);
+  		post.setPostIsdelete("0");
+  		postService.updateByPrimaryKeySelective(post);
+  		return "Rebanned";
+  	}
+  	
+  	//根据id查post
+  	@RequestMapping(value="/queryPostById",method=RequestMethod.POST)
+  	@ResponseBody
+  	public post queryPostById(@RequestParam String postId) {
+  		post post = postService.selectByPrimaryKey(postId);
+  		return post;
+  	}
+  	
+  //查询图库
+  	@RequestMapping(value="/queryAllPic",method=RequestMethod.POST)
+  	@ResponseBody
+  	public List<post_picture> queryAllPic() {
+  		List<post_picture> list = postService.queryAllPic();
+  		return list;
+  	}
+  	
+  //删图
+  	@RequestMapping(value="/delPic",method=RequestMethod.POST)
+  	@ResponseBody
+  	public String delPic(@RequestParam String pictureId) {
+  		post_picture post_picture = new post_picture();
+  		post_picture.setPictureId(pictureId);
+  		post_picture.setPictureIsdelete("1");
+  		postService.deletePic(post_picture);
+  		return "success";
+  	}
+  	
+  	//已读功能
+  	@RequestMapping(value="/AddRead",method=RequestMethod.POST)
+  	@ResponseBody
+  	public String AddRead(HttpServletRequest request,HttpServletResponse response,@RequestParam String postId) {
+  		HttpSession session = request.getSession();
+  		user userSession = (user) session.getAttribute("user");
+  		String  userId = "";
+  		if(userSession != null) {
+  			userId = userSession.getUserId();
+  			List<post_readed> post_readedList = postService.judgeRead(userId,postId);
+			System.out.println("post_readed1===="+post_readedList);
+			System.out.println("postId"+postId);
+  			if(post_readedList.size()==0) {
+  				String readedId = UUID.randomUUID().toString();
+  	  			post_readed post_readed2 = new post_readed();
+  	  			post_readed2.setPostId(postId);
+  	  			post_readed2.setReadedId(readedId);
+  	  			post_readed2.setUserId(userId);
+  	  			postService.PostreadAdd(post_readed2);
+	  	  		System.out.println("Readed");
+	  	  		return "success";
+  			}else {
+  				System.out.println("HaveReaded");
+  				return "HaveReaded";
+  			}
+  		}else {
+  			return "SessionError";
+  		}
+  		
+  	}
 }

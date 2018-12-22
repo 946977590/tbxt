@@ -46,6 +46,7 @@ public class userController {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = response.getWriter();
+		System.out.println("ÓÃ»§×¢²áµÄnick==="+userNickname);
 		String result = "";
 		user CheckUser = userService.queryByUserEmail(userEmail);
 		try {
@@ -211,5 +212,9 @@ public class userController {
 	@RequestMapping(value="/skipto_userList",method=RequestMethod.GET)
 	public String skipto_userList() {
 		return "userList";
+	}
+	@RequestMapping(value="/skipto_picManage",method=RequestMethod.GET)
+	public String skipto_picManage() {
+		return "picManage";
 	}
 }

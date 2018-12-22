@@ -1,5 +1,9 @@
 package com.pxxy.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.pxxy.pojo.post_readed;
 
 public interface post_readedMapper {
@@ -14,4 +18,9 @@ public interface post_readedMapper {
     int updateByPrimaryKeySelective(post_readed record);
 
     int updateByPrimaryKey(post_readed record);
+    
+    List<post_readed> judgeRead(@Param("userId")String userId,@Param("postId")String postId);
+    
+    int CountReaded(String postId);
+    int CountReadByuser(String userId);
 }
