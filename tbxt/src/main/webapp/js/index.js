@@ -88,7 +88,7 @@ var sjx_post_component = Vue.extend({
 			this.$http.post(url, {
 				emulateJSON : true
 			}).then(function(res) {
-				console.log("个人动态时间线res"+JSON.stringify(res.body));
+//				console.log("个人动态时间线res"+JSON.stringify(res.body));
 				if(res.body=='Getpost_error'){
 					layer.msg('获取个人动态信息失败!',{icon: 7},{
 	                    offset:['40%'],
@@ -102,8 +102,8 @@ var sjx_post_component = Vue.extend({
 						vm.PerSonGreadCount = res.body.DTOgreat.CountGreat;
 						vm.PerSonPostCount = res.body.DTOgreat.CountPost;
 					}
-					if(res.body.postList != null){
-						this.list = res.body.postList
+					if(res.body.DTOBarAndPic.postList != null){
+						this.list = res.body.DTOBarAndPic.postList
 //						console.log(this.list)
 						$("#sjx_shafa").hide();
 					}

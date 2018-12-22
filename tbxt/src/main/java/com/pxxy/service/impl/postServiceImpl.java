@@ -56,7 +56,8 @@ public class postServiceImpl implements postService {
 	public PostUserDTO queryPostByUserId(String userId) {
 		// TODO Auto-generated method stub
 		System.out.println("service===进入queryPostByUserId方法");
-		PostUserDTO PostUserDTO = postMapper.queryPostByUserId(userId);
+		PostUserDTO PostUserDTO = new PostUserDTO();
+		DTOBarAndPic dTOBarAndPic = postMapper.queryPostByUserId(userId);
 		DTOreaded DTOreaded = new DTOreaded();
 		DTOgreat DTOgreat = new DTOgreat();
 		int countRead = post_readedMapper.CountReadByuser(userId);
@@ -67,6 +68,7 @@ public class postServiceImpl implements postService {
 		DTOgreat.setCountPost(countPost);
 		if(DTOreaded != null)PostUserDTO.setDTOreaded(DTOreaded);
 		if(DTOgreat != null)PostUserDTO.setDTOgreat(DTOgreat);
+		if(dTOBarAndPic != null)PostUserDTO.setDTOBarAndPic(dTOBarAndPic);
 		return PostUserDTO;
 	}
 	

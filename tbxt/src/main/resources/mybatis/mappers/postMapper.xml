@@ -60,7 +60,7 @@
 		where 1=1
 	</select>
 
-	<resultMap type="com.pxxy.DTO.PostUserDTO"
+	<resultMap type="com.pxxy.DTO.DTOBarAndPic"
 		id="QueryDTO_resultMap">
 		<association property="post" javaType="post"
 			resultMap="BaseResultMap" />

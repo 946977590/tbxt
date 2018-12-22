@@ -29,7 +29,7 @@ public interface postMapper {
 
     int updateByPrimaryKey(post record);
     
-    PostUserDTO queryPostByUserId(String userId);	//根据用户id查询相关post多表信息
+    DTOBarAndPic queryPostByUserId(String userId);	//根据用户id查询相关post多表信息
     
     PostUserDTO queryPostViewByTest(String userId);	//测试首页推荐post
     
