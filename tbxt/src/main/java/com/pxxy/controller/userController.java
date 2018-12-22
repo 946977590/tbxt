@@ -46,7 +46,6 @@ public class userController {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = response.getWriter();
-		System.out.println("用户注册的nick==="+userNickname);
 		String result = "";
 		user CheckUser = userService.queryByUserEmail(userEmail);
 		try {
@@ -114,12 +113,17 @@ public class userController {
 		PrintWriter pw = response.getWriter();
 		user user = userService.queryByUserEmail(userEmail);
 		if(user!=null) {
-			if(user.getUserPassword().equals(userPassword)) {
-				session.setAttribute("user", user);
-				pw.write("loginSuccess");
+			if(user.getUserIsdelete().equals("0") || user.getUserIsdelete().equals("9")) {
+				if(user.getUserPassword().equals(userPassword)) {
+					session.setAttribute("user", user);
+					pw.write("loginSuccess");
+				}else {
+					pw.write("loginError");
+				}
 			}else {
-				pw.write("loginError");
+				pw.write("banned");
 			}
+			
 		}else {
 			pw.write("loginError");
 		}
@@ -180,6 +184,33 @@ public class userController {
 		return postUserDTO;
 	}
 	
+	@RequestMapping(value="/queryUserById",method=RequestMethod.POST)
+	@ResponseBody
+	public user queryUserById(@RequestParam String userId) {
+		user user = userService.selectByPrimaryKey(userId);
+		return user;
+	}
+	
+	//封禁用户
+	@RequestMapping(value="/BannedUser",method=RequestMethod.POST)
+	@ResponseBody
+	public String BannedUser(@RequestParam String userId) {
+		user user = new user();
+		user.setUserId(userId);
+		user.setUserIsdelete("1");
+		userService.updateByPrimaryKeySelective(user);
+		return "banned";
+	}
+	//解除封禁
+	@RequestMapping(value="/ReBannedUser",method=RequestMethod.POST)
+	@ResponseBody
+	public String ReBannedUser(@RequestParam String userId) {
+		user user = new user();
+		user.setUserId(userId);
+		user.setUserIsdelete("0");
+		userService.updateByPrimaryKeySelective(user);
+		return "Rebanned";
+	}
 	
 	
 	@RequestMapping(value="/skipto_backStage",method=RequestMethod.GET)
