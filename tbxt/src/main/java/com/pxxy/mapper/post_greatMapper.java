@@ -15,5 +15,5 @@ public interface post_greatMapper {
 
     int updateByPrimaryKey(post_great record);
     
-    int CountGreatByUser(String userId);
+    int CountGreatByUser(String postId);
 }

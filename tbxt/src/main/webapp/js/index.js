@@ -8,7 +8,42 @@ var em = new Vue({
 	},
 	
 });
-//头部导航栏组件
+//热门话题推荐热门话题推荐热门话题推荐热门话题推荐热门话题推荐热门话题推荐热门话题推荐热门话题推荐热门话题推荐
+var componenthuati = Vue.extend({
+	template:`
+	<ul class="top_list_hot_list">
+						<li class="top_list_hot_list_item" v-for="item in huatiList" :key="item"><p
+								class="top_list_hot_item_number">{{item.number}}</p> <a href=""
+							class="top_list_hot_list_item_name">{{item.content.huatiContent}}</a> <span
+							class="topic_num">1221</span></li>
+					</ul>
+	`,
+data(){
+      return {
+    	 huatiList:[{
+    		 content:'',
+    		 number:''	 
+    	 }]
+      }
+    },
+created(){	
+    	//获取热门话题
+    	var url = 'http://localhost:8080/tbxt/queryHotHuati';
+		this.$http.post(url, {
+			emulateJSON : true
+		}).then(function(res) {
+			for(var i=0;i<res.body.length;i++){
+				this.huatiList.push({content:res.body[i],number:i+1});
+			}
+			this.huatiList.shift();
+			document.getElementsByClassName("top_list_hot_item_number")[0].childNodes[2].text
+//			console.log(JSON.stringify(this.huatiList));
+		}, function(err) {})	
+},
+})
+Vue.component('componenthuati',componenthuati)
+
+//头部导航栏组件头部导航栏组件头部导航栏组件头部导航栏组件头部导航栏组件头部导航栏组件
 var toplable_component = Vue.extend({
 	props: ['content', 'index'],
 	template : '<li class="layui-nav-item"><a href="">{{content}} </a> </li>'
@@ -53,9 +88,29 @@ var commponent2 = Vue.extend({
         	//打开bar列表详情
 			barClick_openBar : function(barId){
 				sessionStorage.setItem('barId',barId); // 存入一个值
-				setTimeout(function() {
-					location.href="/tbxt/barExtend.jsp"
-				}, 50);
+				var data = {
+					'barId':barId
+				}
+				var url2 = 'http://localhost:8080/tbxt/queryBarPic';
+				this.$http.post(url2,data,{
+					emulateJSON : true
+				}).then(function(res) {
+//					console.log("获取贴吧图片=="+JSON.stringify(res.body))
+					if(res.body != null){
+						var barPicName = res.body.barPicture;
+						sessionStorage.setItem('barPicName',barPicName); // 存入一个值
+						setTimeout(function() {
+							location.href="/tbxt/barExtend.jsp"
+						}, 50);
+					}
+				}, function(err) {
+					// 处理失败的结果
+					layer.msg('获取贴吧初始信息失败!',{icon: 5},{
+	                    offset:['40%'],
+	                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	              }); 
+				})	
+				
 			},
         }
 })
@@ -88,7 +143,7 @@ var sjx_post_component = Vue.extend({
 			this.$http.post(url, {
 				emulateJSON : true
 			}).then(function(res) {
-//				console.log("个人动态时间线res"+JSON.stringify(res.body));
+				console.log("个人动态时间线res"+JSON.stringify(res.body));
 				if(res.body=='Getpost_error'){
 					layer.msg('获取个人动态信息失败!',{icon: 7},{
 	                    offset:['40%'],
@@ -215,8 +270,7 @@ var post_view_component = Vue.extend({
 				style="font-size: 15px; float: left; margin-left: 20px; color: #009688;" v-on:click="open_tiezi(pitem.post.postId)" >{{pitem.post.postTitle}}</a> <br />
 			<br />
 			<div class="right-sec_tiezi_content">
-				<a href=""
-					style="font-size: 13px; float: left; display: inline; margin-left: 20px; color: #8D8D8D" >{{pitem.post.postContent}}</a>
+				<a href="" id="title_v" >{{pitem.post.postContent}}</a>
 			</div>
 			<div class="right-sec_tiezi_photo_box" >
 				<img class="right-sec_tiezi_photo" v-for="item in pitem.post_pictureList" :key="item" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " />
@@ -382,7 +436,7 @@ var post_view_component = Vue.extend({
 			<br />
 			<div class="right-sec_tiezi_content">
 				<a href=""
-					style="font-size: 13px; float: left; display: inline; margin-left: 20px; color: #8D8D8D" >{{pitem.post.postContent}}</a>
+					style="font-size: 13px; float: left; text-align : left; display: inline; margin-left: 20px; color: #8D8D8D" >{{pitem.post.postContent}}</a>
 			</div>
 			<div class="right-sec_tiezi_photo_box" >
 				<img class="right-sec_tiezi_photo" v-for="item in pitem.post_pictureList" :key="item" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " />
@@ -446,11 +500,8 @@ var post_view_component = Vue.extend({
 						this.postByGreatReadedDTOList.pictureList = res.body.postByGreatReadedDTOList[0].post_pictureList;
 						this.postByGreatReadedDTOList.post = res.body.postByGreatReadedDTOList[0].post;
 						this.postByGreatReadedDTOList.post_bar = res.body.postByGreatReadedDTOList[0].post_bar;
-						/*if(this.postByGreatReadedDTOList.post != null){
-							this.post_data = this.postByGreatReadedDTOList.post.postCreattime.substr(0,this.postByGreatReadedDTOList.post.postCreattime.length-8);
-						}*/
-//								console.log("this.post_data=="+this.pictureList[0].pictureName);
 						$(".loading_icon").hide();
+
 					} 
 				}, function(err) {
 					// 处理失败的结果
@@ -558,6 +609,28 @@ var post_view_component = Vue.extend({
 	        
 			})
 			Vue.component('component1',component1)
+			
+			var component121 = Vue.extend({
+				template:`
+				<div>
+					<img class="barPic" alt="" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+barPicName">
+				</div>
+				`,
+			data(){
+			      return {
+			    	  barPicName:'',
+			      }
+			    },
+	        created(){	//获取贴吧图片logo
+	        	if(sessionStorage.getItem('barPicName') != null){
+	        		this.barPicName = sessionStorage.getItem('barPicName');
+	        	}else{
+	        		this.barPicName = 'zuizuo21'
+	        	}
+
+	        },
+			})
+			Vue.component('component121',component121)
 		
 	/*============================尾部======吧内post详情展示===========================*/
 //发帖页面Layer
@@ -574,17 +647,28 @@ var post_view_component = Vue.extend({
 
 			<div class="fatie_left">
 			
-				<div id="huati_box" class="layui-form">
-				<label class="layui-form-label">话题类别</label>
-				<div class="layui-input-block">
-					<select name="city" lay-verify="">
-					  <option value="">请选择话题类别</option>
-					  <option value="010">插入我的新话题</option>
-					  <option value="021">LPL夺冠</option>
-					  <option value="0571">湖人总冠军~</option>
-					</select> 
-				</div>	    
+				<div id="rm_huati"  class="layui-form">
+				<label class="layui-form-label">热门话题</label>
+					<div class="layui-input-block">
+						<select name="ht_option" style="display:none;" lay-verify="">
+						  <option value="">请选择话题类别</option>
+						  <option value="010">插入我的新话题</option>
+						  <option value="021">LPL夺冠</option>
+						  <option value="0571">湖人总冠军~</option>
+						</select> 
+					</div>	
 				</div>
+				
+				<div id="zx_huati"  class="layui-form">
+				<label class="layui-form-label">输入话题</label>
+					<div class="layui-input-block">
+						<input type="text" id="fatie_huati" v-model="creat_tie_category"
+							lay-verify="title" autocomplete="off" class="layui-input">
+					</div>	
+				</div>
+				
+				<a id="huati_a" href="javascript:;" v-on:click="zxhuati_add" style="float:left;margin-left:10px;margin-top: 7px;text-decoration:underline;">#添加自己的话题</a>
+				<a id="huati_b" href="javascript:;" v-on:click="rmhuati_add" style="float:left;margin-left:10px;margin-top: 7px;display:none;text-decoration:underline">#选择热门话题</a>
 			
 				<div class="layui-form-item">
 					<label class="layui-form-label">取个标题吧</label>
@@ -598,7 +682,8 @@ var post_view_component = Vue.extend({
 					<label class="layui-form-label"></label>
 					<div class="layui-input-block" style="width: 660px;">
 						<textarea placeholder="发贴记得遵守贴吧相关规则奥~" id="fatie_textarea"
-							v-model="creat_tie_content" class="layui-textarea"></textarea>
+						v-model="creat_tie_content" class="layui-textarea">
+							</textarea>
 					</div>
 				</div>
 			</div>
@@ -640,11 +725,25 @@ var post_view_component = Vue.extend({
 	      return {
 	    	creat_tie_content :'',
 			creat_tie_title :'',
+			creat_tie_category :''
 	      }
 	    },
   mounted(){
         },
         methods:{
+        	//添加话题
+        	zxhuati_add : function(){
+        		$('#rm_huati').hide();
+        		$('#zx_huati').show();
+        		$('#huati_a').hide();
+        		$('#huati_b').show();
+        	},
+        	rmhuati_add : function(){
+        		$('#zx_huati').hide();
+        		$('#rm_huati').show();
+        		$('#huati_b').hide();
+        		$('#huati_a').show();
+        	},
         	//发帖
 			tie_creat: function(){
 				if(this.creat_tie_title == '' || this.creat_tie_content == ''){
@@ -665,6 +764,7 @@ var post_view_component = Vue.extend({
 					var formData=new FormData();
 					formData.append('postTitle', this.creat_tie_title);
 					formData.append('postContent', this.creat_tie_content);
+					formData.append('postCategory', this.creat_tie_category);
 //					console.log("file1.files[0]=="+file1.files[0]);
 //					console.log("file1.files[1]=="+file2.files[0]);
 					formData.append('files', file1.files[0]);
@@ -974,7 +1074,8 @@ var vm = new Vue(
 				},
 				comments_topicContent:'',
 				pictureList:'',
-				pass_postId:''
+				pass_postId:'',
+				barPic_name:'',
 			},
 		 components: {
 			 'post_view_component':post_view_component,
@@ -1175,6 +1276,7 @@ var vm = new Vue(
 			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
 			                  });
 //						       console.log("kkkkkkkkkkkk")
+						       $("#comments_shafa").hide();
 		                	  var url2 = 'http://localhost:8080/tbxt/GetpostByPostId';
 								vm.$http.post(url2,data,{
 									emulateJSON : true,

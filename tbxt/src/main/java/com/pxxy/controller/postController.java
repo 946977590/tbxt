@@ -33,6 +33,7 @@ import com.google.gson.GsonBuilder;
 import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.DTOgreat;
 import com.pxxy.DTO.PostUserDTO;
+import com.pxxy.pojo.huati;
 import com.pxxy.pojo.post;
 import com.pxxy.pojo.post_great;
 import com.pxxy.pojo.post_picture;
@@ -51,13 +52,14 @@ public class postController {
 	@RequestMapping(value = "/postCreat", method = RequestMethod.POST)
 	@ResponseBody
 	public void postCreat(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(required = false) String postBarId, @RequestParam String postTitle,
-			@RequestParam String postContent,@RequestParam(required = false) MultipartFile[] files) throws IOException {
+			@RequestParam(required = false) String postBarId,@RequestParam(required = false) String postCategory, @RequestParam(required = false) String postTitle,
+			@RequestParam(required = false) String postContent,@RequestParam(required = false) MultipartFile[] files) throws IOException {
 		HttpSession session = request.getSession();
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = response.getWriter();
 		post post = new post();
+//		System.out.println("postCategory==="+postCategory);
 		user sessionUser = (user) session.getAttribute("user"); // session未登录，则不可发帖
 		String user_id = sessionUser.getUserId();
 		String postId = UUID.randomUUID().toString();
@@ -108,6 +110,17 @@ public class postController {
 			post.setPostUserId(user_id);
 			post.setPostTitle(postTitle);
 			post.setPostCreattime(ctime);
+			post.setPostCategory(postCategory);
+			huati huati = new huati();
+			if(postCategory != null) {
+				String huatiId = UUID.randomUUID().toString();
+				huati.setHuatiId(huatiId);
+				huati.setHuatiContent(postCategory);
+				huati.setHuatiPostId(postId);
+				huati.setHuatiUserId(user_id);
+				huati.setHuatiIsdelete("0");
+				postService.insertHuati(huati);
+			}
 			if (post != null) {
 				int a = postService.creatPost(post);
 //				System.out.println("controller=====post成功插入" + a + "条数据");
@@ -176,7 +189,7 @@ public class postController {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = response.getWriter();
 		user sessionUser = (user) session.getAttribute("user"); // session未登录，则不可发帖
-		System.out.println("sessionUsersessionUser==="+sessionUser);
+//		System.out.println("sessionUsersessionUser==="+sessionUser);
 		if(sessionUser!=null) {
 			String user_id = sessionUser.getUserId();
 			PostUserDTO PostUserDTO = postService.queryPostByUserId(user_id);
@@ -303,9 +316,9 @@ public class postController {
 		if(sessionUser != null) {
 			String userId = sessionUser.getUserId();
 			String greatId2 = UUID.randomUUID().toString();
-			System.out.println("点赞postId==="+postId);
+//			System.out.println("点赞postId==="+postId);
 			postService.greatAdd(greatId2, postId, userId);
-			System.out.println("点赞数据添加成功");
+//			System.out.println("点赞数据添加成功");
 			res = "great_add";
 		}else {
 			res = "session_null";
@@ -358,7 +371,7 @@ public class postController {
 		DTOgreat DTO_great = postService.queryPostLayer_great(postId);
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		res = gson.toJson(DTO_great);
-		System.out.println("DTO_greatDTO_greatDTO_great==="+DTO_great);
+//		System.out.println("DTO_greatDTO_greatDTO_great==="+DTO_great);
 		pw.write(res);
 		pw.flush();
 		pw.close();
@@ -525,8 +538,8 @@ public class postController {
   		if(userSession != null) {
   			userId = userSession.getUserId();
   			List<post_readed> post_readedList = postService.judgeRead(userId,postId);
-			System.out.println("post_readed1===="+post_readedList);
-			System.out.println("postId"+postId);
+//			System.out.println("post_readed1===="+post_readedList);
+//			System.out.println("postId"+postId);
   			if(post_readedList.size()==0) {
   				String readedId = UUID.randomUUID().toString();
   	  			post_readed post_readed2 = new post_readed();
@@ -534,15 +547,22 @@ public class postController {
   	  			post_readed2.setReadedId(readedId);
   	  			post_readed2.setUserId(userId);
   	  			postService.PostreadAdd(post_readed2);
-	  	  		System.out.println("Readed");
+//	  	  		System.out.println("Readed");
 	  	  		return "success";
   			}else {
-  				System.out.println("HaveReaded");
+//  				System.out.println("HaveReaded");
   				return "HaveReaded";
   			}
   		}else {
   			return "SessionError";
   		}
-  		
+  	}
+  	
+  //查询热门话题
+  	@RequestMapping(value="/queryHotHuati",method=RequestMethod.POST)
+  	@ResponseBody
+  	public List<huati> queryHotHuati() {
+  		List<huati> list = postService.queryHotHuati();
+  		return list;
   	}
 }

@@ -19,4 +19,5 @@ public interface post_barMapper {
     int updateByPrimaryKey(post_bar record);
     PostUserDTO selectAllBar();	//查询所有贴吧
     post_bar queryBarNameById(String barIds); //根据id查吧名
+    post_bar queryBarPic(String barId);	//查询贴吧图片
 }

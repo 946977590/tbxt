@@ -22,5 +22,5 @@ public interface post_readedMapper {
     List<post_readed> judgeRead(@Param("userId")String userId,@Param("postId")String postId);
     
     int CountReaded(String postId);
-    int CountReadByuser(String userId);
+    int CountReadByuser(String postId);
 }

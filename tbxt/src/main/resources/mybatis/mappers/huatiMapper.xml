@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pxxy.mapper.huatiMapper">
+  <resultMap id="BaseResultMap" type="com.pxxy.pojo.huati">
+    <id column="huati_id" jdbcType="VARCHAR" property="huatiId" />
+    <result column="huati_content" jdbcType="VARCHAR" property="huatiContent" />
+    <result column="huati_post_id" jdbcType="VARCHAR" property="huatiPostId" />
+    <result column="huati_user_id" jdbcType="VARCHAR" property="huatiUserId" />
+    <result column="huati_category_id" jdbcType="VARCHAR" property="huatiCategoryId" />
+    <result column="huati_isdelete" jdbcType="VARCHAR" property="huatiIsdelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    huati_id, huati_content, huati_post_id, huati_user_id, huati_category_id, huati_isdelete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from huati
+    where huati_id = #{huatiId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="queryHotHuati" resultMap="BaseResultMap">
+  	SELECT huati_content
+	FROM huati GROUP BY huati_content DESC LIMIT 3
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from huati
+    where huati_id = #{huatiId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pxxy.pojo.huati">
+    insert into huati (huati_id, huati_content, huati_post_id, 
+      huati_user_id, huati_category_id, huati_isdelete
+      )
+    values (#{huatiId,jdbcType=VARCHAR}, #{huatiContent,jdbcType=VARCHAR}, #{huatiPostId,jdbcType=VARCHAR}, 
+      #{huatiUserId,jdbcType=VARCHAR}, #{huatiCategoryId,jdbcType=VARCHAR}, #{huatiIsdelete,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pxxy.pojo.huati">
+    insert into huati
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="huatiId != null">
+        huati_id,
+      </if>
+      <if test="huatiContent != null">
+        huati_content,
+      </if>
+      <if test="huatiPostId != null">
+        huati_post_id,
+      </if>
+      <if test="huatiUserId != null">
+        huati_user_id,
+      </if>
+      <if test="huatiCategoryId != null">
+        huati_category_id,
+      </if>
+      <if test="huatiIsdelete != null">
+        huati_isdelete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="huatiId != null">
+        #{huatiId,jdbcType=VARCHAR},
+      </if>
+      <if test="huatiContent != null">
+        #{huatiContent,jdbcType=VARCHAR},
+      </if>
+      <if test="huatiPostId != null">
+        #{huatiPostId,jdbcType=VARCHAR},
+      </if>
+      <if test="huatiUserId != null">
+        #{huatiUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="huatiCategoryId != null">
+        #{huatiCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="huatiIsdelete != null">
+        #{huatiIsdelete,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pxxy.pojo.huati">
+    update huati
+    <set>
+      <if test="huatiContent != null">
+        huati_content = #{huatiContent,jdbcType=VARCHAR},
+      </if>
+      <if test="huatiPostId != null">
+        huati_post_id = #{huatiPostId,jdbcType=VARCHAR},
+      </if>
+      <if test="huatiUserId != null">
+        huati_user_id = #{huatiUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="huatiCategoryId != null">
+        huati_category_id = #{huatiCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="huatiIsdelete != null">
+        huati_isdelete = #{huatiIsdelete,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where huati_id = #{huatiId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pxxy.pojo.huati">
+    update huati
+    set huati_content = #{huatiContent,jdbcType=VARCHAR},
+      huati_post_id = #{huatiPostId,jdbcType=VARCHAR},
+      huati_user_id = #{huatiUserId,jdbcType=VARCHAR},
+      huati_category_id = #{huatiCategoryId,jdbcType=VARCHAR},
+      huati_isdelete = #{huatiIsdelete,jdbcType=VARCHAR}
+    where huati_id = #{huatiId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -8,4 +8,5 @@ public interface post_barService {
 	int insert(post_bar record);
 	PostUserDTO selectAllBar();	//²éÑ¯ËùÓĞÌù°É
 	int updateByPrimaryKeySelective(post_bar record);	//·â½ûÌù°É
+	post_bar queryBarPic(String barId);	//²éÑ¯Ìù°ÉÍ¼Æ¬
 }

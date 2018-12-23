@@ -106,7 +106,9 @@
 					</div>
 				</div>
 			</div>
-			<div id="rec_right"></div>
+			<div id="rec_right">
+				<img class="barPic" alt="" src="http://localhost:8080/tbxt/IoReadImage?pictureName=zuizuo21.jpg">
+			</div>
 		</div>
 
 		<div id="sec">
@@ -265,36 +267,7 @@
 					<legend>话题热议榜</legend>
 				</fieldset>
 				<div class="top_list_hot">
-					<ul class="top_list_hot_list">
-						<li class="top_list_hot_list_item"><p
-								class="top_list_hot_item_number1">1</p> <a href=""
-							class="top_list_hot_list_item_name">热议榜热议榜热议榜热议榜1</a> <span
-							class="topic_num">1221</span></li>
-						<li class="top_list_hot_list_item"><p
-								class="top_list_hot_item_number1">2</p> <a href=""
-							class="top_list_hot_list_item_name">热议榜2</a> <span
-							class="topic_num">1221</span></li>
-						<li class="top_list_hot_list_item"><p
-								class="top_list_hot_item_number1">3</p> <a href=""
-							class="top_list_hot_list_item_name">热议榜3</a> <span
-							class="topic_num">1221</span></li>
-						<li class="top_list_hot_list_item"><p
-								class="top_list_hot_item_number">4</p> <a href=""
-							class="top_list_hot_list_item_name">热议榜4</a> <span
-							class="topic_num">1221</span></li>
-						<li class="top_list_hot_list_item"><p
-								class="top_list_hot_item_number">5</p> <a href=""
-							class="top_list_hot_list_item_name">热议榜5</a> <span
-							class="topic_num">1221</span></li>
-						<li class="top_list_hot_list_item"><p
-								class="top_list_hot_item_number">6</p> <a href=""
-							class="top_list_hot_list_item_name">热议榜6</a> <span
-							class="topic_num">1221</span></li>
-						<li class="top_list_hot_list_item"><p
-								class="top_list_hot_item_number">7</p> <a href=""
-							class="top_list_hot_list_item_name">热议榜7</a> <span
-							class="topic_num">1221</span></li>
-					</ul>
+					<componenthuati />
 				</div>
 				<br />
 				<br />

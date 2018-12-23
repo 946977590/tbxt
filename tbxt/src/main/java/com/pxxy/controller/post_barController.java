@@ -94,4 +94,11 @@ public class post_barController {
 		return postUserDTO;
 	}
 	
+	//¸ù¾ÝBarid²éÑ¯Ìù°ÉÍ¼Æ¬
+	@RequestMapping(value="/queryBarPic",method=RequestMethod.POST)
+	@ResponseBody
+	public post_bar queryBarPic(@RequestParam String barId) {
+		post_bar post_bar = post_barService.queryBarPic(barId);
+		return post_bar;
+	}
 }

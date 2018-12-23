@@ -45,7 +45,6 @@
 	float: right;
 	text-align: center;
 	margin: 0 auto;
-	background-color: black;
 }
 .barPic{
 	width: 308px;
@@ -65,7 +64,7 @@
 	border-left: 1px solid #DCDCDC;
 }
 .bar_right-sec{
-	width: 1000px;
+	width: 785px;
 	height: 2000px;
 	float: left;
 	border-left: 1px solid #DCDCDC;
@@ -157,7 +156,7 @@
 
 /* 2018.10.24¼ÓµÄcss */
 .right-sec_tiezi_author_info_box {
-	width: 510px;
+	width: 710px;
 	height: 30px;
 	float: left;
 	margin-top: 5px;
@@ -170,15 +169,27 @@
 }
 
 .right-sec_tiezi_info {
-	width: 530px;
+	width: 500px;
 	height: 220px;
 	margin-top:30px;
 	/* border-right: 1px solid #DCDCDC; */
 
 }
+#title_v{
+	font-size: 13px; 
+	width:490px;
+	float: left; 
+	display: inline; 
+	margin-left: 20px; 
+	color: #8D8D8D;
+	text-align: left;
+	white-space:nowrap;
+   text-overflow:ellipsis;
+   overflow: hidden;
+}
 
 .right-sec_tiezi_info_barinfo {
-	width:495px;
+	width:785px;
 	height:auto;
 	float:left;
 	/* margin-top:30px; */
@@ -187,7 +198,7 @@
 	/* border-right: 1px solid #DCDCDC; */
 }
 .right-sec_tiezi_barinfo{
-	width: 1000px;
+	width: 785px;
 	height: 260px;
 }
 
@@ -312,17 +323,13 @@
 	vertical-align: middle;
 	color: #666;
 }
-.top_list_hot_item_number1{
-	float: left;
-	color: #666;
-	background: #FF7F42;
-	padding: 1px 4px;
-}
 .top_list_hot_item_number{
 	float: left;
 	color: #666;
 	padding: 1px 4px;
 }
+.top_list_hot_list_item:nth-child(-n+3) .top_list_hot_item_number{background: #FF7F42;}
+
 .topic_num{
 	color: #999;
 	float: right;
@@ -358,10 +365,16 @@
 	width:660px; 
 	float:left;
 }
-#huati_box{
+#rm_huati{
 	width:400px; 
 	float:left;
 	margin-bottom:20px;
+}
+#zx_huati{
+	width:400px; 
+	float:left;
+	margin-bottom:20px;
+	display:none;
 }
 .photo_xx{
 	max-width: 100%;
@@ -397,7 +410,7 @@
 	margin-top: 65px;
 }
 #great_number1{
-	width:130px;
+	width:150px;
 	height:80px;
 	margin-top:10px;
 	margin-left:40px;
@@ -409,26 +422,26 @@
 	font-size: 25px; 
 }
 #great_icon{
-	font-size: 25px; 
+	font-size: 19px; 
 	color: #009688; 
 	/* margin-top:30px;
 	margin-left:10px; */
 }
 #great_icon2{
-	font-size: 20px; 
+	font-size: 30px; 
 	color: #009688; 
 	/* margin-top:30px;
 	margin-left:10px; */
 }
 #read_number1{
-	width:130px;
+	width:150px;
 	height:80px;
 	margin-top:10px;
 	margin-left:40px;
 	float:left
 }
 #fatie_number1{
-	width:130px;
+	width:150px;
 	height:80px;
 	margin-top:10px;
 	margin-left:250px;

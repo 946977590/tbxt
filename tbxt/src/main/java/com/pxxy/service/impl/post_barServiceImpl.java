@@ -31,4 +31,8 @@ public class post_barServiceImpl implements post_barService {
 		return i;
 	}
 
+	public post_bar queryBarPic(String barId) {
+		post_bar post_bar = post_barMapper.queryBarPic(barId);
+		return post_bar;
+	}
 }

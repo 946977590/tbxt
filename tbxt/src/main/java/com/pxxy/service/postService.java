@@ -5,7 +5,9 @@ import java.util.List;
 import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.DTOgreat;
 import com.pxxy.DTO.PostUserDTO;
+import com.pxxy.pojo.huati;
 import com.pxxy.pojo.post;
+import com.pxxy.pojo.post_bar;
 import com.pxxy.pojo.post_great;
 import com.pxxy.pojo.post_picture;
 import com.pxxy.pojo.post_readed;
@@ -34,4 +36,6 @@ public interface postService {
     int deletePic(post_picture post_picture);
     int PostreadAdd(post_readed record);		//已读功能
     List<post_readed> judgeRead(String userId,String postId);	//判断该用户是否读过文章
+    int insertHuati(huati record);	//插入话题
+    List<huati> queryHotHuati();	//热门话题推荐
 }

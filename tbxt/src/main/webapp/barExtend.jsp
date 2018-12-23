@@ -83,6 +83,8 @@
 		</div>
 		
 		
+		
+		
 		<div id="rec">
 			<div id="rec_left" class="layui-carousel" lay-filter="test1">
 				<div carousel-item="">
@@ -107,16 +109,163 @@
 				</div>
 			</div>
 			<div id="rec_right">
-				<img class="barPic" alt="" src="http://localhost:8080/tbxt/IoReadImage?pictureName=c38ce30c-aaa6-49b3-88f5-16ec798977f92015021114290564.jpg">
+				<component121 />
 			</div>
 		</div>
 
 		<div id="sec">
+		<h1></h1>
+			<div class="left-sec">
+				<div id="my_tieba_box">
+					<div id="my_tieba_mod">
+						<fieldset class="layui-elem-field layui-field-title"
+							style="margin-top: 10px; margin-left: 20px;">
+							<legend>我在最左</legend>
+						</fieldset>
+						<img src="img/psb.jpg"
+							style="width: 80px; height: 80px; float: left; margin-left: 10px; border-style: groove; border-color: #EFEFEF;" />
+						<a class="layui-icon layui-icon-username"
+							style="font-size: 30px; color: #1E9FFF; float: left; margin-left: 10px;"></a><span>{{userInfo.userNickname}}</span>
+						<br>
+						<br> <br> <span>会员等级: <span v-if="userInfo.userLevel==0">萌新</span><span v-if="userInfo.userLevel==1">大佬</span></span> </span>
+					</div>
+					<div id="like_tiebas">
+						<div id="like_tiebas_titile_box">
+							<div id="like_tiebas_titile">
+								<span style="color: #8D8D8D;">爱逛的吧</span><a
+									class="layui-icon layui-icon-set-fill" style="color: #8D8D8D;"></a>
+							</div>
+						</div>
+						<div id="like_tiebas_content">
+							<!-- <div class="tb_cate_boxs">
+								<button class="layui-btn layui-btn-radius layui-btn-normal">萍院吧</button>
+							</div>
+							<div class="tb_cate_boxs">
+								<button class="layui-btn layui-btn-radius layui-btn-normal">李毅吧</button>
+							</div> -->
+							<commponent2 />
+							
+						</div>
+						<div>
+							<i class="layui-icon layui-icon-more"
+								style="font-size: 40px; color: #1E9FFF;"></i>
+						</div>
+
+					</div>
+				</div>
+				<div id="tieba_category_box">
+					<div id="tieba_category_title">
+						<fieldset class="layui-elem-field layui-field-title"
+							style="margin-top: 20px; margin-left: 20px;">
+							<legend style="font-weight: bold; font-size: small;">贴吧分类</legend>
+						</fieldset>
+					</div>
+					<div id="tieba_category_content">
+						<div id="movie_cate">
+							<div class="cate_titile">
+								<a class="layui-icon layui-icon-website" style="color: #1E9FFF;"></a><span>爱电影</span>
+							</div>
+							<br />
+							<br />
+							<div class="zi_cate_content">
+								<a class="zi_cate_content_name">香港电影</a> <a
+									class="zi_cate_content_name">欧美电影</a> <a
+									class="zi_cate_content_name">内地电影</a> <a
+									class="zi_cate_content_name">日本电影</a> <a
+									class="zi_cate_content_name">台湾电影</a> <a
+									class="zi_cate_content_name">韩国电影</a>
+							</div>
+						</div>
+						<div id="mingxing_cate">
+							<div class="cate_titile">
+								<a class="layui-icon layui-icon-rate-solid"
+									style="color: #1E9FFF;"></a><span>娱乐明星</span>
+							</div>
+							<br />
+							<br />
+							<div class="zi_cate_content">
+								<a class="zi_cate_content_name">港台明星</a> <a
+									class="zi_cate_content_name">内地明星</a> <a
+									class="zi_cate_content_name">韩国明星</a> <a
+									class="zi_cate_content_name">台湾明星</a> <a
+									class="zi_cate_content_name">时尚人物</a> <a
+									class="zi_cate_content_name">欧美明星</a>
+							</div>
+						</div>
+						<div id="tiyu_cate">
+							<div class="cate_titile">
+								<a class="layui-icon layui-icon-group" style="color: #1E9FFF;"></a><span>体育</span>
+							</div>
+							<br />
+							<br />
+							<div class="zi_cate_content">
+								<a class="zi_cate_content_name">篮球</a> <a
+									class="zi_cate_content_name">足球</a> <a
+									class="zi_cate_content_name">乒乓球</a> <a
+									class="zi_cate_content_name">网球</a> <a
+									class="zi_cate_content_name">健身</a> <a
+									class="zi_cate_content_name">舞蹈</a><a
+									class="zi_cate_content_name">健美</a>
+							</div>
+						</div>
+						<div id="xiaoshuo_cate">
+							<div class="cate_titile">
+								<a class="layui-icon layui-icon-read" style="color: #1E9FFF;"></a><span>小说</span>
+							</div>
+							<br />
+							<br />
+							<div class="zi_cate_content">
+								<a class="zi_cate_content_name">奇幻</a> <a
+									class="zi_cate_content_name">言情</a> <a
+									class="zi_cate_content_name">灵异</a> <a
+									class="zi_cate_content_name">穿越</a> <a
+									class="zi_cate_content_name">修真</a> <a
+									class="zi_cate_content_name">历史</a>
+							</div>
+						</div>
+						<div id="zongyi_cate">
+							<div class="cate_titile">
+								<a class="layui-icon layui-icon-cellphone"
+									style="color: #1E9FFF;"></a><span>爱综艺</span>
+							</div>
+							<br />
+							<br />
+							<div class="zi_cate_content">
+								<a class="zi_cate_content_name">内地综艺</a> <a
+									class="zi_cate_content_name">台湾综艺</a> <a
+									class="zi_cate_content_name">韩国综艺</a> <a
+									class="zi_cate_content_name">体育综艺</a> <a
+									class="zi_cate_content_name">日本综艺</a> <a
+									class="zi_cate_content_name">欧美综艺</a>
+							</div>
+						</div>
+						<div id="dianshiju_cate">
+							<div class="cate_titile">
+								<a class="layui-icon layui-icon-template-1"
+									style="color: #1E9FFF;"></a><span>追剧狂</span>
+							</div>
+							<br />
+							<br />
+							<div class="zi_cate_content">
+								<a class="zi_cate_content_name">韩剧</a> <a
+									class="zi_cate_content_name">美剧</a> <a
+									class="zi_cate_content_name">港剧</a> <a
+									class="zi_cate_content_name">台剧</a> <a
+									class="zi_cate_content_name">大陆剧</a> <a
+									class="zi_cate_content_name">日剧</a>
+							</div>
+						</div>
+						<div id="cate_more">
+							<button class="layui-btn layui-btn-lg layui-btn-normal">查看更多</button>
+						</div>
+					</div>
+				</div>
+			</div>
 
 			<!-- =====================中间部分===============================-->
 			<div class="bar_right-sec">
 				<fieldset class="layui-elem-field layui-field-title"
-					style="margin-top: 10px; margin-left: 20px; width: 76s0px;">
+					style="margin-top: 10px; margin-left: 20px; width: 700px;">
 					<legend>吧内动态</legend>
 				</fieldset>
 				<div class="right-sec_tiezi_barinfo">

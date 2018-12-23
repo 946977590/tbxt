@@ -30,13 +30,14 @@
   
   <select id="CountReadByuser" resultType="Integer">
 	SELECT COUNT(post_readed.readed_id)
-	FROM post_readed where post_readed.user_id= #{userId}
+	FROM post_readed where post_readed.post_id = #{postId}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from post_readed
     where readed_id = #{readedId,jdbcType=VARCHAR}
   </delete>
+  
   <insert id="insert" parameterType="com.pxxy.pojo.post_readed">
     insert into post_readed (readed_id, post_id, user_id
       )

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pxxy.pojo.huati;
 import com.pxxy.pojo.post;
 import com.pxxy.pojo.post_bar;
 import com.pxxy.pojo.post_great;
@@ -41,8 +42,11 @@ public class postServiceImpl implements postService {
 	@Autowired 
 	private announcesMapper announcesMapper;
 	
+	@Autowired 
+	private huatiMapper huatiMapper;
+	
 	public int creatPost(post record) {
-		int a = postMapper.insert(record);
+		int a = postMapper.insertSelective(record);
 		System.out.println("service=====post成功插入"+a+"条数据");
 		return a;
 	}
@@ -60,8 +64,18 @@ public class postServiceImpl implements postService {
 		DTOBarAndPic dTOBarAndPic = postMapper.queryPostByUserId(userId);
 		DTOreaded DTOreaded = new DTOreaded();
 		DTOgreat DTOgreat = new DTOgreat();
-		int countRead = post_readedMapper.CountReadByuser(userId);
-		int countGreat = post_greatMapper.CountGreatByUser(userId);
+		List postList = postMapper.queryPostIdListByUserId(userId);
+		int countRead = 0;
+		int countGreat = 0;
+		String postId = "";
+		for(int i=0;i<postList.size();i++) {
+			postId = (String) postList.get(i);
+			countRead = post_readedMapper.CountReadByuser(postId);
+			countGreat = post_greatMapper.CountGreatByUser(postId);
+			System.out.println("=========i==="+i);
+		}
+		System.out.println("=========countRead==="+countRead);
+		System.out.println("=========countGreat==="+countGreat);
 		int countPost = postMapper.CountPostByUser(userId);
 		DTOreaded.setCountRead(countRead);
 		DTOgreat.setCountGreat(countGreat);
@@ -209,6 +223,21 @@ public class postServiceImpl implements postService {
 	public List<post_readed> judgeRead(String userId, String postId) {
 		List<post_readed> post_readedList = post_readedMapper.judgeRead(userId,postId);
 		return post_readedList;
+	}
+
+	public post_bar queryBarPic(String barId) {
+		post_bar post_bar = post_barMapper.queryBarPic(barId);
+		return post_bar;
+	}
+
+	public int insertHuati(huati record) {
+		int i = huatiMapper.insert(record);
+		return i;
+	}
+
+	public List<huati> queryHotHuati() {
+		List<huati> list = huatiMapper.queryHotHuati();
+		return list;
 	}
 
 }

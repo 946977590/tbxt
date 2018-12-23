@@ -68,16 +68,16 @@
 		<!-- ====================================top_box===================================== -->
 		<div id="tie_read_great">
 			<button id="fatie_number1" class="layui-btn layui-btn-primary ">
-				<a id="great_icon" class="layui-icon layui-icon-edit">发帖</a>
+				<a id="great_icon" class="layui-icon layui-icon-edit">总发帖数量</a>
 				<br><span id="great_icon2">{{PerSonPostCount}}</span>
 			</button>	
 			<button id="read_number1" class="layui-btn layui-btn-primary ">
-				<a id="great_icon" class="layui-icon layui-icon-star">已读</a>
+				<a id="great_icon" class="layui-icon layui-icon-read">帖子浏览量</a>
 				<br><span id="great_icon2">{{PerSonReadCount}}</span>
 			</button>	
 				
 			<button id="great_number1" class="layui-btn layui-btn-primary ">
-				<a id="great_icon" class="layui-icon layui-icon-praise">获赞</a>
+				<a id="great_icon" class="layui-icon layui-icon-praise">获赞总数</a>
 				<br><span id="great_icon2">{{PerSonGreadCount}}</span>
 			</button>
 			

@@ -18,7 +18,7 @@
   
   <select id="CountGreatByUser" resultType="Integer">
   	SELECT COUNT(post_great.great_id)
-	FROM post_great where post_great.user_id= #{userId}
+	FROM post_great where post_great.post_id = #{postId}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
