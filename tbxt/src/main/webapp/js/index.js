@@ -100,7 +100,7 @@ var commponent2 = Vue.extend({
 						var barPicName = res.body.barPicture;
 						sessionStorage.setItem('barPicName',barPicName); // 存入一个值
 						setTimeout(function() {
-							location.href="/tbxt/barExtend.jsp"
+							location.href="/tbxt/barExtend.html"
 						}, 50);
 					}
 				}, function(err) {
@@ -143,7 +143,7 @@ var sjx_post_component = Vue.extend({
 			this.$http.post(url, {
 				emulateJSON : true
 			}).then(function(res) {
-				console.log("个人动态时间线res"+JSON.stringify(res.body));
+//				console.log("个人动态时间线res"+JSON.stringify(res.body));
 				if(res.body=='Getpost_error'){
 					layer.msg('获取个人动态信息失败!',{icon: 7},{
 	                    offset:['40%'],
@@ -788,7 +788,7 @@ var post_view_component = Vue.extend({
 			                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
 			              });
 							/*setTimeout(function(){
-								location.href="/tbxt/tieba.jsp";
+								location.href="/tbxt/tieba.html";
 							},1000);*/
 							layer.close(layer.index-1); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
 						}else if(res.body=='sessionError'){
@@ -901,7 +901,7 @@ var post_view_component = Vue.extend({
 			                          time: 1000 //2秒关闭（如果不配置，默认是3秒）
 			                    });
 								setTimeout(function(){
-									location.href="/tbxt/tieba.jsp";
+									location.href="/tbxt/tieba.html";
 								},500);
 							}else{
 								layer.msg('该邮箱已注册!',{icon: 7},{
@@ -986,7 +986,7 @@ var post_view_component = Vue.extend({
 	                          time: 1000 //2秒关闭（如果不配置，默认是3秒）
 	                    }); 
 						setTimeout(function(){
-							location.href="/tbxt/tieba.jsp";
+							location.href="/tbxt/tieba.html";
 						},500);
 					}else if(res.body=='banned'){
 						layer.msg('该账户已被封禁!',{icon: 5},{
@@ -1148,7 +1148,7 @@ var vm = new Vue(
 		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
 		                  }); 
 							setTimeout(function(){
-								location.href="/tbxt/tieba.jsp";
+								location.href="/tbxt/tieba.html";
 							},1000);
 						}else{
 							layer.msg('退出异常',{icon: 5},{
@@ -1208,7 +1208,7 @@ var vm = new Vue(
 		                  });
 						}else{
 							setTimeout(function(){ 
-								location.href="/tbxt/infozx.jsp";
+								location.href="/tbxt/infozx.html";
 							}
 							,500);
 						} 

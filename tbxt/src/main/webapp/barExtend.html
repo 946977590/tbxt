@@ -1,25 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-	request.setAttribute("path", basePath);
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>最左——拉近你我</title>
-<link rel="stylesheet" href="${path}css/index.css" />
-<link rel="stylesheet" href="${path}layui/css/layui.css" />
-<link rel="stylesheet" href="${path}css/blog.css">
-<link rel="stylesheet" href="${path}css/toastr.css">
-<script src="${path}js/vue.min.js"></script>
-<script src="${path}js/vue-resource.js"></script>
-<script src="${path}layui/layui.js"></script>
-<script src="${path}js/jquery-3.1.1.min.js"></script>
+<title>吧内详情</title>
+<link rel="stylesheet" href="css/index.css" />
+<link rel="stylesheet" href="layui/css/layui.css" />
+<link rel="stylesheet" href="css/blog.css">
+<link rel="stylesheet" href="css/toastr.css">
+<script src="js/vue.min.js"></script>
+<script src="js/vue-resource.js"></script>
+<script src="layui/layui.js"></script>
+<script src="js/jquery-3.1.1.min.js"></script>
 </head>
 <body>
 	<div id="mainIndex">
@@ -27,10 +18,10 @@
 		<div id="top_box">
 			<div class="top_userBar">
 				<ul class="layui-nav layui-bg-green">
-					<li class="layui-nav-item" id="message-info"><a href="infozx.jsp">信息中心<span
+					<li class="layui-nav-item" id="message-info"><a href="infozx.html">信息中心<span
 							class="layui-badge-dot"></span></a></li>
 					<li class="layui-nav-item" id="my-info" lay-unselect=""><a
-						href="javascript:;"><img src="${path}img/psb.jpg"
+						href="javascript:;"><img src="img/psb.jpg"
 							class="layui-nav-img">{{userInfo.userNickname}}</a>
 						<dl class="layui-nav-child">
 							<dd>
@@ -60,7 +51,7 @@
 					<li class="layui-nav-item" style="float:right;margin-right: 40px;"><a href="javascript:;"  style="font-size: 20px;margin-left: 50px;" class="layui-icon layui-icon-edit" @click="open_fatie">发帖</a></li>
 					<li class="layui-nav-item" style="float:right;"><a href="javascript:;"  style="font-size: 20px;margin-left: 50px;" class="layui-icon layui-icon-search">寻吧</a></li>
 					<li class="layui-nav-item" style="float:right;"><a href="javascript:;"  style="font-size: 20px;margin-left: 50px;" class="layui-icon layui-icon-log" @click="open_myinfozx">我的动态</a></li>
-					<li class="layui-nav-item" style="float:right;"><a href="tieba.jsp"  style="font-size: 20px;margin-left: 50px;" class="layui-icon layui-icon-link">最左首页</a></li>
+					<li class="layui-nav-item" style="float:right;"><a href="tieba.html"  style="font-size: 20px;margin-left: 50px;" class="layui-icon layui-icon-link">最左首页</a></li>
 				</ul>
 			</div>
 		</div>
@@ -83,35 +74,38 @@
 		</div>
 		
 		
+		
+		
 		<div id="rec">
 			<div id="rec_left" class="layui-carousel" lay-filter="test1">
 				<div carousel-item="">
 					<div>
-						<img src="${path}img/pxxylogo.jpg"
+						<img src="img/pxxylogo.jpg"
 							style="width: 100%; height: 100%;" />
 					</div>
 					<div>
-						<img src="${path}img/432.jpg" style="width: 100%; height: 100%;" />
+						<img src="img/432.jpg" style="width: 100%; height: 100%;" />
 					</div>
 					<div>
-						<img src="${path}img/pxxylogo.jpg"
+						<img src="img/pxxylogo.jpg"
 							style="width: 100%; height: 100%;" />
 					</div>
 					<div>
-						<img src="${path}img/432.jpg" style="width: 100%; height: 100%;" />
+						<img src="img/432.jpg" style="width: 100%; height: 100%;" />
 					</div>
 					<div>
-						<img src="${path}img/pxxylogo.jpg"
+						<img src="img/pxxylogo.jpg"
 							style="width: 100%; height: 100%;" />
 					</div>
 				</div>
 			</div>
 			<div id="rec_right">
-				<img class="barPic" alt="" src="http://localhost:8080/tbxt/IoReadImage?pictureName=zuizuo21.jpg">
+				<component121 />
 			</div>
 		</div>
 
 		<div id="sec">
+		<h1></h1>
 			<div class="left-sec">
 				<div id="my_tieba_box">
 					<div id="my_tieba_mod">
@@ -259,60 +253,19 @@
 				</div>
 			</div>
 
-			<!-- =====================最右===============================-->
-
-			<div class="side-sec">
-				<fieldset class="layui-elem-field layui-field-title"
-					style="margin-top: 10px; margin-left: 20px; width: 200px;">
-					<legend>话题热议榜</legend>
-				</fieldset>
-				<div class="top_list_hot">
-					<componenthuati />
-				</div>
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<div class="gonggao">
-					<button class="layui-btn layui-btn-lg">公告板</button>
-					<img src="${path}img/gonggao02.jpg"
-						style="width: 220px; height: 90px; margin-top: 10px;" />
-					<ul class="gonggao_list">
-						<li class="gonggao_list_item"><a href="javascript:;"
-							class="gonggao_list_item_name" @click="open_gonggao">贴吧开展“恋童”专项清理行动
-								贴吧开展“恋童”专项清理行动贴吧开展“恋童”专项清理行动</a></li>
-						<li class="gonggao_list_item"><a href="javascript:;"
-							class="gonggao_list_item_name">贴吧开展“网络相约自残自杀”专项清理行动</a></li>
-					</ul>
-				</div>
-			</div>
-
 			<!-- =====================中间部分===============================-->
-			<div class="right-sec">
+			<div class="bar_right-sec">
 				<fieldset class="layui-elem-field layui-field-title"
-					style="margin-top: 10px; margin-left: 20px; width: 460px;">
-					<legend>热门动态</legend>
+					style="margin-top: 10px; margin-left: 20px; width: 700px;">
+					<legend>吧内动态</legend>
 				</fieldset>
-				<div class="right-sec_tiezi">
+				<div class="right-sec_tiezi_barinfo">
 					<div class="loading_icon">
-						<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop" style="display: inline-block;"></i>
+					<i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-icon-loading" style="display:inline-block"></i>
+						<i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop" style="display:inline-block"></i>
 					</div>
-					<post_view_component  /> 
+					<component1 /> 
 				</div>
-
-
-
 
 
 
@@ -410,13 +363,6 @@
 				<button id="btn_comments_tj" @click="tijiao_comments_click" class="layui-btn">提交</button>
 			</div>
 		</div>
-		
-		<!-- ==========================公告页面===================== -->
-		<div id="gonggao_Box" style="display: none;">
-			<h5 style="text-align: left;padding:20px; color:rgb(141, 141, 141);">
-				<span>贴吧开展“恋童”专项清理行动 贴吧开展贴吧开展“恋童”专项清理行动 贴吧开展贴吧开展“恋童”专项清理行动 贴吧开展</span>
-			</h5>
-		</div>
 
 		<!-- ==========================帖子layer页面===================== -->
 		<div>
@@ -477,8 +423,9 @@
 	</div> 
 	</div>
 	</div>
-	<script type="text/javascript" src="${path}js/toastr.js"></script>
-	<script src="${path}js/index.js"></script>
+	</div>
+	<script type="text/javascript" src="js/toastr.js"></script>
+	<script src="js/index.js"></script>
 </body>
 </html>
 

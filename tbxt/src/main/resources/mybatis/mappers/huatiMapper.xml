@@ -21,7 +21,7 @@
   
   <select id="queryHotHuati" resultMap="BaseResultMap">
   	SELECT huati_content
-	FROM huati GROUP BY huati_content DESC LIMIT 3
+	FROM huati WHERE huati_isdelete='0' GROUP BY huati_content DESC LIMIT 3
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
