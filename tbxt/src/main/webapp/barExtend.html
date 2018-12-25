@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="css/index.css" />
 <link rel="stylesheet" href="layui/css/layui.css" />
 <link rel="stylesheet" href="css/blog.css">
-<link rel="stylesheet" href="css/toastr.css">
 <script src="js/vue.min.js"></script>
 <script src="js/vue-resource.js"></script>
 <script src="layui/layui.js"></script>
@@ -385,7 +384,7 @@
 										发布于：<span>{{postList.DTOBarAndPic.post.postCreattime}}</span>
 									</h5>
 								</div>
-								<p class="comment_title">{{postList.DTOBarAndPic.post.postTitle}}</p>
+								<p class="comment_title">{{postList.DTOBarAndPic.post.postTitle}}<span style="font-size: 15px; float: left; margin-left: 20px; color: #FF7F42;" v-if="postList.DTOBarAndPic.post.postCategory">#{{postList.DTOBarAndPic.post.postCategory}}#</span></p>
 								<p class="comment_content">{{postList.DTOBarAndPic.post.postContent}}</p>
 								<img v-for="item in pictureList" :key="item" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " 
 								style="width: 200px;padding:5px; height: 130px;float: left;margin-left: 1px;"
@@ -424,7 +423,6 @@
 	</div>
 	</div>
 	</div>
-	<script type="text/javascript" src="js/toastr.js"></script>
 	<script src="js/index.js"></script>
 </body>
 </html>

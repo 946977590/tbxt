@@ -1,37 +1,38 @@
 package com.pxxy.controller;
 
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.UUID;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
+import com.pxxy.utils.ImgCompress;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-
 import com.pxxy.service.postService;
 import com.pxxy.service.post_pictureService;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.DTOgreat;
+import com.pxxy.DTO.DTOhuati;
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.pojo.huati;
 import com.pxxy.pojo.post;
@@ -48,6 +49,7 @@ public class postController {
 	
 	@Autowired
 	private post_pictureService post_pictureService;
+	
 
 	@RequestMapping(value = "/postCreat", method = RequestMethod.POST)
 	@ResponseBody
@@ -91,6 +93,10 @@ public class postController {
                 }
                 try {
                     file.transferTo(new File(storePath+File.separator+pic_name));//把文件写入目标文件地址
+                    ImgCompress.pictrueName = pic_name;
+                    ImgCompress imgCom = new ImgCompress(storePath+File.separator+pic_name);
+                	imgCom.resizeFix(400, 400);
+//                	System.out.println("图片压缩成功！！");
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -135,6 +141,7 @@ public class postController {
 		pw.close();
 	}
 
+	
     @RequestMapping(value="/springUpload",method=RequestMethod.POST)
     public String upload(@RequestParam("files") MultipartFile[] files,
             HttpServletRequest request){
@@ -165,7 +172,7 @@ public class postController {
                     filepath.getParentFile().mkdirs();//如果目录不存在，创建目录
                 }
                 try {
-                    file.transferTo(new File(storePath+File.separator+pic_name));//把文件写入目标文件地址
+                	file.transferTo(new File(storePath+File.separator+pic_name));//把文件写入目标文件地址
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -259,10 +266,7 @@ public class postController {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = response.getWriter();
 		PostUserDTO postUserDTO = postService.queryPostLayer(postId);
-//		if(postUserDTO.getDTOgreat() == null) {
-//			postUserDTO.setDTOgreat(dTOgreat);
-//		}
-//		System.out.println(postUserDTO);
+		System.out.println(postUserDTO);
 		Gson gson = new GsonBuilder().serializeNulls().create();	//防止Gson转Json对象空属性丢失
 		String res = gson.toJson(postUserDTO);
 		pw.write(res);
@@ -561,8 +565,47 @@ public class postController {
   //查询热门话题
   	@RequestMapping(value="/queryHotHuati",method=RequestMethod.POST)
   	@ResponseBody
-  	public List<huati> queryHotHuati() {
-  		List<huati> list = postService.queryHotHuati();
-  		return list;
+  	public DTOhuati queryHotHuati() {
+  		DTOhuati DTOhuati = postService.queryHotHuati();
+//  		System.out.println("CCC==DTOhuati=="+DTOhuati);
+  		return DTOhuati;
+  	}
+  	
+  //查询后台话题列表
+  	@RequestMapping(value="/queryHuatiByStage",method=RequestMethod.POST)
+  	@ResponseBody
+  	public DTOhuati queryHuatiByStage() {
+  		DTOhuati DTOhuati = postService.queryHotHuatiByBackStage();
+  		return DTOhuati;
+  	}
+  	
+  //封禁话题
+  	@RequestMapping(value="/BanHuati",method=RequestMethod.POST)
+  	@ResponseBody
+  	public String BanHuati(@RequestParam String huatiContent) {
+  		huati huati = new huati();
+  		huati.setHuatiContent(huatiContent);
+  		huati.setHuatiIsdelete("1");
+  		int i = postService.updateHuati(huati);
+  		return "banned";
+  	}
+  	
+  	 //解封话题
+  	@RequestMapping(value="/ReBanHuati",method=RequestMethod.POST)
+  	@ResponseBody
+  	public String ReBanHuati(@RequestParam String huatiContent) {
+  		huati huati = new huati();
+  		huati.setHuatiContent(huatiContent);
+  		huati.setHuatiIsdelete("0");
+  		int i = postService.updateHuati(huati);
+  		return "Rebanned";
+  	}
+  	
+  //查询话题社区post列表
+  	@RequestMapping(value="/queryHuatiByCategory",method=RequestMethod.POST)
+  	@ResponseBody
+  	public PostUserDTO queryHuatiByCategory(@RequestParam String postCategory) {
+  		PostUserDTO postUserDTO = postService.queryHuatiPostView(postCategory);
+  		return postUserDTO;
   	}
 }

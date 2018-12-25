@@ -248,4 +248,8 @@ public class userController {
 	public String skipto_picManage() {
 		return "picManage";
 	}
+	@RequestMapping(value="/skipto_huatiList",method=RequestMethod.GET)
+	public String skipto_huatiList() {
+		return "huatiList";
+	}
 }

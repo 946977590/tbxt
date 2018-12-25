@@ -56,4 +56,5 @@ public interface postMapper {
     PostUserDTO queryAllBar(); 			//查询所有贴吧
     DTOBarAndPic selectAllPostInBack();	//后台查询所有帖子
     List<?> queryPostIdListByUserId(String postUserId);	//根据用户id查询当前所有帖子id
+    List<?> queryHuatiPostId(String postCategory);	//话题社区所有帖子id
 }

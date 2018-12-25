@@ -19,14 +19,10 @@
 				</div>
 				<a class="layui-btn search_btn">查询帖吧</a>
 			</div>
-			<div class="layui-inline">
-				<a class="layui-btn layui-btn-danger batchDel">批量封禁</a>
-			</div>
 		</blockquote>
 		<div class="layui-form news_list">
 			<table class="layui-table">
 				<colgroup>
-					<col width="5%">
 					<col width="12%">
 					<col width="12%">
 					<col>
@@ -37,7 +33,6 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
 						<th>吧名</th>
 						<th>吧主</th>
 						<th>贴吧宣言</th>
@@ -49,7 +44,6 @@
 				</thead>
 				<tbody class="users_content">
 					<tr v-for="item in barList" :key="item">
-						<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
 						<th>{{item.barName}}</th>
 						<th>{{item.barLeader}}</th>
 						<th>{{item.barSign}}</th>

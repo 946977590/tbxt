@@ -20,4 +20,6 @@ public interface post_pictureMapper {
     List<post_picture> queryAllPic();
     
     List<post_picture> selectByPostId(String postId);
+   
+    List<post_picture> querySlidePic();	//¬÷≤•Õºπ‹¿Ì
 }

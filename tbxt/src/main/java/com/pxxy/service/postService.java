@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.DTOgreat;
+import com.pxxy.DTO.DTOhuati;
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.pojo.huati;
 import com.pxxy.pojo.post;
@@ -28,6 +29,7 @@ public interface postService {
     
     PostUserDTO queryTopPostView();	//贴吧首页热门推荐
     PostUserDTO queryBarPostView(String barId);	//贴吧内容详情
+    PostUserDTO queryHuatiPostView(String postCategory);	//话题社区内容详情
     PostUserDTO queryAllBar(); 			//查询所有贴吧
     DTOBarAndPic selectAllPostInBack();	//后台查询所有帖子
     PostUserDTO selectAllAnnounce();	//查询所有公告
@@ -37,5 +39,7 @@ public interface postService {
     int PostreadAdd(post_readed record);		//已读功能
     List<post_readed> judgeRead(String userId,String postId);	//判断该用户是否读过文章
     int insertHuati(huati record);	//插入话题
-    List<huati> queryHotHuati();	//热门话题推荐
+    DTOhuati queryHotHuati();	//热门话题推荐
+    DTOhuati queryHotHuatiByBackStage();	//后台话题列表
+    int updateHuati(huati record);	//封禁话题
 }

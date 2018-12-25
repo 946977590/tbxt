@@ -20,8 +20,38 @@
   </select>
   
   <select id="queryHotHuati" resultMap="BaseResultMap">
-  	SELECT huati_content
-	FROM huati WHERE huati_isdelete='0' GROUP BY huati_content DESC LIMIT 3
+  	SELECT
+	huati_content,COUNT(huati_content)
+	FROM
+		huati
+	WHERE
+		huati_isdelete = '0'
+	GROUP BY
+		huati_content
+	ORDER BY
+		COUNT(huati_content)  DESC;
+  </select>
+  
+  <select id="queryAllHotHuati" resultMap="BaseResultMap">
+  	SELECT huati_content,huati_isdelete
+	FROM huati GROUP BY huati_content DESC
+  </select>
+  <select id="queryAllHotHuatiNum" resultType="java.lang.String">
+  	SELECT COUNT(huati_id)
+	FROM huati  GROUP BY huati_content DESC
+  </select>
+  
+  <select id="queryHotHuatiNum" resultType="java.lang.String">
+  	SELECT
+	COUNT(huati_content)
+	FROM
+		huati
+	WHERE
+		huati_isdelete = '0'
+	GROUP BY
+		huati_content
+	ORDER BY
+		COUNT(huati_content) DESC;
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
@@ -98,7 +128,7 @@
         huati_isdelete = #{huatiIsdelete,jdbcType=VARCHAR},
       </if>
     </set>
-    where huati_id = #{huatiId,jdbcType=VARCHAR}
+    where huati_content = #{huatiContent,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pxxy.pojo.huati">
     update huati

@@ -1,7 +1,10 @@
 package com.pxxy.service;
 
+import java.util.List;
+
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.pojo.post_bar;
+import com.pxxy.pojo.post_picture;
 
 public interface post_barService {
 
@@ -9,4 +12,6 @@ public interface post_barService {
 	PostUserDTO selectAllBar();	//查询所有贴吧
 	int updateByPrimaryKeySelective(post_bar record);	//封禁贴吧
 	post_bar queryBarPic(String barId);	//查询贴吧图片
+	List<post_picture> querySlidePic();	//轮播图管理
+	int updateByPrimaryKeySelective(post_picture record);
 }

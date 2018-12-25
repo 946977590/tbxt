@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.pxxy.DTO.PostByGreatReadedDTO;
 import com.pxxy.DTO.PostUserDTO;
+import com.pxxy.mapper.huatiMapper;
 import com.pxxy.mapper.postMapper;
 import com.pxxy.pojo.post_great;
 import com.pxxy.service.postService;
@@ -22,6 +23,9 @@ public class Post_test {
 	
 	@Autowired
 	private postService postService;
+	
+	@Autowired
+	private  huatiMapper huatiMapper;
 	
 	
 	@Test
@@ -46,8 +50,8 @@ public class Post_test {
 	
 	@Test
 	public void test13() {
-		PostUserDTO postUserDTO = postMapper.queryAllBar();
-		System.out.println("postUserDTO=="+postUserDTO);
+		List list = huatiMapper.queryHotHuati();
+		System.out.println("list=="+list);
 	}
 	
 	@Test

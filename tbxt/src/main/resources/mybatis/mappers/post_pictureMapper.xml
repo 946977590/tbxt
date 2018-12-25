@@ -27,6 +27,12 @@
     where picture_id = #{pictureId,jdbcType=VARCHAR}
   </select>
   
+  <select id="querySlidePic" resultMap="BaseResultMap">
+  	SELECT picture_id,picture_name
+	FROM post_picture
+	where picture_isdelete = '8'
+  </select>
+  
   <select id="selectByPostId" parameterType="java.lang.String" resultMap="BaseResultMap">
     select * 
     from post_picture 

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.UUID;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.pxxy.service.post_barService;
 import com.pxxy.DTO.PostUserDTO;
+import com.pxxy.pojo.post;
 import com.pxxy.pojo.post_bar;
+import com.pxxy.pojo.post_picture;
 import com.pxxy.pojo.user;
 
 @Controller
@@ -100,5 +103,65 @@ public class post_barController {
 	public post_bar queryBarPic(@RequestParam String barId) {
 		post_bar post_bar = post_barService.queryBarPic(barId);
 		return post_bar;
+	}
+	
+	//查询轮播图
+	@RequestMapping(value="/querySlidePic",method=RequestMethod.POST)
+	@ResponseBody
+	public List<post_picture> querySlidePic() {
+		List<post_picture> list = post_barService.querySlidePic();
+		return list;
+	}
+	
+	//轮播图管理
+	@RequestMapping(value = "/slideManage", method = RequestMethod.POST)
+	@ResponseBody
+	public String slideManage(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(required = false) MultipartFile[] files,@RequestParam List<?> pictureIdList) throws IOException {
+		HttpSession session = request.getSession();
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setContentType("text/html;charset=utf-8");
+		post post = new post();
+		user sessionUser = (user) session.getAttribute("user"); // session未登录，则不可发帖
+		String user_id = sessionUser.getUserId();
+		String postId = UUID.randomUUID().toString();
+		String pictureId = "";
+		if(files!=null && files.length>0){  
+            //循环获取file数组中得文件  
+            for(int i = 0;i<files.length;i++){  
+                MultipartFile file = files[i];  
+                //保存文件  
+                if(file != null) {
+                	  post_picture post_picture = new post_picture();
+                      String storePath= "D:\\AUPLOAD\\images";//存放我们上传的文件路径
+                      Date date = new Date();
+                      String ctime = date.toLocaleString().toString();
+                      String fileName = file.getOriginalFilename();
+                      String pic_name = pictureId+fileName;	//生成唯一的图片名字
+                      File filepath = new File(storePath, fileName);
+                      post_picture.setPictureName(pic_name);
+                      post_picture.setPictureCreattime(ctime);
+                      pictureId = (String) pictureIdList.get(i);
+                      post_picture.setPictureId(pictureId);
+                      post_picture.setPictureIsdelete("8");
+                      post_picture.setPictureBelong(postId);
+                      int a = post_barService.updateByPrimaryKeySelective(post_picture);
+//      		        System.out.println("插入"+a+"post图片!!");
+                      if (!filepath.getParentFile().exists()) {
+
+                          filepath.getParentFile().mkdirs();//如果目录不存在，创建目录
+                      }
+                      try {
+                          file.transferTo(new File(storePath+File.separator+pic_name));//把文件写入目标文件地址
+                      } catch (Exception e) {
+                          e.printStackTrace();
+                      }
+                }
+            }  
+            return "updateSuccess";
+        }else {
+        	return "fileNull";
+        }
+
 	}
 }

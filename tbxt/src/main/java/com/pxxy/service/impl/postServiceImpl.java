@@ -14,6 +14,7 @@ import com.pxxy.pojo.post_picture;
 import com.pxxy.pojo.post_readed;
 import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.DTOgreat;
+import com.pxxy.DTO.DTOhuati;
 import com.pxxy.DTO.DTOreaded;
 import com.pxxy.DTO.DTOtopic;
 import com.pxxy.DTO.PostByGreatReadedDTO;
@@ -169,7 +170,22 @@ public class postServiceImpl implements postService {
 		postUserDTO.setPostByGreatReadedDTOList(postByGreatReadedDTOList);
 		return postUserDTO;
 	}
-
+	//话题社区
+	public PostUserDTO queryHuatiPostView(String postCategory) {
+		PostUserDTO postUserDTO = new PostUserDTO() ;
+		PostByGreatReadedDTO postByGreatReadedDTO = new PostByGreatReadedDTO();
+		List<PostByGreatReadedDTO> postByGreatReadedDTOList = new ArrayList<PostByGreatReadedDTO>();
+		ArrayList postIdList = (ArrayList) postMapper.queryHuatiPostId(postCategory);
+		//根据相关id获取对应的post
+		for(int i=0;i<postIdList.size();i++) {
+			String postId = (String) postIdList.get(i);
+			postByGreatReadedDTO = postMapper.queryPostViewByGreatReaded(postId);
+			postByGreatReadedDTOList.add(postByGreatReadedDTO);
+		}
+		postUserDTO.setPostByGreatReadedDTOList(postByGreatReadedDTOList);
+		return postUserDTO;
+	}
+	
 	public PostUserDTO queryAllBar() {
 		// TODO Auto-generated method stub
 		PostUserDTO postUserDTO = postMapper.queryAllBar();
@@ -235,9 +251,27 @@ public class postServiceImpl implements postService {
 		return i;
 	}
 
-	public List<huati> queryHotHuati() {
+	public DTOhuati queryHotHuati() {
+		DTOhuati DTOhuati = new DTOhuati();
 		List<huati> list = huatiMapper.queryHotHuati();
-		return list;
+		List<?> Numlist = huatiMapper.queryHotHuatiNum();
+		DTOhuati.setHuatiList(list);
+		DTOhuati.setNumList(Numlist);
+		return DTOhuati;
+	}
+
+	public int updateHuati(huati record) {
+		int i = huatiMapper.updateByPrimaryKeySelective(record);
+		return i;
+	}
+
+	public DTOhuati queryHotHuatiByBackStage() {
+		DTOhuati DTOhuati = new DTOhuati();
+		List<huati> list = huatiMapper.queryAllHotHuati();
+		List<?> Numlist = huatiMapper.queryAllHotHuatiNum();
+		DTOhuati.setHuatiList(list);
+		DTOhuati.setNumList(Numlist);
+		return DTOhuati;
 	}
 
 }
