@@ -7,7 +7,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Date;
 import java.util.List;
 import com.pxxy.utils.ImgCompress;
@@ -54,7 +57,7 @@ public class postController {
 	@RequestMapping(value = "/postCreat", method = RequestMethod.POST)
 	@ResponseBody
 	public void postCreat(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(required = false) String postBarId,@RequestParam(required = false) String postCategory, @RequestParam(required = false) String postTitle,
+			@RequestParam String postBarId,@RequestParam(required = false) String postCategory, @RequestParam(required = false) String postTitle,
 			@RequestParam(required = false) String postContent,@RequestParam(required = false) MultipartFile[] files) throws IOException {
 		HttpSession session = request.getSession();
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -75,8 +78,10 @@ public class postController {
                 String storePath= "D:\\AUPLOAD\\images";//存放我们上传的文件路径
                 Date date = new Date();
                 String pictureId = UUID.randomUUID().toString();
-                String ctime = date.toLocaleString().toString();
+        		String ctime = date.toLocaleString().toString();
                 String fileName = file.getOriginalFilename();
+                fileName = fileName.replace("=","o");
+                fileName = fileName.replace("&","o");
                 String pic_name = pictureId+fileName;	//生成唯一的图片名字
                 File filepath = new File(storePath, fileName);
                 post_picture.setPictureName(pic_name);
@@ -112,7 +117,7 @@ public class postController {
 			post.setPostContent(postContent);
 			post.setPostId(postId);
 			post.setPostIsdelete("0");
-			post.setPostBarId("123");
+			post.setPostBarId(postBarId);
 			post.setPostUserId(user_id);
 			post.setPostTitle(postTitle);
 			post.setPostCreattime(ctime);
@@ -155,7 +160,8 @@ public class postController {
                 String storePath= "D:\\AUPLOAD\\images";//存放我们上传的文件路径
                 Date date = new Date();
                 String pictureId = UUID.randomUUID().toString();
-                String ctime = date.toLocaleString().toString();
+                SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss"); 
+        		String ctime = dateFormat.format(date);
                 String fileName = file.getOriginalFilename();
                 String pic_name = pictureId+fileName;	//生成唯一的图片名字
                 File filepath = new File(storePath, fileName);
@@ -476,6 +482,20 @@ public class postController {
     	DTOBarAndPic DTOBarAndPic = postService.selectAllPostInBack();
     	return DTOBarAndPic;
     }
+  //后台查询所有帖子分页
+    @RequestMapping(value = "/selectAllPostInBackFY", method = RequestMethod.POST)
+   	@ResponseBody
+   	public DTOBarAndPic selectAllPostInBackFY(@RequestParam int preNum,@RequestParam int pageSize) {
+    	DTOBarAndPic DTOBarAndPic = postService.selectAllPostInBackFY(preNum, pageSize);
+    	return DTOBarAndPic;
+    }
+  //后台关键字查询所有帖子分页
+    @RequestMapping(value = "/selectAllPostInBackFYandKW", method = RequestMethod.POST)
+   	@ResponseBody
+   	public DTOBarAndPic selectAllPostInBackFYandKW(@RequestParam String postTitle,@RequestParam int preNum,@RequestParam int pageSize) {
+    	DTOBarAndPic DTOBarAndPic = postService.selectAllPostInBackByFYandKw(postTitle, preNum, pageSize);
+    	return DTOBarAndPic;
+    }
     
   //后台查询所有公告
     @RequestMapping(value = "/selectAllAnnounces", method = RequestMethod.POST)
@@ -567,6 +587,15 @@ public class postController {
   	@ResponseBody
   	public DTOhuati queryHotHuati() {
   		DTOhuati DTOhuati = postService.queryHotHuati();
+//  		System.out.println("CCC==DTOhuati=="+DTOhuati);
+  		return DTOhuati;
+  	}
+  	
+  	 //查询所有话题
+  	@RequestMapping(value="/queryHotHuatiAll",method=RequestMethod.POST)
+  	@ResponseBody
+  	public DTOhuati queryHotHuatiAll() {
+  		DTOhuati DTOhuati = postService.queryHotHuatiAll();
 //  		System.out.println("CCC==DTOhuati=="+DTOhuati);
   		return DTOhuati;
   	}

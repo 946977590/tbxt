@@ -34,9 +34,7 @@ form input.layui-input[disabled]{ background:#f2f2f2; color:#595963!important; }
 	width: 400px;
 	float: left;
 }
-#test7{
-	
-}
+
 #img_btn_box{
 	float: left;
 	width: 130px;
@@ -63,11 +61,7 @@ form input.layui-input[disabled]{ background:#f2f2f2; color:#595963!important; }
 	width: 1100px;
 	margin-left:10px;
 }
-.layui-btn{
-	margin-left: 75px;
-	margin-top: 10px;
-	float:left;
-}
+
 .layui-upload-slide{
 	width: 170px;
 	height: 60px;

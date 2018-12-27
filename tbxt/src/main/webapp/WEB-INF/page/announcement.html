@@ -12,15 +12,9 @@
 	</head>
 	<body>
 	<div id="announce">
-		<blockquote class="layui-elem-quote news_search">
-			<div class="layui-inline">
-				<a class="layui-btn layui-btn-danger batchDel">批量封禁</a>
-			</div>
-		</blockquote>
 		<div class="layui-form news_list">
 			<table class="layui-table">
 				<colgroup>
-					<col width="50">
 					<col>
 					<col width="32%">
 					<col width="18%">
@@ -28,7 +22,6 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
 						<th>公告栏标题</th>
 						<th>内容</th>
 						<th>创建时间</th>
@@ -37,18 +30,43 @@
 				</thead>
 				<tbody class="users_content">
 					<tr v-for="item in announceList" :key="item">
-						<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
 						<th>{{item.announceTitle}}</th>
 						<th>{{item.announceContent}}</th>
 						<th>{{item.announceCreattime}}</th>
 						<th>
-							<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-							<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-							<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+							<a class="layui-btn layui-btn-xs" lay-event="edit" @click="open_gg(item.announceId)">编辑</a>
+							<a v-if="item.announceIsdelete==1" class="layui-btn layui-btn layui-btn-xs" lay-event="del" @click="Rebanned(item.announceId)">解封</a>
+							<a v-if="item.announceIsdelete==0" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" @click="banned(item.announceId)">封禁</a>
 						</th>
 					</tr> 
 				</tbody>
 			</table>
+		</div>
+		
+		<div id="gonggaoEdit" style="display:none;width:700px;margin-top:30px;" >
+			<div class="layui-form-item">
+				<label class="layui-form-label">公告标题</label>
+				<div class="layui-input-block">
+					<input type="text" id="fatie_title" 
+						lay-verify="title" v-model="ggTitle" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label"></label>
+				<div class="layui-input-block" style="width: 660px;">
+					<textarea placeholder="请输入相关公告内容~" v-model="ggContent" id="fatie_textarea"
+					 class="layui-textarea">
+						</textarea>
+				</div>
+			</div>
+			
+			<div style="margin-left:360px;">
+				<button type="button" class="layui-btn" @click="updateGG(ggId)">
+				<i class="layui-icon layui-icon-edit"></i>更新公告
+				</button>
+			</div>
+			
+			
 		</div>
 	</div>	
 	<script src="js/list.js"></script>

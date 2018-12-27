@@ -11,7 +11,7 @@
 <script type="text/javascript" src="layui/layui.js"></script>
 </head>
 <body>
-	<div id="barCreat">
+	<div id="picManage">
 	    	<div class="layui-upload-img2" v-for="item in picList" :key="item">
 	    	<a href="javascript:;"  style="position:absolute;" @click="judgeDel(item.pictureId)"><i id="picdele" class="layui-icon layui-icon-close" style="color:red;font-size:20px;"></i></a>
 	    	<img  :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " style="width:100%;height:100%;">

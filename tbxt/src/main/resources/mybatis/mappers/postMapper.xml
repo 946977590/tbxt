@@ -59,6 +59,20 @@
 		from post
 		where 1=1
 	</select>
+	<select id="selectAllPostInBackByFY" resultMap="AllPostResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from post
+		ORDER BY post_id DESC LIMIT #{preNum},#{pageSize}
+	</select>
+	
+	<select id="selectAllPostInBackByFYandKw" resultMap="AllPostResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from post
+		where post_title LIKE CONCAT('%', #{postTitle}, '%') 
+		ORDER BY post_id DESC LIMIT #{preNum},#{pageSize}
+	</select>
 
 	<resultMap type="com.pxxy.DTO.DTOBarAndPic"
 		id="QueryDTO_resultMap">

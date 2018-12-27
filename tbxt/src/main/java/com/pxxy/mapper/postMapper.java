@@ -57,4 +57,6 @@ public interface postMapper {
     DTOBarAndPic selectAllPostInBack();	//后台查询所有帖子
     List<?> queryPostIdListByUserId(String postUserId);	//根据用户id查询当前所有帖子id
     List<?> queryHuatiPostId(String postCategory);	//话题社区所有帖子id
+    DTOBarAndPic selectAllPostInBackByFY(@Param("preNum")int preNum,@Param("pageSize")int pageSize);	//分页
+    DTOBarAndPic selectAllPostInBackByFYandKw(@Param("postTitle") String postTitle,@Param("preNum")int preNum,@Param("pageSize")int pageSize);
 }

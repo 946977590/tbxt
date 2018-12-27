@@ -3,28 +3,26 @@ var vm = new Vue({
 	data:{
 		barOJB:{
 			barName:'',
-			barLeader:'',
 			barSign:'',
-			barCategory:''
-		}
+			barCategory:'',
+		},
+		cateList:[{'n':'高校'},{'n':'企业'},{'n':'电影'},{'n':'娱乐明星'},{'n':'体育'},{'n':'小说'},{'n':'爱综艺'},{'n':'追剧狂'}]
 	},
 	methods:{
 		AddBar:function(){
-			var reg=/^[\u4E00-\u9FA5]{2,4}$/;   /*定义验证表达式*/
+			var reg=/^[\u4E00-\u9FA5]{2,5}$/;   /*定义验证表达式*/
 //			console.log(reg.test(this.barOJB.barName));
 			if(reg.test(this.barOJB.barName)){
-				this.barOJB.barLeader = $('#barLeader').val();
+				this.barOJB.barCategory = $('#barCategory option:selected').val();
 				var formData = new FormData();
 				var file = document.getElementById("file1");
 				formData.append('file', file.files[0]);
 				formData.append('barName', this.barOJB.barName);
-				formData.append('barLeader', this.barOJB.barLeader);
 				formData.append('barSign', this.barOJB.barSign);
 				formData.append('barCategory', this.barOJB.barCategory);
 				var url = 'http://localhost:8080/tbxt/postBarCreat';
 				this.$http.post(url, formData).then(function(res) {
 					// 处理成功的结果
-//					console.log("this.barOJB.barLeader==="+this.barOJB.barLeader)
 //					console.log(res)
 					if(res.bodyText=='success'){
 						layer.msg('创建贴吧成功',{icon: 1},{

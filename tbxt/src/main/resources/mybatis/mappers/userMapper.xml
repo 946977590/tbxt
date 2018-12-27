@@ -34,6 +34,21 @@
     where user_isdelete = '0' OR user_isdelete = '1'
   </select>
   
+   <select id="queryAllUserFY"  resultMap="UserResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_isdelete = '0' OR user_isdelete = '1' ORDER BY user_id DESC LIMIT #{preNum},#{pageSize}
+  </select>
+  
+  <select id="queryUserBykw" resultMap="UserResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_nickname LIKE CONCAT('%', #{userNickname}, '%') 
+    AND (user_isdelete = '0' OR user_isdelete = '1')
+  </select>
+  
   
   <sql id="Base_Column_List">
     user_id, user_email, user_password, user_nickname, user_gender, user_level, user_creattime, 

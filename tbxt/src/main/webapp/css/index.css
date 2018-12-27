@@ -52,27 +52,27 @@
 }
 #sec{
 	width: 1000px;
-	height: 2000px;
+	height: auto;
 	text-align: center;
 	margin: 0 auto;
 }
 .left-sec{
 	width: 210px;
-	height: 2000px;
+	height: auto;
 	float: left;
 	border-right: 1px solid #DCDCDC;
 	border-left: 1px solid #DCDCDC;
 }
 .bar_right-sec{
 	width: 785px;
-	height: 2000px;
+	height: auto;
 	float: left;
 	border-left: 1px solid #DCDCDC;
 	border-right: 1px solid #DCDCDC;
 }
 .right-sec {
 	width: 512px;
-	height: 2000px;
+	height: auto;
 	float: left;
 	margin-left: 10px;
 	border-right: 1px solid #DCDCDC;
@@ -120,7 +120,7 @@
 	height: 40px;
 	margin-top: 25px ;
 	float: left;
-	margin-left: 2px;
+	margin-left: 20px;
 }
 .seacher_btn_post{
 	width: 104px;
@@ -156,7 +156,14 @@
 
 /* 2018.10.24¼ÓµÄcss */
 .right-sec_tiezi_author_info_box {
-	width: 710px;
+	width: 700px;
+	height: 30px;
+	float: left;
+	margin-top: 5px;
+	border-bottom: 1px solid #DCDCDC;
+}
+.right-sec_tiezi_author_info_box2 {
+	width: 500px;
 	height: 30px;
 	float: left;
 	margin-top: 5px;
@@ -265,7 +272,7 @@
 
 #tieba_category_box {
 	width: 210px;
-	height: 1510px;
+	height: auto;
 }
 
 .cate_titile {
@@ -458,4 +465,7 @@
 	margin-left: 20px; border-style: groove; 
 	border-color: #EFEFEF; 
 	margin-top:10px;
+}
+.gonggao_list_item_name{
+	border-bottom: 3px solid #DCDCDC;
 }

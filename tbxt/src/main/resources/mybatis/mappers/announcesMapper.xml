@@ -31,6 +31,13 @@
     where announce_isdelete = '0'
   </select>
   
+  <select id="selectAnnounceBack" resultMap="AllAnnounceResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from announces
+    where 1=1
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

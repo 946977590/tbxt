@@ -22,12 +22,11 @@ public class Usertest {
 	@Test
 	public void test2() {
 		System.out.println("========");
-		user user = new user();
-		user.setUserId("781");
-		user.setUserNickname("xixi");
-		System.out.println("获取user的昵称为"+user.getUserNickname());
-		int a = userMapper.insert(user);
-		System.out.println("成功插入"+a+"数据"+user.getUserNickname());
+		int a = (int) (Math.random()*1000000);
+//	    for(int j = 0; j< 10; j++){
+//	        System.out.println((int)((Math.random()*9+1)*100000));
+//	    }
+	    System.out.println("a=="+a);
 	}
 	
 	@Test

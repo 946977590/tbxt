@@ -15,23 +15,14 @@
 	<body>
 	<div id="uList">
 		<blockquote class="layui-elem-quote news_search">
-			<div class="layui-inline">
 				<div class="layui-input-inline">
-					<input type="text" value="" placeholder="请输入关键字" class="layui-input search_input">
+					<input type="text" v-model="keyword" placeholder="请输入相关昵称" class="layui-input search_input">
 				</div>
-				<a class="layui-btn search_btn">查询用户</a>
-			</div>
-			<div class="layui-inline">
-				<a class="layui-btn layui-btn-normal usersAdd_btn">添加贴吧管理员</a>
-			</div>
-			<div class="layui-inline">
-				<a class="layui-btn layui-btn-danger batchDel">批量封禁</a>
-			</div>
+				<a class="layui-btn search_btn" @click="searchByKW" >查询用户</a>
 		</blockquote>
-		<div class="layui-form news_list">
+		<div class="layui-form news_list" style="height:300px;">
 			<table class="layui-table">
 				<colgroup>
-					<col width="50">
 					<col>
 					<col width="18%">
 					<col width="8%">
@@ -42,7 +33,6 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
 						<th>登录名</th>
 						<th>邮箱</th>
 						<th>性别</th>
@@ -54,7 +44,6 @@
 				</thead>
 				<tbody class="users_content">
 					<tr v-for="item in userList" :key="item">
-						<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
 						<th>{{item.userNickname}}</th>
 						<th>{{item.userEmail}}</th>
 						<th v-if="item.userGender==0">女</th>
@@ -72,7 +61,17 @@
 				</tbody>
 			</table>
 		</div>
-		
+	
+	<div id="fy_box" style="float:left;margin-left:100px;margin-top:30px;">
+			<button class="layui-btn" @click="prevCli"><i class="layui-icon layui-icon-prev"></i></button>
+			<button class="layui-btn" @click="nextCli"><i class="layui-icon layui-icon-next"></i></button>
+			<a >第{{curr}}页</a>
+	</div>
+	<div style="float:left;margin-left:10px;margin-top:30px;">
+		<input type="text" v-model="skipNum" style="width:50px;float:left;" class="layui-input search_input">
+		<button class="layui-btn" @click="skipCli">跳转</button>
+		<a >共{{Zcount}}条记录</a>
+	</div>	
 	
 	<div id="my_info_Box" style="display: none;">
 			<form class="layui-form" action="">

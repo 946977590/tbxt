@@ -2,6 +2,7 @@ package com.pxxy.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 import java.util.Date;
 
@@ -23,6 +24,7 @@ import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pxxy.service.userService;
+import com.pxxy.utils.SendEmail;
 import com.google.gson.Gson;
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.pojo.user;
@@ -78,6 +80,19 @@ public class userController {
 		}
 		pw.flush();
 		pw.close();
+	}
+	//获取session并判断
+	@RequestMapping(value="/sendEmail",method=RequestMethod.POST)
+	@ResponseBody
+	public String sendEmail(@RequestParam String userEmail,@RequestParam String userNickname) throws IOException{
+		int a = (int) (Math.random()*1000000);
+		String verifyCode = String.valueOf(a);
+		try {
+			SendEmail.sendEmail(userEmail, userNickname, verifyCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return verifyCode;
 	}
 	
 	//获取session并判断
@@ -183,6 +198,21 @@ public class userController {
 		PostUserDTO postUserDTO = userService.queryAllUser();
 		return postUserDTO;
 	}
+	@RequestMapping(value="/queryAllUserFY",method=RequestMethod.POST)
+	@ResponseBody
+	public PostUserDTO queryAllUserFY(@RequestParam int preNum,@RequestParam int pageSize) {
+		PostUserDTO postUserDTO = userService.queryAllUserFY(preNum,pageSize);
+		return postUserDTO;
+	}
+	
+	//关键字查询
+	@RequestMapping(value="/queryUserByKW",method=RequestMethod.POST)
+	@ResponseBody
+	public PostUserDTO queryUserByKW(@RequestParam String userNickname) {
+		PostUserDTO postUserDTO = userService.queryUserBykw(userNickname);
+		System.out.println("postUserDTO="+postUserDTO);
+		return postUserDTO;
+	}
 	
 	@RequestMapping(value="/queryUserById",method=RequestMethod.POST)
 	@ResponseBody
@@ -198,6 +228,9 @@ public class userController {
 		user user = new user();
 		user.setUserId(userId);
 		user.setUserIsdelete("1");
+		Date date = new Date();
+		String userModifytime = date.toLocaleString().toString();
+		user.setUserModifytime(userModifytime);
 		userService.updateByPrimaryKeySelective(user);
 		return "banned";
 	}
@@ -208,10 +241,37 @@ public class userController {
 		user user = new user();
 		user.setUserId(userId);
 		user.setUserIsdelete("0");
+		Date date = new Date();
+		String userModifytime = date.toLocaleString().toString();
+		user.setUserModifytime(userModifytime);
 		userService.updateByPrimaryKeySelective(user);
 		return "Rebanned";
 	}
-	
+	//更新用户信息
+	@RequestMapping(value="/UpdateUser",method=RequestMethod.POST)
+	@ResponseBody
+	public String UpdateUser(HttpServletRequest request,@RequestParam String userNickname,@RequestParam String userGender) {
+		HttpSession session = request.getSession();
+		user user1 = (user) session.getAttribute("user");
+		user user = new user();
+		Date date = new Date();
+		String userModifytime = date.toLocaleString().toString();
+		user.setUserId(user1.getUserId());
+		user.setUserModifytime(userModifytime);
+		user.setUserGender(userGender);
+		user.setUserNickname(userNickname);
+		userService.updateByPrimaryKeySelective(user);
+		return "Update";
+	}
+	//根据id查nickname
+	@RequestMapping(value="/findName",method=RequestMethod.POST)
+	@ResponseBody
+	public user findName(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		user user1 = (user) session.getAttribute("user");
+		user user2 = userService.selectByPrimaryKey(user1.getUserId());
+		return user2;
+	}
 	
 	@RequestMapping(value="/skipto_backStage",method=RequestMethod.GET)
 	public ModelAndView skipto_back() {

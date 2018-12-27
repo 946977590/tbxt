@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pxxy.pojo.announces;
 import com.pxxy.pojo.post;
 import com.pxxy.pojo.post_bar;
 import com.pxxy.pojo.post_picture;
@@ -27,6 +29,7 @@ import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.mapper.post_barMapper;
 import com.pxxy.mapper.post_pictureMapper;
+import com.pxxy.mapper.announcesMapper;
 import com.pxxy.service.post_barService;
 
 @Service
@@ -37,6 +40,9 @@ public class post_barServiceImpl implements post_barService {
 	
 	@Autowired 
 	private post_pictureMapper post_pictureMapper;
+	
+	@Autowired 
+	private announcesMapper announcesMapper;
 	
 	public int insert(post_bar record) {
 	int a =	post_barMapper.insert(record);
@@ -68,6 +74,41 @@ public class post_barServiceImpl implements post_barService {
 	public int updateByPrimaryKeySelective(post_picture record) {
 		int i = post_pictureMapper.updateByPrimaryKeySelective(record);
 		return i;
+	}
+
+	public announces selectAnnouncesByKey(String announceId) {
+		announces announces = announcesMapper.selectByPrimaryKey(announceId);
+		return announces;
+	}
+
+	public post_bar queryBarByName(String barName) {
+		post_bar post_bar = post_barMapper.queryBarByName(barName);
+		return post_bar;
+	}
+
+	public PostUserDTO selectBarByKW( String barName,int preNum,int pageSize) {
+		PostUserDTO postUserDTO = post_barMapper.selectBarByKW(barName,preNum,pageSize);
+		return postUserDTO;
+	}
+
+	public int insertGG(announces record) {
+		int i = announcesMapper.insert(record);
+		return i;
+	}
+
+	public int updateGG(announces record) {
+		int i = announcesMapper.updateByPrimaryKeySelective(record);
+		return i;
+	}
+
+	public PostUserDTO selectAnnounceBack() {
+		PostUserDTO PostUserDTO = announcesMapper.selectAnnounceBack();
+		return PostUserDTO;
+	}
+
+	public PostUserDTO selectAllBarFY(int preNum, int pageSize) {
+		PostUserDTO postUserDTO = post_barMapper.selectAllBarFY(preNum,pageSize);
+		return postUserDTO;
 	}
 		
 }

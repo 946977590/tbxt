@@ -10,5 +10,7 @@ public interface userService {
 	 user queryByUserEmail(String uerEmail); //用户登陆
 	 user queryByManaUserEmail(String userEmail);
 	 PostUserDTO queryAllUser();	//查询除管理员之外所有会员
+	 PostUserDTO queryAllUserFY(int preNum,int pageSize);	//分页查询除管理员之外所有会员
 	 int updateByPrimaryKeySelective(user record);
+	 PostUserDTO queryUserBykw(String userNickname);
 }

@@ -15,6 +15,7 @@ public class DTOBarAndPic {
 	private List<post_picture> post_pictureList;
 	private List<post> postList;
 	private List<post_bar> post_barList;
+
 	public post getPost() {
 		return post;
 	}

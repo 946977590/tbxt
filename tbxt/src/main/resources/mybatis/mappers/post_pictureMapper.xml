@@ -28,7 +28,7 @@
   </select>
   
   <select id="querySlidePic" resultMap="BaseResultMap">
-  	SELECT picture_id,picture_name
+  	SELECT picture_id,picture_name,picture_belong
 	FROM post_picture
 	where picture_isdelete = '8'
   </select>

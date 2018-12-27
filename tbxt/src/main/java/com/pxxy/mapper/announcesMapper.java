@@ -16,5 +16,6 @@ public interface announcesMapper {
 
     int updateByPrimaryKey(announces record);
     
-    PostUserDTO selectAllAnnounce();	//查询所有公告
+    PostUserDTO selectAllAnnounce();	//查询公告isdelete=0
+    PostUserDTO selectAnnounceBack();	//查询所有公告
 }

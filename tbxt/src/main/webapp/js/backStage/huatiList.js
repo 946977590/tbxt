@@ -36,10 +36,11 @@ layui.use('form', function() {
 			var myChart = echarts.init(document.getElementById('drawLine'));
 			var url = '/tbxt/queryHotHuati';
 			this.$http.post(url).then(function(res) {
+//				console.log(JSON.stringify(res.body));
 				var Clis = new Array();
 				var Nlis = new Array();
 				for(var i=0;i<res.body.huatiList.length;i++){
-					Clis.push(res.body.huatiList[i].huatiContent)
+					Clis.push(res.body.huatiList[i].huatiContent.substring(0, 5))
 					Nlis.push(res.body.NumList[i]);
 //					this.huatiOBJ.push({content:res.body.huatiList[i].huatiContent,number:res.body.NumList[i]});
 				}

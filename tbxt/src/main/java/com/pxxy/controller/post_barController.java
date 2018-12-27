@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.pxxy.service.post_barService;
 import com.pxxy.DTO.PostUserDTO;
+import com.pxxy.pojo.announces;
 import com.pxxy.pojo.post;
 import com.pxxy.pojo.post_bar;
 import com.pxxy.pojo.post_picture;
@@ -38,8 +39,7 @@ public class post_barController {
 	@RequestMapping(value="/postBarCreat",method=RequestMethod.POST)
 	@ResponseBody
 	public String postBarCreat(HttpServletRequest request,HttpServletResponse response,
-		@RequestParam String barName,@RequestParam(required=false) String barLeader
-		,@RequestParam(required = false) MultipartFile file,
+		@RequestParam String barName,@RequestParam(required = false) MultipartFile file,
 		@RequestParam(required=false) String barSign,@RequestParam String barCategory)
 		throws IOException{
 		HttpSession session = request.getSession();
@@ -72,7 +72,7 @@ public class post_barController {
 			post_bar.setBarCreattime(ctime);
 			post_bar.setBarId(barId);
 			post_bar.setBarIsdelete("0");
-			post_bar.setBarLeader(barLeader);
+			post_bar.setBarLeader("CharmK");
 			post_bar.setBarSign(barSign);
 			post_bar.setBarName(barName);
 			post_bar.setBarPicture(barPicture);
@@ -96,7 +96,41 @@ public class post_barController {
 		PostUserDTO postUserDTO = post_barService.selectAllBar();
 		return postUserDTO;
 	}
-	
+	@RequestMapping(value="/queryAllBarInBackFY",method=RequestMethod.POST)
+	@ResponseBody
+	public PostUserDTO querAllBarFY(@RequestParam int preNum,@RequestParam int pageSize) {
+		PostUserDTO postUserDTO = post_barService.selectAllBarFY(preNum, pageSize);
+		return postUserDTO;
+	}
+	//关键字查bar
+	@RequestMapping(value="/queryAllBarByKW",method=RequestMethod.POST)
+	@ResponseBody
+	public PostUserDTO queryAllBarByKW(@RequestParam String barName,@RequestParam int preNum,@RequestParam int pageSize) {
+		PostUserDTO postUserDTO = post_barService.selectBarByKW(barName,preNum,pageSize);
+//		System.out.println("postUserDTO="+postUserDTO);
+		return postUserDTO;
+	}
+	//封禁bar
+	@RequestMapping(value="/BannedBar",method=RequestMethod.POST)
+	@ResponseBody
+	public String BannedBar(@RequestParam String barId) {
+		post_bar post_bar = new post_bar();
+		post_bar.setBarId(barId);
+		post_bar.setBarIsdelete("1");
+		post_barService.updateByPrimaryKeySelective(post_bar);
+		return "banned";
+	}
+	//解除封禁
+	@RequestMapping(value="/ReBannedBar",method=RequestMethod.POST)
+	@ResponseBody
+	public String ReBannedBar(@RequestParam String barId) {
+		post_bar post_bar = new post_bar();
+		post_bar.setBarId(barId);
+		post_bar.setBarIsdelete("0");
+		post_barService.updateByPrimaryKeySelective(post_bar);
+		return "Rebanned";
+	}
+		
 	//根据Barid查询贴吧图片
 	@RequestMapping(value="/queryBarPic",method=RequestMethod.POST)
 	@ResponseBody
@@ -111,6 +145,14 @@ public class post_barController {
 	public List<post_picture> querySlidePic() {
 		List<post_picture> list = post_barService.querySlidePic();
 		return list;
+	}
+	
+	//根据id查公告
+	@RequestMapping(value="/queryGGByid",method=RequestMethod.POST)
+	@ResponseBody
+	public announces queryGGByid(@RequestParam String announceId) {
+		announces announces = post_barService.selectAnnouncesByKey(announceId);
+		return announces;
 	}
 	
 	//轮播图管理
@@ -162,6 +204,102 @@ public class post_barController {
         }else {
         	return "fileNull";
         }
-
 	}
+	//添加公告
+	@RequestMapping(value="/announcesAdd",method=RequestMethod.POST)
+	@ResponseBody
+	public String announcesAdd(@RequestParam 
+			String announceTitle,@RequestParam String announceContent) 
+	{
+		String announceId = UUID.randomUUID().toString();
+		Date date = new Date();
+		String announceCreattime = date.toLocaleString().toString();
+		announces announces = new announces();
+		announces.setAnnounceContent(announceContent);
+		announces.setAnnounceId(announceId);
+		announces.setAnnounceCreattime(announceCreattime);
+		announces.setAnnounceTitle(announceTitle);
+		post_barService.insertGG(announces);
+		return "success";
+	}
+	
+	//更改公告
+	@RequestMapping(value="/announcesUpdate",method=RequestMethod.POST)
+	@ResponseBody
+	public String announcesUpdate(@RequestParam String announceId,
+			@RequestParam String announceTitle,@RequestParam String announceContent) 
+	{
+		announces announces = new announces();
+		Date date = new Date();
+		String announceModifytime = date.toLocaleString().toString();
+		announces.setAnnounceId(announceId);
+		announces.setAnnounceContent(announceContent);
+		announces.setAnnounceId(announceId);
+		announces.setAnnounceModifytime(announceModifytime);
+		announces.setAnnounceTitle(announceTitle);
+		post_barService.updateGG(announces);
+		return "success";
+	}
+	
+	//查询公告ById
+	@RequestMapping(value="/GetAnnouncesBy",method=RequestMethod.POST)
+	@ResponseBody
+	public announces GetAnnouncesBy(@RequestParam String announceId) 
+	{
+		announces announces = post_barService.selectAnnouncesByKey(announceId);
+		return announces;
+	}
+	
+	//封禁bar
+	@RequestMapping(value="/BannedAnnounce",method=RequestMethod.POST)
+	@ResponseBody
+	public String BannedAnnounce(@RequestParam String announceId) {
+		announces announces = new announces();
+		announces.setAnnounceId(announceId);
+		announces.setAnnounceIsdelete("1");
+		post_barService.updateGG(announces);
+		return "banned";
+	}
+	//解除封禁
+	@RequestMapping(value="/ReBannedAnnounce",method=RequestMethod.POST)
+	@ResponseBody
+	public String ReBannedAnnounce(@RequestParam String announceId) {
+		announces announces = new announces();
+		announces.setAnnounceId(announceId);
+		announces.setAnnounceIsdelete("0");
+		post_barService.updateGG(announces);
+		return "Rebanned";
+	}
+	
+	//管理轮播图所属话题
+	@RequestMapping(value="/updateSlideHuati",method=RequestMethod.POST)
+	@ResponseBody
+	public String updateSlideHuati(@RequestParam String pictureId,@RequestParam String pictureBelong) {
+		post_picture post_picture = new post_picture();
+		post_picture.setPictureId(pictureId);
+		post_picture.setPictureBelong(pictureBelong);
+		post_barService.updateByPrimaryKeySelective(post_picture);
+		return "success";
+	}
+	
+	//根据name查询贴吧
+	@RequestMapping(value="/queryBarByName",method=RequestMethod.POST)
+	@ResponseBody
+	public post_bar queryBarByName(@RequestParam String barName) {
+		post_bar post_bar = post_barService.queryBarByName(barName);
+		if(post_bar != null) {
+			return post_bar;
+		}else {
+			return null;
+		}
+	}
+	
+	//查询所有公告
+	@RequestMapping(value="/queryAnnounceBack",method=RequestMethod.POST)
+	@ResponseBody
+	public PostUserDTO queryAnnounceBack() {
+		PostUserDTO postUserDTO = post_barService.selectAnnounceBack();
+		return postUserDTO;
+	}
+	
 }

@@ -20,14 +20,55 @@
 		<div id="btn_box">
 			<div v-for="item in nList" >
 				<input type="file" :id="'file'+item.n" style="display:none">
-				<button type="button" class="layui-btn" :id="'tes'+item.n" >
-					<i class="layui-icon"></i>替换轮播图
+				<button type="button" class="layui-btn" style="float:left;margin-left:70px;" :id="'tes'+item.n" >
+					<i class="layui-icon"></i>替换轮播图{{item.n}}
 				</button>
 			</div>
 		</div>
-		<button type="button" class="layui-btn" @click="Add_carousel" >
-			<i class="layui-icon"></i>提交更新
+		<button type="button" style="margin-left:490px;margin-top:20px;" class="layui-btn layui-btn-danger" @click="Add_carousel" >
+			<i class="layui-icon"></i>提交轮播图更新
 		</button>
+		
+		
+		<table class="layui-table" style="margin-top:20px;">
+				<colgroup>
+					<col width="18%">
+					<col width="18%">
+					<col width="15%">
+					<col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th>轮播图序号</th>
+						<th>所属话题</th>
+						<th>操作</th>
+					</tr> 
+				</thead>
+				<tbody class="users_content">
+					<tr v-for="item in picList" :key="item">
+						<th>{{item.pictureId}}</th>
+						<th>{{item.pictureBelong}}</th>
+						<th><a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail" @click="queryInfo(item.pictureId)">更换话题</a></th>
+					</tr> 
+				</tbody>
+			</table>
+		
+		
+		<div style="display:none;width:500px;" id="huatiSelect">
+		<form class="layui-form layui-form-pane" action="">
+			 <div class="layui-form-item" style="margin-top:30px;margin-left:40px;">
+		    <label class="layui-form-label">选择话题内容</label>
+		    <div class="layui-input-block">
+		      <select name="interest" lay-filter="aihao" id="huatiSelect">
+		        <option v-for="item in huatiList" :value="item.huatiContent">{{item.huatiContent}}</option>
+		      </select>
+		    </div>
+		    <button type="button" style="margin-left:240px;margin-top:50px;" class="layui-btn layui-btn-danger" @click="update_huati" >
+			<i class="layui-icon"></i>提交话题更新
+			</button>
+  			</div>
+  		</form>	
+		</div>
 		
 	</div>	
 	

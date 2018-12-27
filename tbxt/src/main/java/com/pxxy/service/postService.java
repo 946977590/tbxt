@@ -40,6 +40,9 @@ public interface postService {
     List<post_readed> judgeRead(String userId,String postId);	//判断该用户是否读过文章
     int insertHuati(huati record);	//插入话题
     DTOhuati queryHotHuati();	//热门话题推荐
+    DTOhuati queryHotHuatiAll();	
     DTOhuati queryHotHuatiByBackStage();	//后台话题列表
     int updateHuati(huati record);	//封禁话题
+    DTOBarAndPic selectAllPostInBackFY(int preNum,int pageSize);	//分页
+    DTOBarAndPic selectAllPostInBackByFYandKw(String postTitle,int preNum,int pageSize);	//关键字查询分页
 }

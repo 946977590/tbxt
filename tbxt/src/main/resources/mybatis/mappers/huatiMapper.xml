@@ -29,7 +29,20 @@
 	GROUP BY
 		huati_content
 	ORDER BY
-		COUNT(huati_content)  DESC;
+		COUNT(huati_content)  DESC LIMIT 8;
+  </select>
+  
+  <select id="queryHotHuatiAll" resultMap="BaseResultMap">
+  	SELECT
+	huati_content,COUNT(huati_content)
+	FROM
+		huati
+	WHERE
+		huati_isdelete = '0'
+	GROUP BY
+		huati_content
+	ORDER BY
+		COUNT(huati_content)  DESC ;
   </select>
   
   <select id="queryAllHotHuati" resultMap="BaseResultMap">
@@ -51,7 +64,7 @@
 	GROUP BY
 		huati_content
 	ORDER BY
-		COUNT(huati_content) DESC;
+		COUNT(huati_content) DESC LIMIT 8;
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

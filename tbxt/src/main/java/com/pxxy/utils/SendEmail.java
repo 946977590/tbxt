@@ -53,7 +53,7 @@ public class SendEmail {
 		//String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);// 生成短信验证码
 		// System.out.println("sadasdasdasdasd:"+verifyCode);
 		// 4 From: 发件人（昵称有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改昵称）
-		message.setFrom(new InternetAddress(myEmailAccount, "性能监测系统管理员", "UTF-8"));
+		message.setFrom(new InternetAddress(myEmailAccount, "最左社区贴吧平台", "UTF-8"));
 
 		// 5 To: 收件人（可以增加多个收件人、抄送、密送）
 		message.setRecipient(MimeMessage.RecipientType.TO,new InternetAddress(receiveMailAccount, username + "用户", "UTF-8"));
@@ -63,7 +63,7 @@ public class SendEmail {
 
 		// 7. Content: 邮件正文（可以使用html标签）（内容有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改发送内容）
 		//message.setContent(username + "用户你好,您的提供操作的验证码是" + verifyCode, "text/html;charset=UTF-8");
-		message.setContent(username + "<H1>用户你好,云栖系统激活邮件！点击以下链接进行账户激活</H1> <h3><a href='http://192.168.233.1:8080/xnjcpt/user/user_activate?user.user_id="+verifyCode+"'>http:// 192.168.233.1:8080/xnjcpt/user/user_activate?user.user_id="+verifyCode+"</a></h3>", "text/html;charset=UTF-8");
+		message.setContent(username + "<H1>用户你好,最左社区贴吧邮件！您的验证码是</H1> <h3><a href='javascript:;'>"+verifyCode+"</a></h3>", "text/html;charset=UTF-8");
 		// 8. 设置发件时间
 		message.setSentDate(new Date());
 

@@ -38,7 +38,11 @@ public class userServiceImpl implements userService {
 		PostUserDTO postUserDTO = userMapper.queryAllUser();
 		return postUserDTO;
 	}
-
+	
+	public PostUserDTO queryAllUserFY(int preNum,int pageSize) {
+		PostUserDTO postUserDTO = userMapper.queryAllUserFY(preNum,pageSize);
+		return postUserDTO;
+	}
 	public user selectByPrimaryKey(String userId) {
 		user user = userMapper.selectByPrimaryKey(userId);
 		return user;
@@ -47,5 +51,10 @@ public class userServiceImpl implements userService {
 	public int updateByPrimaryKeySelective(user record) {
 		int i = userMapper.updateByPrimaryKeySelective(record);
 		return i;
+	}
+
+	public PostUserDTO queryUserBykw(String userNickname) {
+		PostUserDTO postUserDTO = userMapper.queryUserBykw(userNickname);
+		return postUserDTO;
 	}
 }

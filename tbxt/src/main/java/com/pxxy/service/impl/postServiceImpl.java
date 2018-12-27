@@ -60,30 +60,41 @@ public class postServiceImpl implements postService {
 
 	public PostUserDTO queryPostByUserId(String userId) {
 		// TODO Auto-generated method stub
-		System.out.println("service===进入queryPostByUserId方法");
+//		System.out.println("service===进入queryPostByUserId方法");
 		PostUserDTO PostUserDTO = new PostUserDTO();
-		DTOBarAndPic dTOBarAndPic = postMapper.queryPostByUserId(userId);
+		DTOBarAndPic dTOBarAndPic0 = postMapper.queryPostByUserId(userId);
 		DTOreaded DTOreaded = new DTOreaded();
 		DTOgreat DTOgreat = new DTOgreat();
 		List postList = postMapper.queryPostIdListByUserId(userId);
 		int countRead = 0;
 		int countGreat = 0;
+		int rrr = 0;
+		int ggg =0;
 		String postId = "";
 		for(int i=0;i<postList.size();i++) {
 			postId = (String) postList.get(i);
-			countRead = post_readedMapper.CountReadByuser(postId);
-			countGreat = post_greatMapper.CountGreatByUser(postId);
-			System.out.println("=========i==="+i);
+			rrr = post_readedMapper.CountReadByuser(postId);
+			ggg = post_greatMapper.CountGreatByUser(postId);
+			countRead = countRead+rrr;
+			countGreat = countGreat+ggg;
 		}
-		System.out.println("=========countRead==="+countRead);
-		System.out.println("=========countGreat==="+countGreat);
 		int countPost = postMapper.CountPostByUser(userId);
 		DTOreaded.setCountRead(countRead);
 		DTOgreat.setCountGreat(countGreat);
 		DTOgreat.setCountPost(countPost);
-		if(DTOreaded != null)PostUserDTO.setDTOreaded(DTOreaded);
-		if(DTOgreat != null)PostUserDTO.setDTOgreat(DTOgreat);
-		if(dTOBarAndPic != null)PostUserDTO.setDTOBarAndPic(dTOBarAndPic);
+		PostUserDTO.setDTOreaded(DTOreaded);
+		PostUserDTO.setDTOgreat(DTOgreat);
+		DTOBarAndPic dTOBarAndPic = new DTOBarAndPic();
+		if(dTOBarAndPic0 != null) {
+			dTOBarAndPic = dTOBarAndPic0;
+			PostUserDTO.setDTOBarAndPic(dTOBarAndPic);
+		}else {
+			DTOBarAndPic dTOBarAndPic2 = new DTOBarAndPic();
+			dTOBarAndPic2.setPostList(null);
+			dTOBarAndPic = dTOBarAndPic2;
+			PostUserDTO.setDTOBarAndPic(dTOBarAndPic);
+		}
+		
 		return PostUserDTO;
 	}
 	
@@ -215,6 +226,19 @@ public class postServiceImpl implements postService {
 		DTOBarAndPic.setPostList(postList);
 		return DTOBarAndPic;
 	}
+	
+	public DTOBarAndPic selectAllPostInBackFY(int preNum,int pageSize) {
+		DTOBarAndPic DTOBarAndPic = new DTOBarAndPic();
+		DTOBarAndPic DTOBarAndPic1 = postMapper.selectAllPostInBackByFY(preNum, pageSize);
+		List<post> postList = DTOBarAndPic1.getPostList();
+		for(int i=0;i<DTOBarAndPic1.getPostList().size();i++) {
+			String barId = DTOBarAndPic1.getPostList().get(i).getPostBarId();
+			post_bar post_bar = post_barMapper.queryBarNameById(barId);
+			postList.get(i).setPostCategory(post_bar.getBarName());
+		}
+		DTOBarAndPic.setPostList(postList);
+		return DTOBarAndPic;
+	}
 
 	public int updateByPrimaryKeySelective(post record) {
 		int i = postMapper.updateByPrimaryKeySelective(record);
@@ -272,6 +296,26 @@ public class postServiceImpl implements postService {
 		DTOhuati.setHuatiList(list);
 		DTOhuati.setNumList(Numlist);
 		return DTOhuati;
+	}
+
+	public DTOhuati queryHotHuatiAll() {
+		DTOhuati DTOhuati = new DTOhuati();
+		List<huati> list = huatiMapper.queryHotHuatiAll();
+		DTOhuati.setHuatiList(list);
+		return DTOhuati;
+	}
+
+	public DTOBarAndPic selectAllPostInBackByFYandKw(String postTitle, int preNum, int pageSize) {
+		DTOBarAndPic DTOBarAndPic = new DTOBarAndPic();
+		DTOBarAndPic DTOBarAndPic1 = postMapper.selectAllPostInBackByFYandKw(postTitle, preNum, pageSize);
+		List<post> postList = DTOBarAndPic1.getPostList();
+		for(int i=0;i<DTOBarAndPic1.getPostList().size();i++) {
+			String barId = DTOBarAndPic1.getPostList().get(i).getPostBarId();
+			post_bar post_bar = post_barMapper.queryBarNameById(barId);
+			postList.get(i).setPostCategory(post_bar.getBarName());
+		}
+		DTOBarAndPic.setPostList(postList);
+		return DTOBarAndPic;
 	}
 
 }

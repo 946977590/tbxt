@@ -37,6 +37,21 @@
     where 1=1
   </select>
   
+  <select id="selectAllBarFY" resultMap="postBarResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from post_bar
+    ORDER BY bar_id DESC LIMIT #{preNum},#{pageSize}
+  </select>
+  
+  <select id="selectBarByKW" resultMap="postBarResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from post_bar
+    where bar_name LIKE CONCAT('%', #{barName}, '%') 
+    ORDER BY bar_id DESC LIMIT #{preNum},#{pageSize}
+  </select>
+  
   <select id="queryBarPic" resultMap="BaseResultMap">
   	SELECT post_bar.bar_picture
 	FROM post_bar where post_bar.bar_id = #{barId}
@@ -47,6 +62,13 @@
 		post_bar.bar_name
     from post_bar
     where post_bar.bar_id = #{barId}
+  </select>
+  
+  <select id="queryBarByName" resultType="com.pxxy.pojo.post_bar">
+  	select 
+		post_bar.bar_id
+    from post_bar
+    where post_bar.bar_name = #{barName}
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">

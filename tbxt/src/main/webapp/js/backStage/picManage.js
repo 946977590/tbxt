@@ -1,5 +1,5 @@
 var vm = new Vue({
-	el:'#barCreat',
+	el:'#picManage',
 	data:{
 		picList:'',
 	},

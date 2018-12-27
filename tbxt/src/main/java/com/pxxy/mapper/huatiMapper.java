@@ -17,9 +17,8 @@ public interface huatiMapper {
 
     int updateByPrimaryKey(huati record);
     List<huati> queryHotHuati();	//热门话题推荐
-    
+    List<huati> queryHotHuatiAll();	
     List<?> queryHotHuatiNum();	//查询话题对应的热度
-    
     List<huati> queryAllHotHuati();
     List<?> queryAllHotHuatiNum();	//查询话题对应的热度
 }
