@@ -387,6 +387,10 @@ var post_view_component = Vue.extend({
 			</div>
 		</div>
 		
+		<fieldset class="layui-elem-field layui-field-title"
+			style="margin-top: 10px; margin-left: 20px; width:200px;">
+		<legend>我是有底线的</legend>
+		</fieldset> 
 	</div>	
 	`,
 		data(){
@@ -559,6 +563,10 @@ var post_view_component = Vue.extend({
 			</div>
 		</div>
 		
+		<fieldset class="layui-elem-field layui-field-title"
+			style="margin-top: 10px; margin-left: 20px; width:200px;">
+		<legend>我是有底线的</legend>
+		</fieldset>
 	</div>
 				`,
 		data(){
@@ -756,6 +764,10 @@ var post_view_component = Vue.extend({
 			</div>
 		</div>
 		
+		<fieldset class="layui-elem-field layui-field-title"
+			style="margin-top: 10px; margin-left: 20px; width:200px;">
+		<legend>我是有底线的</legend>
+		</fieldset>
 	</div>
 				`,
 		data(){
@@ -1203,7 +1215,7 @@ var post_view_component = Vue.extend({
 						class="layui-input">
 				</div>
 				<button id="yzm_btn1" class="layui-btn layui-btn-primary " @click="sendEmail">获取验证码</button>
-				<button id="yzm_btn2" class="layui-btn " @click="sendEmail" style="display:none;">验证码已发送</button>
+				<button id="yzm_btn2" class="layui-btn " style="display:none;">验证码已发送</button>
 			</div>
 			<div id="btn_zq">
 				<button class="layui-btn layui-btn-lg" v-on:click="register_user">注册</button>
@@ -1469,6 +1481,12 @@ var vm = new Vue(
 				pass_postId:'',
 				barPic_name:'',
 				seacherBarName:'',
+				wjmm_email:'',
+				wjmm_newpassword:'',
+				wjmm_yzm:'',
+				jdmm_oldpassword:'',
+				jdmm_newpassword:'',
+				jdmm_email:'',
 			},
 		 components: {
 			 'post_view_component':post_view_component,
@@ -1498,6 +1516,7 @@ var vm = new Vue(
 			        	  }else{
 			        		  that.userInfo.userNickname = '未登录'
 			        		  $('#myinfooo').hide();
+			        		  $('#logoutooo').hide();
 			        	  }
 			          }
 			        })
@@ -1561,6 +1580,155 @@ var vm = new Vue(
 						// 打开的内容
 						});
 					})
+				},
+				wjmm : function(){
+					$('#jdmm').show();
+					$('#wjmm').hide();
+				},
+				jdmm : function(){
+					$('#wjmm').show();
+					$('#jdmm').hide();
+				},
+				//修改密码
+				open_my_mima : function(){
+					layui.use([ 'layer' ], function() {
+						var layer = layui.layer, $ = layui.$;
+						layer.open({
+							type : 1,// 类型
+							area : [ '400px', '450px' ],// 定义宽和高
+							title : '修改密码',// 题目
+							shadeClose : false,// 点击遮罩层关闭
+							content : $('#xiugaiMM')
+						// 打开的内容
+						});
+					})
+				},
+				//忘记密码的修改密码方法
+				wjmm_update : function(){
+					var regPassword=/^[0-9]{6}$/;   /*定义验证表达式*/
+					if(regPassword.test(this.wjmm_newpassword)){
+						if(this.yzm == this.wjmm_yzm){
+							var data = {
+								'userEmail':this.wjmm_email,
+								'userPassword':this.wjmm_newpassword,
+							}
+							var url = '/tbxt/UpdateWjPassword';
+	        				this.$http.post(url, data, {
+	        					emulateJSON : true
+	        				}).then(function(res) {
+	        					if(res.bodyText == 'Update'){
+	        						layer.msg('更新密码成功!',{icon: 1},{
+		                                offset:['40%'],
+		                                time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                          }); 
+	            					layer.close(layer.index-1);
+	        					}else{
+	        						layer.msg('该邮箱账户不存在!',{icon: 5},{
+		                                offset:['40%'],
+		                                time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                          }); 
+	        					}
+	        				}, function(err) {
+	        					// 处理失败的结果
+	        					layer.msg('数据异常!',{icon: 5},{
+	                                offset:['40%'],
+	                                time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                          }); 
+	        				})
+						}else{
+							layer.msg('验证码错误!',{icon: 5},{
+	                            offset:['40%'],
+	                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                      }); 
+						}
+					}else{
+						layer.msg('新密码格式不对!',{icon: 5},{
+                            offset:['40%'],
+                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                      }); 
+					}
+				},
+				//记得密码的修改密码方法
+				jdmm_update : function(){
+					var regPassword=/^[0-9]{6}$/;   /*定义验证表达式*/
+					var regEmail = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/; /*校验邮件地址是否合法 */
+					var url = '/tbxt/UpdateJdPassword';
+					if(regEmail.test(this.jdmm_email)){
+						if(regPassword.test(this.jdmm_newpassword)){
+							var data = {
+								'userEmail': this.jdmm_email,
+								'userOldPassword':this.jdmm_oldpassword,
+								'userNewPassword':this.jdmm_newpassword,
+							}
+							this.$http.post(url, data, {
+								emulateJSON : true
+							}).then(function(res) {
+								switch(res.bodyText){
+								case 'Update':
+								layer.msg('密码更新成功!',{icon: 1},{
+		                            offset:['40%'],
+		                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                      });
+								layer.close(layer.index-1);
+								break;
+								case 'passwordError':
+								layer.msg('旧密码错误!',{icon: 5},{
+		                            offset:['40%'],
+		                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                      });
+								break;
+								case 'emailNull':
+								layer.msg('该邮箱账户不存在!',{icon: 5},{
+		                            offset:['40%'],
+		                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                      });
+								break;
+								}
+							}, function(err) {
+								
+							})
+						}else{
+						layer.msg('新密码格式错误!',{icon: 5},{
+                            offset:['40%'],
+                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                      });
+						}
+					}else{
+						layer.msg('邮箱格式不对!',{icon: 5},{
+                            offset:['40%'],
+                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                      }); 
+					}
+			
+				},
+				//发送修改密码的验证码
+				sendXGyzm : function(){
+		        console.log("发送邮箱");
+        		var regEmail = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/; /*校验邮件地址是否合法 */
+            		if(regEmail.test(this.wjmm_email)){
+            			$('#yzm_btn11').hide();
+            			$('#yzm_btn22').show();
+            			var data = {
+            				'userEmail':this.wjmm_email,
+            			}
+            			var url = '/tbxt/sendXGEmail';
+        				this.$http.post(url, data, {
+        					emulateJSON : true
+        				}).then(function(res) {
+        					this.yzm = res.bodyText;
+        				}, function(err) {
+        					// 处理失败的结果
+        					layer.msg('数据异常!',{icon: 5},{
+                                offset:['40%'],
+                                time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                          }); 
+        				})
+            		}else{
+            			layer.msg('邮箱格式错误!',{icon: 5},{
+                            offset:['40%'],
+                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                      }); 
+            		}
 				},
 				//注销用户
 				logout : function(){
@@ -1748,7 +1916,7 @@ var vm = new Vue(
 		                  });
 					})
 				},
-				// 打开注册模态框
+				// 打开模态框
 				open_register : function() {
 					// $("[name='testname']").val("xxxxxxxxxxxxxxx");//向模态框中赋值
 					layui.use([ 'layer' ], function() {
@@ -1944,7 +2112,6 @@ var vm = new Vue(
 						})
 					
 				},
-				
 			}
 		})
 

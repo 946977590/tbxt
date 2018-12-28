@@ -32,7 +32,7 @@
 							<dd>
 								<a href="javascript:;" @click="open_register">注册新账号</a>
 							</dd>
-							<dd>
+							<dd id="logoutooo">
 								<a href="javascript:;" @click="logout">退了</a>
 							</dd>
 						</dl></li>
@@ -301,9 +301,73 @@
 							lay-filter="demo1" @click="update_user">保存修改</button>
 					</div>
 				</div>
-			
 		</div>
 		
+		
+		<div id="xiugaiMM" style="display:none">
+			<div style="margin-top:30px;margin:0 atuo;">
+				<button class="layui-btn layui-btn-primary" @click="wjmm">记得原始密码</button>
+				<button class="layui-btn layui-btn-primary" @click="jdmm">忘记密码</button>
+				
+			<div id="wjmm" style="margin-top:20px;display:none;">
+				<div class="layui-form-item">
+				<label class="layui-form-label">邮箱</label>
+				<div class="layui-input-block">
+					<input type="text" 
+					id="my_info_user_email" v-model="wjmm_email" placeholder="请输入邮箱"  autocomplete="off"
+						class="layui-input">
+				</div>
+				</div>
+				<div class="layui-form-item">
+				<label class="layui-form-label">新密码</label>
+				<div class="layui-input-block">
+					<input type="text" 
+					id="my_info_user_email" v-model="wjmm_newpassword" placeholder="请输入六位数字密码"  autocomplete="off"
+						class="layui-input">
+				</div>
+				</div>
+				<div class="layui-form-item">
+				<label class="layui-form-label">验证码</label>
+				<div class="layui-input-inline">
+					<input type="text" id="verifiy_code"
+						  placeholder="请输入验证码" autocomplete="off"
+					v-model="wjmm_yzm"	class="layui-input">
+				</div>
+			   </div>
+			   <button id="yzm_btn11" class="layui-btn layui-btn-primary " @click="sendXGyzm">获取验证码</button>
+				<button id="yzm_btn22" class="layui-btn "  style="display:none;">验证码已发送</button>
+				<button class="layui-btn" @click="wjmm_update">更新密码</button>
+			</div>
+			
+			<div id="jdmm" style="margin-top:20px;display:none;">
+				<div class="layui-form-item">
+				<label class="layui-form-label">邮箱</label>
+				<div class="layui-input-block">
+					<input type="text" 
+					id="my_info_user_email" v-model="jdmm_email" placeholder="请输入您的邮箱账户"  autocomplete="off"
+						class="layui-input">
+				</div>
+				</div>
+				<div class="layui-form-item">
+				<label class="layui-form-label">旧密码</label>
+				<div class="layui-input-block">
+					<input type="text" 
+					id="my_info_user_email" v-model="jdmm_oldpassword" placeholder="请输入旧密码"  autocomplete="off"
+						class="layui-input">
+				</div>
+				</div>
+				<div class="layui-form-item">
+				<label class="layui-form-label">新密码</label>
+				<div class="layui-input-block">
+					<input type="text" 
+					id="my_info_user_email" v-model="jdmm_newpassword" placeholder="请输入六位数字密码"  autocomplete="off"
+						class="layui-input">
+				</div>
+				</div>
+				<button class="layui-btn" @click="jdmm_update">更新密码</button>
+			</div>
+			</div>
+		</div>
 
 		<!-- ==========================评论区页面===================== -->
 		<div id="comments_Box" style="display: none;">

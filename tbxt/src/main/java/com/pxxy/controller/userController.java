@@ -81,10 +81,25 @@ public class userController {
 		pw.flush();
 		pw.close();
 	}
-	//获取session并判断
+	//发送注册验证码
 	@RequestMapping(value="/sendEmail",method=RequestMethod.POST)
 	@ResponseBody
 	public String sendEmail(@RequestParam String userEmail,@RequestParam String userNickname) throws IOException{
+		int a = (int) (Math.random()*1000000);
+		String verifyCode = String.valueOf(a);
+		try {
+			SendEmail.sendEmail(userEmail, userNickname, verifyCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return verifyCode;
+	}
+	//发送修改密码验证码
+	@RequestMapping(value="/sendXGEmail",method=RequestMethod.POST)
+	@ResponseBody
+	public String sendXGEmail(@RequestParam String userEmail) throws IOException{
+		user user = userService.queryByUserEmail(userEmail);
+		String userNickname = user.getUserNickname();
 		int a = (int) (Math.random()*1000000);
 		String verifyCode = String.valueOf(a);
 		try {
@@ -182,14 +197,8 @@ public class userController {
 		}else {
 			res = "user_null";
 		}
-//		return res;
 		PrintWriter pw = response.getWriter();
 		pw.write(res);
-		/*System.out.println("00000000000000000000000");
-		String s ="dd";
-		modelAndView.addObject("res",res);
-		modelAndView.setViewName("backStage");
-		return res;*/
 	}
 	
 	@RequestMapping(value="/queryAllUser",method=RequestMethod.POST)
@@ -262,6 +271,40 @@ public class userController {
 		user.setUserNickname(userNickname);
 		userService.updateByPrimaryKeySelective(user);
 		return "Update";
+	}
+	//记得密码的===修改密码
+	@RequestMapping(value="/UpdateJdPassword",method=RequestMethod.POST)
+	@ResponseBody
+	public String UpdateUserPassword(@RequestParam String userEmail,@RequestParam String userOldPassword
+			,@RequestParam String userNewPassword) {
+		user user1 = userService.queryByUserEmail(userEmail);
+		if(user1 != null) {
+			String oldpassword = user1.getUserPassword();
+			if(userOldPassword.equals(oldpassword)) {
+				user1.setUserPassword(userNewPassword);
+				userService.updateByPrimaryKeySelective(user1);
+				return "Update";
+			}else {
+				return "passwordError";
+			}
+		}else {
+			return "emailNull";
+		}
+		
+	}
+	//忘记密码的===修改密码
+	@RequestMapping(value="/UpdateWjPassword",method=RequestMethod.POST)
+	@ResponseBody
+	public String UpdateWjPassword(@RequestParam String userEmail,@RequestParam String userPassword) {
+		user user1 = userService.queryByUserEmail(userEmail);
+		if(user1 != null) {
+			user1.setUserPassword(userPassword);
+			userService.updateByPrimaryKeySelective(user1);
+			return "Update";
+		}else {
+			return "emailNull";
+		}
+		
 	}
 	//根据id查nickname
 	@RequestMapping(value="/findName",method=RequestMethod.POST)

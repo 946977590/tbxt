@@ -303,7 +303,7 @@
 
 .side-sec {
 	width: 250px;
-	height: 2000px;
+	height: auto;
 	float: right;
 	border-right: 1px solid #DCDCDC;
 	border-left: 1px solid #DCDCDC;
