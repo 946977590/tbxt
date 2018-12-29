@@ -114,6 +114,8 @@ public class postController {
 			Date date = new Date();
 			String ctime = date.toLocaleString().toString();
 			post.setPostAuthor(postAuthor);
+			postContent = postContent.trim();
+			postTitle = postTitle.trim();
 			post.setPostContent(postContent);
 			post.setPostId(postId);
 			post.setPostIsdelete("0");
@@ -402,6 +404,7 @@ public class postController {
 		if(sessionUser != null) {
 			String userId = sessionUser.getUserId();
 			String topicId = UUID.randomUUID().toString();
+			topicContent = topicContent.trim();
 			postService.commentAdd(topicId, postId, userId, bUserId, topicContent);
 			res = "success";
 		}else {

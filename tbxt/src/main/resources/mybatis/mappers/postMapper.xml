@@ -129,6 +129,8 @@
 		post.post_id
 		FROM post RIGHT JOIN post_great
 		ON post.post_id = post_great.post_id
+		RIGHT JOIN post_readed
+		ON post.post_id = post_readed.post_id
 		WHERE post.post_isdelete = '0'
 		GROUP BY post_great.post_id DESC
 	</select>

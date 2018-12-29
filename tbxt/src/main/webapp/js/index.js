@@ -813,7 +813,7 @@ var post_view_component = Vue.extend({
 		              }); 
 					}else{
 						if(res.body.postByGreatReadedDTOList.length>0){
-							console.log(JSON.stringify(this.list));
+//							console.log(JSON.stringify(this.list));
 							this.list = res.body.postByGreatReadedDTOList;
 							this.postByGreatReadedDTOList = res.body.postByGreatReadedDTOList[0];
 							this.postByGreatReadedDTOList.pictureList = res.body.postByGreatReadedDTOList[0].post_pictureList;
@@ -1094,6 +1094,8 @@ var post_view_component = Vue.extend({
 				var barId = sessionStorage.getItem('barId'); // => 返回testKey对应的值
 				if(barId){
 					var regT=/^.{1,20}$/;   /*定义验证表达式*/
+					this.creat_tie_title = this.creat_tie_title.trim();
+					this.creat_tie_content = this.creat_tie_content.trim();
 					if(regT.test(this.creat_tie_title) && this.creat_tie_content != ''){
 						var file1 = document.getElementById("file1");
 						var file2 = document.getElementById("file2");
@@ -1858,63 +1860,70 @@ var vm = new Vue(
 				tijiao_comments_click : function(index_comments){
 					var url = 'http://localhost:8080/tbxt/CommentsAdd';
 					var postId = vm.pass_postId
-					var topicContent = vm.comments_topicContent
+					var topicContent = vm.comments_topicContent.trim();
 //					console.log("评论功能===获取topicContent=="+vm.comments_topicContent);
 //					console.log("评论功能===postId，topicContent=="+postId+"=="+topicContent);
 					var data = {
 						'postId': postId,
 						'topicContent':topicContent
 					}
-					this.$http.post(url, data,{
-						emulateJSON : true
-					}).then(function(res) {
-//					console.log("====="+res.body);
-						 switch(res.body){
-						     case 'success':
-						       layer.msg('评论成功！',{icon: 1},{
+					if(topicContent != ''){
+						this.$http.post(url, data,{
+							emulateJSON : true
+						}).then(function(res) {
+//						console.log("====="+res.body);
+							 switch(res.body){
+							     case 'success':
+							       layer.msg('评论成功！',{icon: 1},{
+				                        offset:['40%'],
+				                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+				                  });
+//							       console.log("kkkkkkkkkkkk")
+							       $("#comments_shafa").hide();
+			                	  var url2 = 'http://localhost:8080/tbxt/GetpostByPostId';
+									vm.$http.post(url2,data,{
+										emulateJSON : true,
+									}).then(function(res) {
+										if(res.body.DTOtopic != null){
+											vm.post_topicList = res.body.DTOtopic.post_topicList;
+										}
+									}, function(err) {
+										// 处理失败的结果
+//											console.log(err)
+										layer.msg('数据异常！',{icon: 5},{
+						                        offset:['40%'],
+						                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+						                  });
+									})	
+//									console.log("rrrrrrrrrrr")
+									layer.close(layer.index-1); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+							       break;
+							     case 'session_null':
+							       layer.msg('未登录！',{icon: 7},{
+				                        offset:['40%'],
+				                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+				                  });
+							       break;  
+							     default:
+							     layer.msg('评论出现异常！',{icon: 5},{
+				                        offset:['40%'],
+				                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+				                  });
+							       break;
+						   }
+						}, function(err) {
+							// 处理失败的结果
+							 layer.msg('获取个人动态信息失败！',{icon: 7},{
 			                        offset:['40%'],
 			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
 			                  });
-//						       console.log("kkkkkkkkkkkk")
-						       $("#comments_shafa").hide();
-		                	  var url2 = 'http://localhost:8080/tbxt/GetpostByPostId';
-								vm.$http.post(url2,data,{
-									emulateJSON : true,
-								}).then(function(res) {
-									if(res.body.DTOtopic != null){
-										vm.post_topicList = res.body.DTOtopic.post_topicList;
-									}
-								}, function(err) {
-									// 处理失败的结果
-//										console.log(err)
-									layer.msg('数据异常！',{icon: 5},{
-					                        offset:['40%'],
-					                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
-					                  });
-								})	
-//								console.log("rrrrrrrrrrr")
-								layer.close(layer.index-1); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
-						       break;
-						     case 'session_null':
-						       layer.msg('未登录！',{icon: 7},{
-			                        offset:['40%'],
-			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
-			                  });
-						       break;  
-						     default:
-						     layer.msg('评论出现异常！',{icon: 5},{
-			                        offset:['40%'],
-			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
-			                  });
-						       break;
-					   }
-					}, function(err) {
-						// 处理失败的结果
-						 layer.msg('获取个人动态信息失败！',{icon: 7},{
-		                        offset:['40%'],
-		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
-		                  });
-					})
+						})
+					}else{
+						layer.msg('评论内容不能为空！',{icon: 7},{
+	                        offset:['40%'],
+	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                  });
+					}
 				},
 				// 打开模态框
 				open_register : function() {
