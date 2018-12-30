@@ -230,7 +230,7 @@ var sjx_post_component = Vue.extend({
 	<li class="layui-timeline-item" v-for="item in list" :key="item">
 	<i class="layui-icon layui-timeline-axis"></i>
 	<div class="layui-timeline-content layui-text">
-	<div class="layui-timeline-title"><a href="javascript:;" v-on:click="Open_personPostInfo(item.postId)">{{item.postCreattime}} {{item.postTitle}}</a> </div>
+	<div class="layui-timeline-title" ><a href="javascript:;" style="width:400px;overflow: hidden;text-overflow: ellipsis;float:left;" v-on:click="Open_personPostInfo(item.postId)">{{item.postCreattime}} {{item.postTitle}}</a> <a href="javascript:;" v-on:click="judgeDel(item.postId)"> <span style="color:#009688 !important;">删除</span></a></div>
 	</div>
 	</li></ul>
 	</div>`
@@ -241,7 +241,7 @@ var sjx_post_component = Vue.extend({
 	      }
 	    },
   mounted(){
-        	var url = 'http://localhost:8080/tbxt/GetpostByuserId';
+        	var url = '/tbxt/GetpostByuserId';
 			this.$http.post(url, {
 				emulateJSON : true
 			}).then(function(res) {
@@ -275,6 +275,52 @@ var sjx_post_component = Vue.extend({
 			})	
         },
         methods:{
+        	judgeDel : function(postId){
+        		layer.confirm('确认删除该条动态？', {
+  				  btn: ['确定', '取消'] //可以无限个按钮
+  				,yes: function(index, layero){
+  				    //按钮【按钮一】的回调
+  					var url2 = '/tbxt/BannedPost';
+  					var data = {
+  							'postId': postId
+  					}
+  					vm.$http.post(url2, data,{
+  						emulateJSON : true
+  					}).then(function(res) {
+  						if(res.bodyText == 'banned'){
+  							layer.msg('删除成功!',{icon: 1},{
+  	  		                    offset:['40%'],
+  	  		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+  	  		              }); 
+  							var url3 = '/tbxt/GetpostByuserId';
+  							vm.$http.post(url3).then(function(res) {
+							vm.PerSonReadCount = res.body.DTOreaded.countRead;
+							vm.PerSonGreadCount = res.body.DTOgreat.CountGreat;
+							vm.PerSonPostCount = res.body.DTOgreat.CountPost;
+							this.list = res.body.DTOBarAndPic.postList
+  							}, function(err) {})
+  							
+  						}else{
+  							layer.msg('数据异常!',{icon: 7},{
+  	  		                    offset:['40%'],
+  	  		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+  	  		              }); 
+  						}
+  					}, function(err) {
+  						// 处理失败的结果
+  						layer.msg('数据异常!',{icon: 7},{
+  		                    offset:['40%'],
+  		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+  		              }); 
+  					})
+  					
+  				  }
+  				  ,btn2: function(index, layero){
+  				    //按钮【按钮三】的回调
+  					  layer.close(index)
+  				  }
+  				});
+        	},
         	Open_personPostInfo : function(postid){
         		//监测该贴是否被点赞
 				var url2 = 'http://localhost:8080/tbxt/greatJudge';
@@ -479,7 +525,7 @@ var post_view_component = Vue.extend({
 					vm.$http.post(url,data,{
 						emulateJSON : true,
 					}).then(function(res) {
-//						console.log("res.body=="+JSON.stringify(res.body));
+						console.log("res.body=="+JSON.stringify(res.body));
 						
 						var Judurl = 'http://localhost:8080/tbxt/AddRead';
 						vm.$http.post(Judurl,data,{
@@ -1107,13 +1153,15 @@ var post_view_component = Vue.extend({
 						var file8 = document.getElementById("file8");
 						var file9 = document.getElementById("file9");
 						var formData=new FormData();
-						var creat_tie_category22= $('#htSelect option:selected') .val();//选中的值
+						var creat_tie_category22= $('#htSelect option:selected') .val().trim();//选中的值
 //						console.log("111==="+this.creat_tie_category);
 //						console.log("222==="+creat_tie_category22);
-						if(creat_tie_category22 == ''){
+						if(creat_tie_category22 == '' && this.creat_tie_category != ''){
 							formData.append('postCategory', this.creat_tie_category);
-						}else{
+						}else if(creat_tie_category22 != '' && this.creat_tie_category == ''){
 							formData.append('postCategory', creat_tie_category22);
+						}else{
+							formData.append('postCategory', '');
 						}
 						formData.append('postTitle', this.creat_tie_title);
 						formData.append('postContent', this.creat_tie_content);
@@ -1476,7 +1524,7 @@ var vm = new Vue(
 				great:'',
 				post_topicList:{
 					userId:'',
-					topicContent:''
+					topicContent:'',
 				},
 				comments_topicContent:'',
 				pictureList:'',
@@ -1540,34 +1588,43 @@ var vm = new Vue(
 				},
 				//修改用户信息
 				update_user : function(){
-					var data = {
-						'userNickname':this.userInfo.userNickname,
-						'userGender':this.userInfo.userGender,
-					}
-//					console.log('update');
-					var url = 'http://localhost:8080/tbxt/UpdateUser';
-					this.$http.post(url,data,{
-						emulateJSON : true
-					}).then(function(res) {
-						if(res.bodyText == 'Update'){
-							layer.msg('更新信息成功！',{icon: 1},{
-		                        offset:['40%'],
-		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
-		                  });
-							layer.close(layer.index-1)
-								var url = 'http://localhost:8080/tbxt/findName';
-								this.$http.post(url).then(function(res) {
-									 this.userInfo.userNickname = res.body.userNickname;
-					        		 this.userInfo.userGender = res.body.userGender;
-								}, function(err) {})
-						}
-					}, function(err) {
-						// 处理失败的结果
-						layer.msg('数据异常',{icon: 5},{
+					this.userInfo.userNickname = this.userInfo.userNickname.trim();
+					if(this.userInfo.userNickname != ''){
+						var data = {
+								'userNickname':this.userInfo.userNickname,
+								'userGender':this.userInfo.userGender,
+							}
+//							console.log('update');
+							var url = 'http://localhost:8080/tbxt/UpdateUser';
+							this.$http.post(url,data,{
+								emulateJSON : true
+							}).then(function(res) {
+								if(res.bodyText == 'Update'){
+									layer.msg('更新信息成功！',{icon: 1},{
+				                        offset:['40%'],
+				                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+				                  });
+									layer.close(layer.index-1)
+										var url = 'http://localhost:8080/tbxt/findName';
+										this.$http.post(url).then(function(res) {
+											 this.userInfo.userNickname = res.body.userNickname;
+							        		 this.userInfo.userGender = res.body.userGender;
+										}, function(err) {})
+								}
+							}, function(err) {
+								// 处理失败的结果
+								layer.msg('数据异常',{icon: 5},{
+			                        offset:['40%'],
+			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                  }); 
+							})	
+					}else{
+						layer.msg('用户名不能为空',{icon: 5},{
 	                        offset:['40%'],
 	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
 	                  }); 
-					})	
+					}
+					
 				},
 				// 打开个人信息页面
 				open_my_info : function() {

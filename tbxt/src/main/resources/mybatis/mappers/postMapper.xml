@@ -120,7 +120,7 @@
 		inner JOIN post_bar on post.post_bar_id=post_bar.bar_id
 		inner JOIN user on post.post_user_id = user.user_id
 		<!-- inner JOIN post_picture on post.post_id=post_picture.picture_belong -->
-		WHERE user.user_id = #{userId} ORDER BY post.post_creattime DESC
+		WHERE user.user_id = #{userId} AND post.post_isdelete = '0' ORDER BY post.post_creattime DESC
 	</select>
 
 	<!-- ====================头部=====首页预览帖子========================== -->
@@ -269,7 +269,7 @@
 
 	<select id="CountPostByUser" resultType="Integer">
 	SELECT COUNT(post.post_id)
-	FROM post where post.post_user_id = #{userId}
+	FROM post where post.post_user_id = #{userId} AND post.post_isdelete = '0'
 	</select>
 
 	<resultMap type="com.pxxy.DTO.DTOreaded"

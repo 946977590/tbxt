@@ -12,6 +12,7 @@ import com.pxxy.pojo.post_bar;
 import com.pxxy.pojo.post_great;
 import com.pxxy.pojo.post_picture;
 import com.pxxy.pojo.post_readed;
+import com.pxxy.pojo.user;
 import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.DTOgreat;
 import com.pxxy.DTO.DTOhuati;
@@ -42,6 +43,9 @@ public class postServiceImpl implements postService {
 	
 	@Autowired 
 	private announcesMapper announcesMapper;
+	
+	@Autowired 
+	private userMapper userMapper;
 	
 	@Autowired 
 	private huatiMapper huatiMapper;
@@ -109,6 +113,13 @@ public class postServiceImpl implements postService {
 		DTOBarAndPic DTO_BarAndPic = postMapper.queryPostLayer_BarAndPic(postId);
 		DTO_BarAndPic.setPost_pictureList(Piclist);
 		DTOtopic DTO_Topic = postMapper.queryPostLayer_Topic(postId);
+		if(DTO_Topic != null) {
+			for(int i=0;i<DTO_Topic.getPost_topicList().size();i++) {
+				String userId = DTO_Topic.getPost_topicList().get(i).getUserId();
+				user user = userMapper.selectByPrimaryKey(userId);
+				DTO_Topic.getPost_topicList().get(i).setbUserId(user.getUserNickname());
+			}
+		}
 		DTOgreat DTO_great = postMapper.queryPostLayer_great(postId);
 		int CountRead = post_readedMapper.CountReaded(postId);
 		DTOreaded DTO_readed = new DTOreaded();

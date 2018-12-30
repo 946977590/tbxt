@@ -125,7 +125,8 @@ public class postController {
 			post.setPostCreattime(ctime);
 			post.setPostCategory(postCategory);
 			huati huati = new huati();
-			if(postCategory != null) {
+			System.out.println("postCategorypostCategory==="+postCategory);
+			if(postCategory.length()>0) {
 				String huatiId = UUID.randomUUID().toString();
 				huati.setHuatiId(huatiId);
 				huati.setHuatiContent(postCategory);
@@ -208,6 +209,7 @@ public class postController {
 		if(sessionUser!=null) {
 			String user_id = sessionUser.getUserId();
 			PostUserDTO PostUserDTO = postService.queryPostByUserId(user_id);
+//			System.out.println(PostUserDTO);
 			Gson gson = new Gson();
 			String res = gson.toJson(PostUserDTO);
 			pw.write(res);
