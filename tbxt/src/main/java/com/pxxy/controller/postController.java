@@ -272,10 +272,22 @@ public class postController {
 	@ResponseBody
 	public void GetpostByPostId(HttpServletRequest request, HttpServletResponse response,@RequestParam String postId
 			) throws IOException {
+    	HttpSession session = request.getSession();
+    	user user1 = (user) session.getAttribute("user");
+    	String userId = "";
+    	if(user1 != null) {
+    		userId = user1.getUserId();
+    	}
+    	post post = postService.judgePostUserTopic(postId, userId);
+    	PostUserDTO postUserDTO = postService.queryPostLayer(postId);
+    	if(post != null) {
+    		postUserDTO.setJudgePostUser(1);
+    	}else {
+    		postUserDTO.setJudgePostUser(0);
+    	}
     	response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = response.getWriter();
-		PostUserDTO postUserDTO = postService.queryPostLayer(postId);
 		System.out.println(postUserDTO);
 		Gson gson = new GsonBuilder().serializeNulls().create();	//防止Gson转Json对象空属性丢失
 		String res = gson.toJson(postUserDTO);
@@ -641,5 +653,13 @@ public class postController {
   	public PostUserDTO queryHuatiByCategory(@RequestParam String postCategory) {
   		PostUserDTO postUserDTO = postService.queryHuatiPostView(postCategory);
   		return postUserDTO;
+  	}
+  	
+  //删除评论
+  	@RequestMapping(value="/deleteTopic",method=RequestMethod.POST)
+  	@ResponseBody
+  	public String deleteTopic(@RequestParam String topicId) {
+  		postService.deleteTopic(topicId);
+  		return "success";
   	}
 }

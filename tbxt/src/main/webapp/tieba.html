@@ -316,14 +316,12 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">性别</label>
 					<div class="layui-input-inline">
-						<div v-if="userInfo.userGender==0">
-							<input type="radio" name="sex" value="男" title="男" >
-							<input type="radio" name="sex" value="女" title="女" checked="">
-						</div>
-						<div v-if="userInfo.userGender==1">
-							<input type="radio" name="sex" value="男" title="男" checked="">
-							<input type="radio" name="sex" value="女" title="女" >
-						</div>
+						<select name="ht_option" id="SexSelect" style="display:none;" lay-verify="">
+						  <option v-if="userInfo.userGender==1" value="1" selected="selected">男</option>
+						  <option v-if="userInfo.userGender==1" value="0" >女</option>
+						  <option v-if="userInfo.userGender==0" value="0" selected="selected">女</option>
+						  <option v-if="userInfo.userGender==0" value="1" >男</option>
+						</select>
 					</div>
 				</div>
 				</form>
@@ -482,7 +480,7 @@
 								<img class="info-img" src="img/psb.jpg" alt="">
 								<div class="info-text">
 									<p class="title count">
-										<span class="name">{{item.bUserId}}</span> 
+										<span class="name">{{item.bUserId}}<a class="delTopic" href="javascript:;"  @click="deleteTopic(item.topicId)">删除</a></span> 
 									</p>
 									<p class="info-intr">{{item.topicContent}}</p>
 								</div>

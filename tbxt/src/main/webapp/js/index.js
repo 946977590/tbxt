@@ -12,17 +12,17 @@ data(){
       }
     },
     mounted(){
-    	//获取轮播
+    	// 获取轮播
     	var url = 'http://localhost:8080/tbxt/selectAllAnnounces';	 
 		this.$http.post(url, {
 			emulateJSON : true
 		}).then(function(res) {
-//			console.log(JSON.stringify(res.body));
+// console.log(JSON.stringify(res.body));
 			this.gonggaoList = res.body.announceList;
 		}, function(err) {
-//			console.log("error!");
+// console.log("error!");
 		})	
-//		console.log("异步的作用==113-12132=321");
+// console.log("异步的作用==113-12132=321");
     },
 created(){	
 },
@@ -35,14 +35,14 @@ methods:{
 		this.$http.post(url,data,{
 			emulateJSON : true
 		}).then(function(res) {
-//			console.log(JSON.stringify(res.body));
+// console.log(JSON.stringify(res.body));
 			vm.announceContent = res.body.announceContent;
 			this.$options.methods.open_gonggao();
 		}, function(err) {
-//			console.log("error!");
+// console.log("error!");
 		})	
 	},
-	//获取话题对应的category
+	// 获取话题对应的category
 	open_gonggao : function(){
 		layui.use([ 'layer' ], function() {
 			var layer = layui.layer, $ = layui.$;
@@ -60,7 +60,7 @@ methods:{
 })
 Vue.component('component809',component809)
 
-//轮播图轮播图轮播图轮播图轮播图轮播图轮播图轮播图轮播图轮播图
+// 轮播图轮播图轮播图轮播图轮播图轮播图轮播图轮播图轮播图轮播图
 var component888 = Vue.extend({
 	template:`
 	<div carousel-item="">
@@ -75,22 +75,22 @@ data(){
       }
     },
     mounted(){
-    	//获取轮播
+    	// 获取轮播
     	var url = 'http://localhost:8080/tbxt/querySlidePic';	 
 		this.$http.post(url, {
 			emulateJSON : true
 		}).then(function(res) {
-//			console.log(JSON.stringify(res.body));
+// console.log(JSON.stringify(res.body));
 			this.slideList = res.body;
 		}, function(err) {
-//			console.log("error!");
+// console.log("error!");
 		})	
-//		console.log("异步的作用==113-12132=321");
+// console.log("异步的作用==113-12132=321");
     },
 created(){	
 },
 methods:{
-	//获取话题对应的category
+	// 获取话题对应的category
 	pass_postCategory : function(postCategory){
 		sessionStorage.setItem('postCategory',postCategory); // 存入一个值
 		setTimeout(function() {
@@ -101,7 +101,7 @@ methods:{
 })
 Vue.component('component888',component888)
 
-//热门话题推荐热门话题推荐热门话题推荐热门话题推荐热门话题推荐热门话题推荐热门话题推荐热门话题推荐热门话题推荐
+// 热门话题推荐热门话题推荐热门话题推荐热门话题推荐热门话题推荐热门话题推荐热门话题推荐热门话题推荐热门话题推荐
 var componenthuati = Vue.extend({
 	template:`
 	<ul class="top_list_hot_list">
@@ -121,12 +121,12 @@ data(){
       }
     },
 created(){	
-    	//获取热门话题
+    	// 获取热门话题
     	var url = 'http://localhost:8080/tbxt/queryHotHuati';	 
 		this.$http.post(url, {
 			emulateJSON : true
 		}).then(function(res) {
-//			console.log(JSON.stringify(res.body));
+// console.log(JSON.stringify(res.body));
 			for(var i=0;i<res.body.huatiList.length;i++){
 				this.huatiList.push({content:res.body.huatiList[i],number:i+1,postN:res.body.NumList[i]});
 			}
@@ -134,7 +134,7 @@ created(){
 		}, function(err) {})	
 },
 methods:{
-	//获取话题对应的category
+	// 获取话题对应的category
 	pass_postCategory : function(postCategory){
 		sessionStorage.setItem('postCategory',postCategory); // 存入一个值
 		setTimeout(function() {
@@ -145,13 +145,13 @@ methods:{
 })
 Vue.component('componenthuati',componenthuati)
 
-//头部导航栏组件头部导航栏组件头部导航栏组件头部导航栏组件头部导航栏组件头部导航栏组件
+// 头部导航栏组件头部导航栏组件头部导航栏组件头部导航栏组件头部导航栏组件头部导航栏组件
 var toplable_component = Vue.extend({
 	props: ['content', 'index'],
 	template : '<li class="layui-nav-item"><a href="">{{content}} </a> </li>'
 })
 
-//首页左侧bar列表  top
+// 首页左侧bar列表 top
 var commponent2 = Vue.extend({
 	template:`
 		<div>
@@ -171,23 +171,23 @@ var commponent2 = Vue.extend({
 				if(res.body=='error'){
 					layer.msg('获取贴吧列表信息null!',{icon: 5},{
                         offset:['40%'],
-                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
                   }); 
 				}else{
 					this.barList = res.body.post_barList
-//					console.log(JSON.stringify(this.barList));
+// console.log(JSON.stringify(this.barList));
 				} 
 			}, function(err) {
 				// 处理失败的结果
-//				console.log(err)
+// console.log(err)
 				layer.msg('获取贴吧列表功能异常!',{icon: 5},{
                     offset:['40%'],
-                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
               }); 
 			})	
         },
         methods:{
-        	//打开bar列表详情
+        	// 打开bar列表详情
 			barClick_openBar : function(barId){
 				sessionStorage.setItem('barId',barId); // 存入一个值
 				var data = {
@@ -197,7 +197,7 @@ var commponent2 = Vue.extend({
 				this.$http.post(url2,data,{
 					emulateJSON : true
 				}).then(function(res) {
-//					console.log("获取贴吧图片=="+JSON.stringify(res.body))
+// console.log("获取贴吧图片=="+JSON.stringify(res.body))
 					if(res.body != null){
 						var barPicName = res.body.barPicture;
 						sessionStorage.setItem('barPicName',barPicName); // 存入一个值
@@ -209,7 +209,7 @@ var commponent2 = Vue.extend({
 					// 处理失败的结果
 					layer.msg('获取贴吧初始信息失败!',{icon: 5},{
 	                    offset:['40%'],
-	                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	              }); 
 				})	
 				
@@ -217,9 +217,9 @@ var commponent2 = Vue.extend({
         }
 })
 Vue.component('commponent2',commponent2)
-//首页左侧bar列表  bottom
+// 首页左侧bar列表 bottom
 
-//个人动态时间线
+// 个人动态时间线
 var sjx_post_component = Vue.extend({
 	template:`
 	<div>
@@ -245,11 +245,11 @@ var sjx_post_component = Vue.extend({
 			this.$http.post(url, {
 				emulateJSON : true
 			}).then(function(res) {
-//				console.log("个人动态时间线res"+JSON.stringify(res.body));
+// console.log("个人动态时间线res"+JSON.stringify(res.body));
 				if(res.body=='Getpost_error'){
 					layer.msg('获取个人动态信息失败!',{icon: 7},{
 	                    offset:['40%'],
-	                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	              }); 
 				}else{
 					if(res.body.DTOreaded != null){
@@ -261,25 +261,25 @@ var sjx_post_component = Vue.extend({
 					}
 					if(res.body.DTOBarAndPic.postList != null){
 						this.list = res.body.DTOBarAndPic.postList
-//						console.log(this.list)
+// console.log(this.list)
 						$("#sjx_shafa").hide();
 					}
 				} 
 			}, function(err) {
 				// 处理失败的结果
-//				console.log(err)
+// console.log(err)
 				layer.msg('获取数据异常!',{icon: 5},{
                     offset:['40%'],
-                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
               }); 
 			})	
         },
         methods:{
         	judgeDel : function(postId){
         		layer.confirm('确认删除该条动态？', {
-  				  btn: ['确定', '取消'] //可以无限个按钮
+  				  btn: ['确定', '取消'] // 可以无限个按钮
   				,yes: function(index, layero){
-  				    //按钮【按钮一】的回调
+  				    // 按钮【按钮一】的回调
   					var url2 = '/tbxt/BannedPost';
   					var data = {
   							'postId': postId
@@ -290,7 +290,7 @@ var sjx_post_component = Vue.extend({
   						if(res.bodyText == 'banned'){
   							layer.msg('删除成功!',{icon: 1},{
   	  		                    offset:['40%'],
-  	  		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+  	  		                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
   	  		              }); 
   							var url3 = '/tbxt/GetpostByuserId';
   							vm.$http.post(url3).then(function(res) {
@@ -303,26 +303,26 @@ var sjx_post_component = Vue.extend({
   						}else{
   							layer.msg('数据异常!',{icon: 7},{
   	  		                    offset:['40%'],
-  	  		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+  	  		                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
   	  		              }); 
   						}
   					}, function(err) {
   						// 处理失败的结果
   						layer.msg('数据异常!',{icon: 7},{
   		                    offset:['40%'],
-  		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+  		                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
   		              }); 
   					})
   					
   				  }
   				  ,btn2: function(index, layero){
-  				    //按钮【按钮三】的回调
+  				    // 按钮【按钮三】的回调
   					  layer.close(index)
   				  }
   				});
         	},
         	Open_personPostInfo : function(postid){
-        		//监测该贴是否被点赞
+        		// 监测该贴是否被点赞
 				var url2 = 'http://localhost:8080/tbxt/greatJudge';
 				var data = {
 						'postId': postid
@@ -344,7 +344,7 @@ var sjx_post_component = Vue.extend({
 					// 处理失败的结果
 					layer.msg('获取个人动态信息失败!',{icon: 7},{
 	                    offset:['40%'],
-	                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	              }); 
 				})
 				this.$options.methods.GetPostById(postid);
@@ -360,9 +360,10 @@ var sjx_post_component = Vue.extend({
 					});
 				})
 			},
-			//传递postid获取相关参数
+			// 传递postid获取相关参数
 			GetPostById :function(postid){
-//				console.log("jieshou=="+postid);
+// console.log("jieshou=="+postid);
+				sessionStorage.setItem('toPost',postid); // 存入一个值
 				var data = {
 						'postId': postid
 				}
@@ -370,7 +371,6 @@ var sjx_post_component = Vue.extend({
 				vm.$http.post(url,data,{
 					emulateJSON : true,
 				}).then(function(res) {
-//					console.log("res.body=="+JSON.stringify(res.body));
 					vm.postList = res.body
 					if(res.body.DTOreaded != null){
 						vm.readed = res.body.DTOreaded.countRead
@@ -392,20 +392,25 @@ var sjx_post_component = Vue.extend({
 						vm.post_topicList=false;
 					}
 					vm.pass_postId = postid;
+					if(res.body.judgePostUser == 1){
+						setTimeout(function(){
+						$('.delTopic').show();
+					}, 10);
+					}
 				}, function(err) {
 					// 处理失败的结果
-//					console.log(err)
+// console.log(err)
 					layer.msg('获取帖子动态信息失败!',{icon: 5},{
 	                    offset:['40%'],
-	                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	              }); 
 				})	
         		
-        		/*=================分割线===========*/
+        		/* =================分割线=========== */
         	},
         }
 })
-//首页中间部分帖子预览展示
+// 首页中间部分帖子预览展示
 var post_view_component = Vue.extend({
 	template:`
 	<div >
@@ -453,11 +458,11 @@ var post_view_component = Vue.extend({
 				this.$http.post(url, {
 					emulateJSON : true
 				}).then(function(res) {
-//					console.log(JSON.stringify(res.body.postByGreatReadedDTOList))
+// console.log(JSON.stringify(res.body.postByGreatReadedDTOList))
 					if(res.body=='error'){
 						layer.msg('获取数据异常!',{icon: 5},{
 		                    offset:['40%'],
-		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		              }); 
 					}else{
 						this.list = res.body.postByGreatReadedDTOList;
@@ -465,10 +470,10 @@ var post_view_component = Vue.extend({
 					} 
 				}, function(err) {
 					// 处理失败的结果
-//					console.log(err)
+// console.log(err)
 					layer.msg('获取数据异常!',{icon: 5},{
 	                    offset:['40%'],
-	                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	              }); 
 				})	
 				
@@ -476,7 +481,7 @@ var post_view_component = Vue.extend({
 	        methods:{
 	        	// 打开帖子
 				open_tiezi : function(postid) {
-					//监测该贴是否被点赞
+					// 监测该贴是否被点赞
 					var url2 = 'http://localhost:8080/tbxt/greatJudge';
 					var data = {
 							'postId': postid
@@ -498,11 +503,11 @@ var post_view_component = Vue.extend({
 						// 处理失败的结果
 						layer.msg('获取个人动态信息失败!',{icon: 7},{
 		                    offset:['40%'],
-		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		              }); 
 					})
 					this.$options.methods.GetPostById(postid);
-//					bus.$emit("postid",postid)   //$emit这个方法会触发一个事件
+// bus.$emit("postid",postid) //$emit这个方法会触发一个事件
 					layui.use([ 'layer' ], function() {
 						var layer = layui.layer, $ = layui.$;
 						layer.open({
@@ -515,9 +520,10 @@ var post_view_component = Vue.extend({
 						});
 					})
 				},
-				//传递postid获取相关参数
+				// 传递postid获取相关参数
 				GetPostById :function(postid){
-//					console.log("jieshou=="+postid);
+// console.log("jieshou=="+postid);
+					sessionStorage.setItem('toPost',postid); // 存入一个值
 					var data = {
 							'postId': postid
 					}
@@ -525,18 +531,19 @@ var post_view_component = Vue.extend({
 					vm.$http.post(url,data,{
 						emulateJSON : true,
 					}).then(function(res) {
-						console.log("res.body=="+JSON.stringify(res.body));
-						
+// console.log("res.body=="+JSON.stringify(res.body));
 						var Judurl = 'http://localhost:8080/tbxt/AddRead';
 						vm.$http.post(Judurl,data,{
 							emulateJSON : true,
 						}).then(function(res) {
-//							console.log("postId==="+postid);
-//							console.log("执行已读==="+res.bodyText);
+// console.log("postId==="+postid);
+// console.log("执行已读==="+res.bodyText);
 						}, function(err) {
 						})
-//						console.log("传递参数过去呀")
-						
+// console.log("传递参数过去呀")
+						if(res.body.judgePostUser == '1'){
+							$('#delTopic').show();
+						}
 						vm.postList = res.body
 						if(res.body.DTOreaded != null){
 							vm.readed = res.body.DTOreaded.countRead
@@ -558,12 +565,17 @@ var post_view_component = Vue.extend({
 							vm.post_topicList=false;
 						}
 						vm.pass_postId = postid;
+						if(res.body.judgePostUser == 1){
+							setTimeout(function(){
+							$('.delTopic').show();
+						}, 10);
+						}
 					}, function(err) {
 						// 处理失败的结果
-//						console.log(err)
+// console.log(err)
 						layer.msg('获取帖子动态信息失败!',{icon: 5},{
 		                    offset:['40%'],
-		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		              }); 
 					})	
 				},
@@ -580,7 +592,7 @@ var post_view_component = Vue.extend({
 	})
 	
 	
-	/*====================话题社区内部post详情展==========================*/
+	/* ====================话题社区内部post详情展========================== */
 	var component9469 = Vue.extend({
 				template:`
 					<div >
@@ -641,11 +653,12 @@ var post_view_component = Vue.extend({
 		      }
 		    },
 	  created(){
-		    	var postCategory = sessionStorage.getItem('postCategory'); // => 返回testKey对应的值
+		    	var postCategory = sessionStorage.getItem('postCategory'); // =>
+																			// 返回testKey对应的值
 		    	var data={
 		    		'postCategory' : postCategory
 		    		}
-//		    	console.log('postCategory'+postCategory);
+// console.log('postCategory'+postCategory);
 	        	var url = 'http://localhost:8080/tbxt/queryHuatiByCategory';
 				this.$http.post(url,data,{
 					emulateJSON : true
@@ -653,11 +666,11 @@ var post_view_component = Vue.extend({
 					if(res.body=='error'){
 						layer.msg('获取数据异常!',{icon: 5},{
 		                    offset:['40%'],
-		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		              }); 
 					}else{
 						this.list = res.body.postByGreatReadedDTOList;
-//						console.log(JSON.stringify(this.list));
+// console.log(JSON.stringify(this.list));
 						this.postByGreatReadedDTOList = res.body.postByGreatReadedDTOList[0];
 						this.postByGreatReadedDTOList.pictureList = res.body.postByGreatReadedDTOList[0].post_pictureList;
 						this.postByGreatReadedDTOList.post = res.body.postByGreatReadedDTOList[0].post;
@@ -667,10 +680,10 @@ var post_view_component = Vue.extend({
 					} 
 				}, function(err) {
 					// 处理失败的结果
-//					console.log(err)
+// console.log(err)
 					layer.msg('获取个人动态信息失败!',{icon: 5},{
 	                    offset:['40%'],
-	                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	              }); 
 				})	
 				
@@ -678,7 +691,7 @@ var post_view_component = Vue.extend({
 	        methods:{
 	        	// 打开帖子
 				open_tiezi : function(postid) {
-					//监测该贴是否被点赞
+					// 监测该贴是否被点赞
 					var url2 = 'http://localhost:8080/tbxt/greatJudge';
 					var data = {
 							'postId': postid
@@ -698,10 +711,10 @@ var post_view_component = Vue.extend({
 					   }
 					}, function(err) {
 						// 处理失败的结果
-//						console.log(err)
+// console.log(err)
 						layer.msg('获取个人动态信息失败!',{icon: 5},{
 		                    offset:['40%'],
-		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		              }); 
 					})
 					this.$options.methods.GetPostById(postid);
@@ -717,17 +730,21 @@ var post_view_component = Vue.extend({
 						});
 					})
 				},
-				//传递postid获取相关参数
+				// 传递postid获取相关参数
 				GetPostById :function(postid){
 					var data = {
 							'postId': postid
 					}
+					sessionStorage.setItem('toPost',postid); // 存入一个值
 					var url = 'http://localhost:8080/tbxt/GetpostByPostId';
 					vm.$http.post(url,data,{
 						emulateJSON : true,
 					}).then(function(res) {
-//						console.log("res.body=="+JSON.stringify(res.body));
+// console.log("res.body=="+JSON.stringify(res.body));
 						vm.postList = res.body
+						if(res.body.judgePostUser == '1'){
+							$('#delTopic').show();
+						}
 						if(res.body.DTOreaded != null){
 							vm.readed = res.body.DTOreaded.countRead;
 						}else{
@@ -749,26 +766,31 @@ var post_view_component = Vue.extend({
 						}
 						vm.pass_postId = postid;
 						$(".loading_icon").hide();
-//						this.$options.methods.judgeRead(postid);
+						if(res.body.judgePostUser == 1){
+							setTimeout(function(){
+							$('.delTopic').show();
+						}, 10);
+						}
+// this.$options.methods.judgeRead(postid);
 						var Judurl = 'http://localhost:8080/tbxt/AddRead';
 						vm.$http.post(Judurl,data,{
 							emulateJSON : true,
 						}).then(function(res) {
-//							console.log("postId==="+postid);
-//							console.log("执行已读==="+res.bodyText);
+// console.log("postId==="+postid);
+// console.log("执行已读==="+res.bodyText);
 						}, function(err) {
 						})
-//						console.log("传递参数过去呀")
+// console.log("传递参数过去呀")
 					}, function(err) {
 						// 处理失败的结果
 						layer.msg('获取帖子动态信息失败!',{icon: 5},{
 		                    offset:['40%'],
-		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		              });
 					})	
 				},
 				openbar : function(barId){
-//					console.log("00"+barPicName);
+// console.log("00"+barPicName);
 					sessionStorage.setItem('barId',barId); // 存入一个值
 					setTimeout(function() {
 						location.href="/tbxt/barExtend.html"
@@ -778,7 +800,7 @@ var post_view_component = Vue.extend({
 	        
 			})
 			Vue.component('component9469',component9469)
-/*============================头部======吧内post详情展示===========================*/
+/* ============================头部======吧内post详情展示=========================== */
 		var component1 = Vue.extend({
 				template:`
 			<div>	
@@ -842,8 +864,9 @@ var post_view_component = Vue.extend({
 		      }
 		    },
 	  created(){
-		    	var barId = sessionStorage.getItem('barId'); // => 返回testKey对应的值
-//		    	console.log("creattttt"+barId);
+		    	var barId = sessionStorage.getItem('barId'); // =>
+																// 返回testKey对应的值
+// console.log("creattttt"+barId);
 		    	var data={
 		    		'barId' : barId
 		    		}
@@ -851,15 +874,15 @@ var post_view_component = Vue.extend({
 				this.$http.post(url,data,{
 					emulateJSON : true
 				}).then(function(res) {
-//					console.log(res.body.postByGreatReadedDTOList.length);
+// console.log(res.body.postByGreatReadedDTOList.length);
 					if(res.body=='error'){
 						layer.msg('获取数据异常!',{icon: 5},{
 		                    offset:['40%'],
-		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		              }); 
 					}else{
 						if(res.body.postByGreatReadedDTOList.length>0){
-//							console.log(JSON.stringify(this.list));
+// console.log(JSON.stringify(this.list));
 							this.list = res.body.postByGreatReadedDTOList;
 							this.postByGreatReadedDTOList = res.body.postByGreatReadedDTOList[0];
 							this.postByGreatReadedDTOList.pictureList = res.body.postByGreatReadedDTOList[0].post_pictureList;
@@ -872,10 +895,10 @@ var post_view_component = Vue.extend({
 					} 
 				}, function(err) {
 					// 处理失败的结果
-//					console.log(err)
+// console.log(err)
 					layer.msg('获取个人动态信息失败!',{icon: 5},{
 	                    offset:['40%'],
-	                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	              }); 
 				})	
 				
@@ -883,7 +906,7 @@ var post_view_component = Vue.extend({
 	        methods:{
 	        	// 打开帖子
 				open_tiezi : function(postid) {
-					//监测该贴是否被点赞
+					// 监测该贴是否被点赞
 					var url2 = 'http://localhost:8080/tbxt/greatJudge';
 					var data = {
 							'postId': postid
@@ -903,10 +926,10 @@ var post_view_component = Vue.extend({
 					   }
 					}, function(err) {
 						// 处理失败的结果
-//						console.log(err)
+// console.log(err)
 						layer.msg('获取个人动态信息失败!',{icon: 5},{
 		                    offset:['40%'],
-		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		              }); 
 					})
 					this.$options.methods.GetPostById(postid);
@@ -922,17 +945,21 @@ var post_view_component = Vue.extend({
 						});
 					})
 				},
-				//传递postid获取相关参数
+				// 传递postid获取相关参数
 				GetPostById :function(postid){
 					var data = {
 							'postId': postid
 					}
+					sessionStorage.setItem('toPost',postid); // 存入一个值
 					var url = 'http://localhost:8080/tbxt/GetpostByPostId';
 					vm.$http.post(url,data,{
 						emulateJSON : true,
 					}).then(function(res) {
-//						console.log("res.body=="+JSON.stringify(res.body));
+// console.log("res.body=="+JSON.stringify(res.body));
 						vm.postList = res.body
+						if(res.body.judgePostUser == '1'){
+							$('#delTopic').show();
+						}
 						if(res.body.DTOreaded != null){
 							vm.readed = res.body.DTOreaded.countRead;
 						}else{
@@ -954,21 +981,26 @@ var post_view_component = Vue.extend({
 						}
 						vm.pass_postId = postid;
 						$(".loading_icon").hide();
-//						this.$options.methods.judgeRead(postid);
+						if(res.body.judgePostUser == 1){
+							setTimeout(function(){
+							$('.delTopic').show();
+						}, 10);
+						}
+// this.$options.methods.judgeRead(postid);
 						var Judurl = 'http://localhost:8080/tbxt/AddRead';
 						vm.$http.post(Judurl,data,{
 							emulateJSON : true,
 						}).then(function(res) {
-//							console.log("postId==="+postid);
-//							console.log("执行已读==="+res.bodyText);
+// console.log("postId==="+postid);
+// console.log("执行已读==="+res.bodyText);
 						}, function(err) {
 						})
-//						console.log("传递参数过去呀")
+// console.log("传递参数过去呀")
 					}, function(err) {
 						// 处理失败的结果
 						layer.msg('获取帖子动态信息失败!',{icon: 5},{
 		                    offset:['40%'],
-		                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		              });
 					})	
 				},
@@ -988,7 +1020,7 @@ var post_view_component = Vue.extend({
 			    	  barPicName:'',
 			      }
 			    },
-	        created(){	//获取贴吧图片logo
+	        created(){	// 获取贴吧图片logo
 			    var barId = sessionStorage.getItem('barId');
 			    if(barId != null){
 			    	var data = {
@@ -997,7 +1029,7 @@ var post_view_component = Vue.extend({
 	        		var url = 'http://localhost:8080/tbxt/queryBarPic'
 	            		this.$http.post(url,data,{emulateJSON:true}).then(function(res) {
 	        				// 处理成功的结果
-//	            			console.log(res.body);
+// console.log(res.body);
 	            			this.barPicName = res.body.barPicture;
 	        			}, function(err) { })
 	        	}else{
@@ -1008,8 +1040,8 @@ var post_view_component = Vue.extend({
 			})
 			Vue.component('component121',component121)
 		
-	/*============================尾部======吧内post详情展示===========================*/
-//发帖页面Layer
+	/* ============================尾部======吧内post详情展示=========================== */
+// 发帖页面Layer
 	var creat_post_component = Vue.extend({
 	template:`<div id="fatie_Box" style="display: none;">
 			<div class="layui-form-item">
@@ -1108,12 +1140,12 @@ var post_view_component = Vue.extend({
     		this.$http.post(url).then(function(res) {
 				// 处理成功的结果
 				this.huatiList = res.body.huatiList
-//				console.log("-==="+JSON.stringify(this.huatiList));
+// console.log("-==="+JSON.stringify(this.huatiList));
 			}, function(err) {
 				// 处理失败的结果
 				layer.msg('登陆失败!',{icon: 5},{
                     offset:['40%'],
-                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
               });
 				
 			})
@@ -1122,7 +1154,7 @@ var post_view_component = Vue.extend({
   mounted(){
         },
         methods:{
-        	//添加话题
+        	// 添加话题
         	zxhuati_add : function(){
         		$('#rm_huati').hide();
         		$('#zx_huati').show();
@@ -1135,11 +1167,12 @@ var post_view_component = Vue.extend({
         		$('#huati_b').hide();
         		$('#huati_a').show();
         	},
-        	//发帖
+        	// 发帖
 			tie_creat: function(){
-				var barId = sessionStorage.getItem('barId'); // => 返回testKey对应的值
+				var barId = sessionStorage.getItem('barId'); // =>
+																// 返回testKey对应的值
 				if(barId){
-					var regT=/^.{1,20}$/;   /*定义验证表达式*/
+					var regT=/^.{1,20}$/;   /* 定义验证表达式 */
 					this.creat_tie_title = this.creat_tie_title.trim();
 					this.creat_tie_content = this.creat_tie_content.trim();
 					if(regT.test(this.creat_tie_title) && this.creat_tie_content != ''){
@@ -1153,9 +1186,9 @@ var post_view_component = Vue.extend({
 						var file8 = document.getElementById("file8");
 						var file9 = document.getElementById("file9");
 						var formData=new FormData();
-						var creat_tie_category22= $('#htSelect option:selected') .val().trim();//选中的值
-//						console.log("111==="+this.creat_tie_category);
-//						console.log("222==="+creat_tie_category22);
+						var creat_tie_category22= $('#htSelect option:selected') .val().trim();// 选中的值
+// console.log("111==="+this.creat_tie_category);
+// console.log("222==="+creat_tie_category22);
 						if(creat_tie_category22 == '' && this.creat_tie_category != ''){
 							formData.append('postCategory', this.creat_tie_category);
 						}else if(creat_tie_category22 != '' && this.creat_tie_category == ''){
@@ -1180,32 +1213,33 @@ var post_view_component = Vue.extend({
 							emulateJSON : true
 						}).then(function(res) {
 							// 处理成功的结果
-//							console.log(res.body)
+// console.log(res.body)
 							if(res.body=='success'){
 								layer.msg('发帖成功!',{icon: 1},{
 				                    offset:['40%'],
-				                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+				                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 				              });
-								/*setTimeout(function(){
-									location.href="/tbxt/tieba.html";
-								},1000);*/
-								layer.close(layer.index-1); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+								/*
+								 * setTimeout(function(){
+								 * location.href="/tbxt/tieba.html"; },1000);
+								 */
+								layer.close(layer.index-1); // 它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
 							}else if(res.body=='sessionError'){
 								layer.msg('未登录状态!',{icon: 7},{
 			                        offset:['40%'],
-			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                  });
 							}else{
 								layer.msg('发帖出现错误!',{icon: 5},{
 			                        offset:['40%'],
-			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                  });
 							}
 						}, function(err) {
 							// 处理失败的结果
 							layer.msg('登陆失败!',{icon: 5},{
 		                        offset:['40%'],
-		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		                  });
 							
 						})
@@ -1213,7 +1247,7 @@ var post_view_component = Vue.extend({
 					}else{
 						layer.msg('注意发帖格式!',{icon: 7},{
 	                        offset:['40%'],
-	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	                  });
 					}
 				}
@@ -1222,7 +1256,7 @@ var post_view_component = Vue.extend({
 			},
         }
 })
-//注册页面Layer
+// 注册页面Layer
 	var register_component = Vue.extend({
 	template:`<div id="registerBox" style="display: none;">
 			<fieldset class="layui-elem-field layui-field-title"
@@ -1285,9 +1319,9 @@ var post_view_component = Vue.extend({
         },
         methods:{
         	sendEmail : function(){
-//        		console.log("发送邮箱");
-        		var regName=/^[\u4E00-\u9FA5]{2,4}$/;   /*定义验证表达式*/
-        		var regEmail = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/; /*校验邮件地址是否合法 */
+// console.log("发送邮箱");
+        		var regName=/^[\u4E00-\u9FA5]{2,4}$/;   /* 定义验证表达式 */
+        		var regEmail = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/; /* 校验邮件地址是否合法 */
         		if(regName.test(this.registerBox_userNickname)){
             		if(regEmail.test(this.registerBox_userEmail)){
             			$('#yzm_btn1').hide();
@@ -1300,34 +1334,34 @@ var post_view_component = Vue.extend({
         				this.$http.post(url, data, {
         					emulateJSON : true
         				}).then(function(res) {
-//        					console.log(res.bodyText);
+// console.log(res.bodyText);
         					this.yzm = res.bodyText;
         				}, function(err) {
         					// 处理失败的结果
         					layer.msg('数据异常!',{icon: 5},{
                                 offset:['40%'],
-                                time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                                time: 1000 // 2秒关闭（如果不配置，默认是3秒）
                           }); 
         				})
             		}else{
             			layer.msg('邮箱格式错误!',{icon: 5},{
                             offset:['40%'],
-                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                            time: 1000 // 2秒关闭（如果不配置，默认是3秒）
                       }); 
             		}
         		}else{
         			layer.msg('用户名格式错误!',{icon: 5},{
                         offset:['40%'],
-                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
                   }); 
         		}
 
         	},
         	// 注册事件
 			register_user : function() {
-				var regEmail = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/; /*校验邮件地址是否合法 */
-				var regPassword=/^[0-9]{6}$/;   /*定义验证表达式*/
-				var regName=/^[\u4E00-\u9FA5]{2,4}$/;   /*定义验证表达式*/
+				var regEmail = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/; /* 校验邮件地址是否合法 */
+				var regPassword=/^[0-9]{6}$/;   /* 定义验证表达式 */
+				var regName=/^[\u4E00-\u9FA5]{2,4}$/;   /* 定义验证表达式 */
 				if(regEmail.test(this.registerBox_userEmail) && regPassword.test(this.registerBox_userPassword) && regName.test(this.registerBox_userNickname 
 						)){
 					if(this.registerBox_yzm == this.yzm){
@@ -1341,11 +1375,11 @@ var post_view_component = Vue.extend({
 							emulateJSON : true
 						}).then(function(res) {
 							// 处理成功的结果
-//							console.log(res.body)
+// console.log(res.body)
 							if(res.body=='register_success'){
 								layer.msg('注册成功!',{icon: 6},{
 			                          offset:['40%'],
-			                          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                          time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                    });
 								setTimeout(function(){
 									location.href="/tbxt/tieba.html";
@@ -1354,34 +1388,34 @@ var post_view_component = Vue.extend({
 								layer.msg('该邮箱已注册!',{icon: 7},{
 			                          offset:['40%'],
 			                          anim:1,
-			                          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                          time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                    }); 
 							}
 						}, function(err) {
 							// 处理失败的结果
-//							console.log(err)
+// console.log(err)
 							layer.msg('注册失败!',{icon: 5},{
 			                          offset:['40%'],
-			                          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                          time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                  }); 
 						})
 					}else{
 						layer.msg('验证码错误!',{icon: 5},{
 	                        offset:['40%'],
-	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	                  }); 
 					}
 				}else{
 					layer.msg('请输入合法字符!',{icon: 5},{
                         offset:['40%'],
-                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
                   }); 
 				}
 				
 			},
         }
 })
-//登陆页面Layer
+// 登陆页面Layer
 	var login_component = Vue.extend({
 	template:`<div id="loginBox" style="display: none;">
 			<fieldset class="layui-elem-field layui-field-title"
@@ -1419,9 +1453,9 @@ var post_view_component = Vue.extend({
   mounted(){
         },
         methods:{
-        	//登陆事件
+        	// 登陆事件
 			login_user : function() {
-//				console.log("执行登陆事件");
+// console.log("执行登陆事件");
 				var data = {
 					userEmail : this.loginBox_userEmail,
 					userPassword : this.loginBox_userPassword
@@ -1431,11 +1465,13 @@ var post_view_component = Vue.extend({
 					emulateJSON : true
 				}).then(function(res) {
 					// 处理成功的结果
-//					console.log(res.body)
+// console.log(res.body)
 					if(res.body=='loginSuccess'){
+						sessionStorage.setItem('userAcount',this.loginBox_userEmail); // 存入一个值
+						sessionStorage.setItem('userPassword',this.loginBox_userPassword); // 存入一个值
 						layer.msg('登陆成功!',{icon: 6},{
 	                          offset:['40%'],
-	                          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                          time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	                    }); 
 						setTimeout(function(){
 							location.href="/tbxt/tieba.html";
@@ -1443,20 +1479,20 @@ var post_view_component = Vue.extend({
 					}else if(res.body=='banned'){
 						layer.msg('该账户已被封禁!',{icon: 5},{
 	                          offset:['40%'],
-	                          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                          time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	                    }); 
 					}else{
 						layer.msg('邮箱或者密码错误!',{icon: 7},{
 	                          offset:['40%'],
-	                          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                          time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	                    }); 
 					}
 				}, function(err) {
 					// 处理失败的结果
-//					console.log(err)
+// console.log(err)
 					layer.msg('登陆失败!',{icon: 5},{
                         offset:['40%'],
-                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
                   }); 
 				})
 
@@ -1540,9 +1576,9 @@ var vm = new Vue(
 			},
 		 components: {
 			 'post_view_component':post_view_component,
-			 /*'post_barView_component':post_barView_component*/
+			 /* 'post_barView_component':post_barView_component */
 				  },
-			//vue载入后执行获取session方法
+			// vue载入后执行获取session方法
 			mounted(){ 
 				this.$nextTick(function () {
 					var that=this;
@@ -1573,28 +1609,32 @@ var vm = new Vue(
 			      })
 			    },
 			methods : {
-				//打开登陆模态框
+				// 打开登陆模态框
 				open_login : function(){
 					layui.use(['layer'],function () {
 						var layer = layui.layer,$=layui.$;
 						layer.open({
-								type:1,//类型
-								area:['500px','360px'],//定义宽和高
-								title:'账号登陆',//题目
-								shadeClose:false,//点击遮罩层关闭
-								content: $('#loginBox')//打开的内容
+								type:1,// 类型
+								area:['500px','360px'],// 定义宽和高
+								title:'账号登陆',// 题目
+								shadeClose:false,// 点击遮罩层关闭
+								content: $('#loginBox')// 打开的内容
 						});
 					})
 				},
-				//修改用户信息
+				// 修改用户信息
 				update_user : function(){
 					this.userInfo.userNickname = this.userInfo.userNickname.trim();
 					if(this.userInfo.userNickname != ''){
+						var aa = sessionStorage.getItem('userAcount'); // 存入一个值
+						var bb = sessionStorage.getItem('userPassword'); // 存入一个值
+						var cc = $('#SexSelect option:selected') .val()
+// console.log('性别=='+cc);
 						var data = {
 								'userNickname':this.userInfo.userNickname,
-								'userGender':this.userInfo.userGender,
+								'userGender':cc
 							}
-//							console.log('update');
+// console.log('update');
 							var url = 'http://localhost:8080/tbxt/UpdateUser';
 							this.$http.post(url,data,{
 								emulateJSON : true
@@ -1602,26 +1642,56 @@ var vm = new Vue(
 								if(res.bodyText == 'Update'){
 									layer.msg('更新信息成功！',{icon: 1},{
 				                        offset:['40%'],
-				                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+				                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 				                  });
 									layer.close(layer.index-1)
-										var url = 'http://localhost:8080/tbxt/findName';
-										this.$http.post(url).then(function(res) {
-											 this.userInfo.userNickname = res.body.userNickname;
-							        		 this.userInfo.userGender = res.body.userGender;
-										}, function(err) {})
+									
+									var data = {
+					userEmail : aa,
+					userPassword : bb
+				};
+				var url = 'http://localhost:8080/tbxt/login';
+				this.$http.post(url, data, {
+					emulateJSON : true
+				}).then(function(res) {
+					// 处理成功的结果
+// console.log(res.body)
+					if(res.body=='loginSuccess'){
+						setTimeout(function(){
+							location.href="/tbxt/tieba.html";
+						},500);
+					}else if(res.body=='banned'){
+						layer.msg('该账户已被封禁!',{icon: 5},{
+	                          offset:['40%'],
+	                          time: 1000 // 2秒关闭（如果不配置，默认是3秒）
+	                    }); 
+					}else{
+						layer.msg('邮箱或者密码错误!',{icon: 7},{
+	                          offset:['40%'],
+	                          time: 1000 // 2秒关闭（如果不配置，默认是3秒）
+	                    }); 
+					}
+				}, function(err) {
+					// 处理失败的结果
+// console.log(err)
+					layer.msg('登陆失败!',{icon: 5},{
+                        offset:['40%'],
+                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
+                  }); 
+				})
+									
 								}
 							}, function(err) {
 								// 处理失败的结果
 								layer.msg('数据异常',{icon: 5},{
 			                        offset:['40%'],
-			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                  }); 
 							})	
 					}else{
 						layer.msg('用户名不能为空',{icon: 5},{
 	                        offset:['40%'],
-	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	                  }); 
 					}
 					
@@ -1648,7 +1718,7 @@ var vm = new Vue(
 					$('#wjmm').show();
 					$('#jdmm').hide();
 				},
-				//修改密码
+				// 修改密码
 				open_my_mima : function(){
 					layui.use([ 'layer' ], function() {
 						var layer = layui.layer, $ = layui.$;
@@ -1662,9 +1732,9 @@ var vm = new Vue(
 						});
 					})
 				},
-				//忘记密码的修改密码方法
+				// 忘记密码的修改密码方法
 				wjmm_update : function(){
-					var regPassword=/^[0-9]{6}$/;   /*定义验证表达式*/
+					var regPassword=/^[0-9]{6}$/;   /* 定义验证表达式 */
 					if(regPassword.test(this.wjmm_newpassword)){
 						if(this.yzm == this.wjmm_yzm){
 							var data = {
@@ -1678,39 +1748,39 @@ var vm = new Vue(
 	        					if(res.bodyText == 'Update'){
 	        						layer.msg('更新密码成功!',{icon: 1},{
 		                                offset:['40%'],
-		                                time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                                time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		                          }); 
 	            					layer.close(layer.index-1);
 	        					}else{
 	        						layer.msg('该邮箱账户不存在!',{icon: 5},{
 		                                offset:['40%'],
-		                                time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                                time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		                          }); 
 	        					}
 	        				}, function(err) {
 	        					// 处理失败的结果
 	        					layer.msg('数据异常!',{icon: 5},{
 	                                offset:['40%'],
-	                                time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                                time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	                          }); 
 	        				})
 						}else{
 							layer.msg('验证码错误!',{icon: 5},{
 	                            offset:['40%'],
-	                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                            time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	                      }); 
 						}
 					}else{
 						layer.msg('新密码格式不对!',{icon: 5},{
                             offset:['40%'],
-                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                            time: 1000 // 2秒关闭（如果不配置，默认是3秒）
                       }); 
 					}
 				},
-				//记得密码的修改密码方法
+				// 记得密码的修改密码方法
 				jdmm_update : function(){
-					var regPassword=/^[0-9]{6}$/;   /*定义验证表达式*/
-					var regEmail = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/; /*校验邮件地址是否合法 */
+					var regPassword=/^[0-9]{6}$/;   /* 定义验证表达式 */
+					var regEmail = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/; /* 校验邮件地址是否合法 */
 					var url = '/tbxt/UpdateJdPassword';
 					if(regEmail.test(this.jdmm_email)){
 						if(regPassword.test(this.jdmm_newpassword)){
@@ -1726,20 +1796,20 @@ var vm = new Vue(
 								case 'Update':
 								layer.msg('密码更新成功!',{icon: 1},{
 		                            offset:['40%'],
-		                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                            time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                      });
 								layer.close(layer.index-1);
 								break;
 								case 'passwordError':
 								layer.msg('旧密码错误!',{icon: 5},{
 		                            offset:['40%'],
-		                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                            time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                      });
 								break;
 								case 'emailNull':
 								layer.msg('该邮箱账户不存在!',{icon: 5},{
 		                            offset:['40%'],
-		                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                            time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                      });
 								break;
 								}
@@ -1749,21 +1819,21 @@ var vm = new Vue(
 						}else{
 						layer.msg('新密码格式错误!',{icon: 5},{
                             offset:['40%'],
-                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                            time: 1000 // 2秒关闭（如果不配置，默认是3秒）
                       });
 						}
 					}else{
 						layer.msg('邮箱格式不对!',{icon: 5},{
                             offset:['40%'],
-                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                            time: 1000 // 2秒关闭（如果不配置，默认是3秒）
                       }); 
 					}
 			
 				},
-				//发送修改密码的验证码
+				// 发送修改密码的验证码
 				sendXGyzm : function(){
-		        console.log("发送邮箱");
-        		var regEmail = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/; /*校验邮件地址是否合法 */
+//		        console.log("发送邮箱");
+        		var regEmail = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/; /* 校验邮件地址是否合法 */
             		if(regEmail.test(this.wjmm_email)){
             			$('#yzm_btn11').hide();
             			$('#yzm_btn22').show();
@@ -1779,26 +1849,26 @@ var vm = new Vue(
         					// 处理失败的结果
         					layer.msg('数据异常!',{icon: 5},{
                                 offset:['40%'],
-                                time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                                time: 1000 // 2秒关闭（如果不配置，默认是3秒）
                           }); 
         				})
             		}else{
             			layer.msg('邮箱格式错误!',{icon: 5},{
                             offset:['40%'],
-                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                            time: 1000 // 2秒关闭（如果不配置，默认是3秒）
                       }); 
             		}
 				},
-				//注销用户
+				// 注销用户
 				logout : function(){
 					var url = '/tbxt/logout';
 					this.$http.post(url).then(function(res) {
 						// 处理成功的结果
-//						console.log("注销==="+res.body)
+// console.log("注销==="+res.body)
 						if(res.body=='logoutSuccess'){
 							layer.msg('成功退出!',{icon: 1},{
 		                        offset:['40%'],
-		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		                  }); 
 							setTimeout(function(){
 								location.href="/tbxt/tieba.html";
@@ -1806,24 +1876,24 @@ var vm = new Vue(
 						}else{
 							layer.msg('退出异常',{icon: 5},{
 		                        offset:['40%'],
-		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		                  }); 
 						}
 					}, function(err) {
 						// 处理失败的结果
 						layer.msg('退出异常',{icon: 5},{
 	                        offset:['40%'],
-	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	                  }); 
 					})
 				},
 				SYopen_fatie : function(){
 					layer.msg('该功能只能在进入相关贴吧内使用~',{icon: 7},{
                         offset:['40%'],
-                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
                   }); 
 				},
-				//打开发帖页面
+				// 打开发帖页面
 				open_fatie:function(){
 					var url = 'http://localhost:8080/tbxt/requestSession';
 					this.$http.post(url, {
@@ -1832,17 +1902,17 @@ var vm = new Vue(
 						if(res.body==''){
 							layer.msg('请先登录',{icon: 7},{
 		                        offset:['40%'],
-		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		                  }); 
 						}else{
 							layui.use(['layer'],function () {
 								var layer = layui.layer,$=layui.$;
 								var index = layer.open({
-										type:1,//类型
-										area:['1330px','600px'],//定义宽和高
-										title:'发表新帖',//题目
-										shadeClose:false,//点击遮罩层关闭
-										content: $('#fatie_Box')//打开的内容
+										type:1,// 类型
+										area:['1330px','600px'],// 定义宽和高
+										title:'发表新帖',// 题目
+										shadeClose:false,// 点击遮罩层关闭
+										content: $('#fatie_Box')// 打开的内容
 								});
 						})
 						} 
@@ -1850,11 +1920,11 @@ var vm = new Vue(
 						// 处理失败的结果
 						layer.msg('获取个人动态信息失败',{icon: 5},{
 	                        offset:['40%'],
-	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	                  }); 
 					})	
 				},
-				//打开个人动态页面
+				// 打开个人动态页面
 				open_myinfozx:function(){
 					var url = 'http://localhost:8080/tbxt/GetpostByuserId';
 					this.$http.post(url, {
@@ -1863,7 +1933,7 @@ var vm = new Vue(
 						if(res.body=='Getpost_error'){
 							layer.msg('请先登录!',{icon: 7},{
 		                        offset:['40%'],
-		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		                  });
 						}else{
 							setTimeout(function(){ 
@@ -1875,7 +1945,7 @@ var vm = new Vue(
 						// 处理失败的结果
 						layer.msg('获取个人动态信息失败',{icon: 5},{
 	                        offset:['40%'],
-	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	                  });
 					})	
 				},
@@ -1888,7 +1958,7 @@ var vm = new Vue(
 						if(res.body==''){
 							layer.msg('检测到账号未登录',{icon: 7},{
 		                        offset:['40%'],
-		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		                  });
 						}else{
 							layui.use([ 'layer' ], function() {
@@ -1905,21 +1975,21 @@ var vm = new Vue(
 						}
 					}, function(err) {
 						// 处理失败的结果
-//						console.log(err)
+// console.log(err)
 						layer.msg('评论功能出现异常',{icon: 5},{
 	                        offset:['40%'],
-	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	                  });
 					})
 					
 				},
-				//评论功能
+				// 评论功能
 				tijiao_comments_click : function(index_comments){
 					var url = 'http://localhost:8080/tbxt/CommentsAdd';
 					var postId = vm.pass_postId
 					var topicContent = vm.comments_topicContent.trim();
-//					console.log("评论功能===获取topicContent=="+vm.comments_topicContent);
-//					console.log("评论功能===postId，topicContent=="+postId+"=="+topicContent);
+// console.log("评论功能===获取topicContent=="+vm.comments_topicContent);
+// console.log("评论功能===postId，topicContent=="+postId+"=="+topicContent);
 					var data = {
 						'postId': postId,
 						'topicContent':topicContent
@@ -1928,14 +1998,14 @@ var vm = new Vue(
 						this.$http.post(url, data,{
 							emulateJSON : true
 						}).then(function(res) {
-//						console.log("====="+res.body);
+// console.log("====="+res.body);
 							 switch(res.body){
 							     case 'success':
 							       layer.msg('评论成功！',{icon: 1},{
 				                        offset:['40%'],
-				                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+				                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 				                  });
-//							       console.log("kkkkkkkkkkkk")
+// console.log("kkkkkkkkkkkk")
 							       $("#comments_shafa").hide();
 			                	  var url2 = 'http://localhost:8080/tbxt/GetpostByPostId';
 									vm.$http.post(url2,data,{
@@ -1946,25 +2016,25 @@ var vm = new Vue(
 										}
 									}, function(err) {
 										// 处理失败的结果
-//											console.log(err)
+// console.log(err)
 										layer.msg('数据异常！',{icon: 5},{
 						                        offset:['40%'],
-						                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+						                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 						                  });
 									})	
-//									console.log("rrrrrrrrrrr")
-									layer.close(layer.index-1); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+// console.log("rrrrrrrrrrr")
+									layer.close(layer.index-1); // 它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
 							       break;
 							     case 'session_null':
 							       layer.msg('未登录！',{icon: 7},{
 				                        offset:['40%'],
-				                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+				                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 				                  });
 							       break;  
 							     default:
 							     layer.msg('评论出现异常！',{icon: 5},{
 				                        offset:['40%'],
-				                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+				                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 				                  });
 							       break;
 						   }
@@ -1972,13 +2042,13 @@ var vm = new Vue(
 							// 处理失败的结果
 							 layer.msg('获取个人动态信息失败！',{icon: 7},{
 			                        offset:['40%'],
-			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                  });
 						})
 					}else{
 						layer.msg('评论内容不能为空！',{icon: 7},{
 	                        offset:['40%'],
-	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	                  });
 					}
 				},
@@ -1997,25 +2067,25 @@ var vm = new Vue(
 						});
 					})
 				},
-				//判断点赞
+				// 判断点赞
 				judge_great : function(postId){
 					postId = vm.pass_postId
 					var url = 'http://localhost:8080/tbxt/greatJudge';
-//					console.log("judge_great.点赞id==="+postId);
+// console.log("judge_great.点赞id==="+postId);
 					var data = {
 						'postId': postId,
 					}
 					this.$http.post(url, data,{
 						emulateJSON : true
 					}).then(function(res) {
-//						console.log("成功进入点赞判断逻辑");
+// console.log("成功进入点赞判断逻辑");
 						 switch(res.body){
 						     case 'great_0':
 						       document.getElementById("great_icon_jb").style.color="#999999"; 
 						       this.$options.methods.great_add(postId);
 						       layer.msg('点赞成功!',{icon: 1},{
 			                        offset:['40%'],
-			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                  });
 						       break;
 						     case 'great_1':
@@ -2023,35 +2093,35 @@ var vm = new Vue(
 						       this.$options.methods.great_del(postId);
 						       layer.msg('取消点赞!！',{icon: 1},{
 			                        offset:['40%'],
-			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                  });
 						       break;
 						     case 'session_null':
 						       layer.msg('账号检测请登录!',{icon: 7},{
 			                        offset:['40%'],
-			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                  });
 						       break;
 						     default:
 						     layer.msg('数据异常!',{icon: 5},{
 			                        offset:['40%'],
-			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                  });
 						       break;
 					   }
 					}, function(err) {
 						// 处理失败的结果
-//						console.log(err)
+// console.log(err)
 						layer.msg('数据异常!',{icon: 5},{
 	                        offset:['40%'],
-	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	                  });
 					})
 				},
-				//点赞
+				// 点赞
 				great_add : function(postId){
 					var url = 'http://localhost:8080/tbxt/greatAdd';
-//					console.log("click_great点赞id==="+postId);
+// console.log("click_great点赞id==="+postId);
 					var data = {
 							'postId': postId,
 					}
@@ -2064,44 +2134,44 @@ var vm = new Vue(
 						    	 vm.$http.post(url2, data,{
 										emulateJSON : true
 									}).then(function(res) {
-//										console.log("二次异步得到点赞==="+JSON.stringify(res.body));
+// console.log("二次异步得到点赞==="+JSON.stringify(res.body));
 										document.getElementById("great_icon_jb").style.color="#009688";
 										vm.great = res.body.post_greatList.length
 									}, function(err) {
 										// 处理失败的结果
-//										console.log(err)
+// console.log(err)
 										layer.msg('获取个人动态信息失败!',{icon: 7},{
 					                        offset:['40%'],
-					                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+					                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 					                  });
 									})	 
 						       break;
 						     case 'session_null':
 						       layer.msg('未登录!',{icon: 7},{
 			                        offset:['40%'],
-			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                  });
 						       break;
 						     default:
 						     layer.msg('数据异常!',{icon: 5},{
 			                        offset:['40%'],
-			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                  });
 						       break;
 					   }
 					}, function(err) {
 						// 处理失败的结果
-//						console.log(err)
+// console.log(err)
 						 layer.msg('获取个人动态信息失败!',{icon: 7},{
 		                        offset:['40%'],
-		                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+		                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 		                  });
 					})	
 				},
-				//取消点赞
+				// 取消点赞
 				great_del : function(postId){
 					var url = 'http://localhost:8080/tbxt/greatDel';
-//					console.log("click_great点赞id==="+postId);
+// console.log("click_great点赞id==="+postId);
 					var data = {
 							'postId': postId,
 					}
@@ -2114,7 +2184,7 @@ var vm = new Vue(
 						    	 vm.$http.post(url2, data,{
 										emulateJSON : true
 									}).then(function(res) {
-//										console.log("二次异步得到点赞==="+JSON.stringify(res.body));
+// console.log("二次异步得到点赞==="+JSON.stringify(res.body));
 										document.getElementById("great_icon_jb").style.color="#999999";
 										if(res.body == null || res.body == 'null'){
 											vm.great = '0'
@@ -2123,17 +2193,17 @@ var vm = new Vue(
 										}
 									}, function(err) {
 										// 处理失败的结果
-//										console.log(err)
+// console.log(err)
 										layer.msg('获取个人动态信息失败!',{icon: 7},{
 					                        offset:['40%'],
-					                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+					                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 					                  });
 									})	 
 						       break;
 						     case 'del_error':
 						       layer.msg('点赞异常!',{icon: 5},{
 			                        offset:['40%'],
-			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                  });
 						       break; 
 						     default:
@@ -2141,15 +2211,15 @@ var vm = new Vue(
 					   }
 					}, function(err) {
 						// 处理失败的结果
-//						console.log(err)
+// console.log(err)
 						layer.msg('获取个人动态信息失败',{icon: 7},{
 	                        offset:['40%'],
-	                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+	                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 	                  });
 					})	
 				},
 				searchBar : function(){
-//					console.log(vm.seacherBarName);
+// console.log(vm.seacherBarName);
 					var data = {
 						'barName':vm.seacherBarName
 					}
@@ -2157,7 +2227,7 @@ var vm = new Vue(
 					this.$http.post(url, data,{
 						emulateJSON : true
 					}).then(function(res) {
-//						console.log(res.body);
+// console.log(res.body);
 						if(res.body != ''){
 								sessionStorage.setItem('barId',res.body.barId); // 存入一个值
 								setTimeout(function() {
@@ -2166,17 +2236,99 @@ var vm = new Vue(
 							}else{
 							 layer.msg('暂无该贴吧信息！',{icon: 7},{
 			                        offset:['40%'],
-			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                  });
 							}
 						}, function(err) {
 							// 处理失败的结果
 							 layer.msg('获取个人动态信息失败！',{icon: 7},{
 			                        offset:['40%'],
-			                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+			                        time: 1000 // 2秒关闭（如果不配置，默认是3秒）
 			                  });
 						})
-					
+				},
+				// 删除评论
+				deleteTopic : function(topicId){
+					layer.confirm('确认删除该条评论？', {
+		  				  btn: ['确定', '取消'] // 可以无限个按钮
+		  				,yes: function(index, layero){
+		  				    // 按钮【按钮一】的回调
+		  					var url2 = '/tbxt/deleteTopic';
+		  					var data = {
+		  							'topicId': topicId
+		  					}
+		  					vm.$http.post(url2, data,{
+		  						emulateJSON : true
+		  					}).then(function(res) {
+		  						if(res.bodyText == 'success'){
+		  							layer.msg('删除成功!',{icon: 1},{
+		  	  		                    offset:['40%'],
+		  	  		                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
+		  	  		              }); 
+		  							var postid = sessionStorage.getItem('toPost'); // 存入一个值
+		  							var data = {
+		  									'postId': postid
+		  							}
+		  							var url = 'http://localhost:8080/tbxt/GetpostByPostId';
+		  							vm.$http.post(url,data,{
+		  								emulateJSON : true,
+		  							}).then(function(res) {
+		  								vm.postList = res.body
+		  								if(res.body.DTOreaded != null){
+		  									vm.readed = res.body.DTOreaded.countRead
+		  								}else{
+		  									vm.readed = '0'
+		  								}
+		  								if(res.body.DTOgreat == null){
+		  									vm.great = '0'
+		  								}else{
+		  									vm.great = res.body.DTOgreat.post_greatList.length
+		  								}
+		  								if(res.body.DTOBarAndPic.post_pictureList != null){
+		  									vm.pictureList = res.body.DTOBarAndPic.post_pictureList
+		  								}
+		  								if(res.body.DTOtopic != null){
+		  									vm.post_topicList = res.body.DTOtopic.post_topicList;
+		  									$("#comments_shafa").hide();
+		  								}else{
+		  									vm.post_topicList=false;
+		  								}
+		  								vm.pass_postId = postid;
+		  								if(res.body.judgePostUser == 1){
+		  									setTimeout(function(){
+		  									$('.delTopic').show();
+		  								}, 10);
+		  								}
+		  							}, function(err) {
+		  								// 处理失败的结果
+// console.log(err)
+		  								layer.msg('获取帖子动态信息失败!',{icon: 5},{
+		  				                    offset:['40%'],
+		  				                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
+		  				              }); 
+		  							})	
+		  							
+		  							
+		  						}else{
+		  							layer.msg('数据异常!',{icon: 1},{
+		  	  		                    offset:['40%'],
+		  	  		                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
+		  	  		              }); 
+		  						}
+		  					}, function(err) {
+		  						// 处理失败的结果
+		  						layer.msg('数据异常!',{icon: 7},{
+		  		                    offset:['40%'],
+		  		                    time: 1000 // 2秒关闭（如果不配置，默认是3秒）
+		  		              }); 
+		  					})
+		  					
+		  				  }
+		  				  ,btn2: function(index, layero){
+		  				    // 按钮【按钮三】的回调
+		  					  layer.close(index)
+		  				  }
+		  				});
 				},
 			}
 		})
@@ -2203,15 +2355,15 @@ layui.use([ 'carousel', 'form' ], function() {
 })
 layui.use('element', function() {
 	var element = layui.element; // 导航的hover效果、二级菜单等功能，需要依赖element模块
-	//监听导航点击
+	// 监听导航点击
 	element.on('nav(demo)', function(elem) {
-		//console.log(elem)
+		// console.log(elem)
 		layer.msg(elem.text());
 	});
 });
 
-//发表帖子加图片
-//发帖上传图片事件 
+// 发表帖子加图片
+// 发帖上传图片事件
 $('#photo_xx1').click(function(){
 	 $('#file1').click();
 });$('#photo_xx2').click(function(){

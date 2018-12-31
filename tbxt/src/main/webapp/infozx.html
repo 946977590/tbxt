@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>最左——个人信息社区中心</title>
 <link rel="stylesheet" href="layui/css/layui.css" />
-<link rel="stylesheet" href="css/index.css?v=1" />
+<link rel="stylesheet" href="css/index.css" />
 <link rel="stylesheet" href="css/blog.css">
 <script src="layui/layui.js"></script>
 <script src="js/vue.min.js"></script>
@@ -116,6 +116,18 @@
 
 		<!-- ==========================发帖页面模态框===================== -->
 		<div><creat_post_component /></div>
+		
+		<!-- ==========================评论区页面===================== -->
+		<div id="comments_Box" style="display: none;">
+			<div class="comments-form" action="">
+				<div class="layui-form-item layui-form-text"
+					style="background-color: #FFFFFF">
+					<textarea placeholder="发贴记得遵守贴吧相关规则奥~" id="comments_textarea"
+							v-model="comments_topicContent" class="layui-textarea"></textarea>
+				</div>
+				<button id="btn_comments_tj" @click="tijiao_comments_click" class="layui-btn">提交</button>
+			</div>
+		</div>
 
 		<!-- ==========================个人信息页面模态框===================== -->
 		<div id="my_info_Box" style="display: none;">
@@ -145,14 +157,12 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">性别</label>
 					<div class="layui-input-inline">
-						<div v-if="userInfo.userGender==0">
-							<input type="radio" name="sex" value="男" title="男" >
-							<input type="radio" name="sex" value="女" title="女" checked="">
-						</div>
-						<div v-if="userInfo.userGender==1">
-							<input type="radio" name="sex" value="男" title="男" checked="">
-							<input type="radio" name="sex" value="女" title="女" >
-						</div>
+						<select name="ht_option" id="SexSelect" style="display:none;" lay-verify="">
+						  <option v-if="userInfo.userGender==1" value="1" selected="selected">男</option>
+						  <option v-if="userInfo.userGender==1" value="0" >女</option>
+						  <option v-if="userInfo.userGender==0" value="0" selected="selected">女</option>
+						  <option v-if="userInfo.userGender==0" value="1" >男</option>
+						</select>
 					</div>
 				</div>
 				</form>
@@ -276,6 +286,25 @@
 									<span class="pull-left">阅读 <em>{{readed}}</em></span> <span
 										class="pull-right like"><i class="layui-icon layui-icon-praise" @click="judge_great" id="great_icon_jb"></i><em v-if="great">{{great}}</em></span>
 								</div>
+								<div class="comt layui-clear">
+							<a href="javascript:;" class="pull-left">评论</a> <a
+								href="javascript:;"  class="pull-right"  @click="open_comment_w">写评论</a>
+						</div>
+						<div id="comments_shafa">
+								<i class="layui-icon layui-icon-reply-fill" style="font-size: 25px;color: rgb(153, 153, 153);">目前还没人评论哟，快来抢沙发~</i>
+						</div>
+						<div id="LAY-msg-box" v-if="post_topicList">
+							<div class="info-item" v-for="item in post_topicList" :key="item">
+								<img class="info-img" src="img/psb.jpg" alt="">
+								<div class="info-text">
+									<p class="title count">
+										<span class="name">{{item.bUserId}}<a class="delTopic" href="javascript:;"  @click="deleteTopic(item.topicId)">删除</a></span> 
+									</p>
+									
+									<p class="info-intr">{{item.topicContent}}</p>
+								</div>
+							</div>
+						</div>
 							</div>
 						</div>
 					</div>

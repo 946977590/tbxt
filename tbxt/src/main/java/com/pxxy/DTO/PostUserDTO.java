@@ -26,6 +26,14 @@ public class PostUserDTO {
 	private DTOtopic DTOtopic;
 	private PostByGreatReadedDTO postByGreatReadedDTO;
 	private List<PostByGreatReadedDTO> postByGreatReadedDTOList;
+	private int judgePostUser;
+	
+	public int getJudgePostUser() {
+		return judgePostUser;
+	}
+	public void setJudgePostUser(int judgePostUser) {
+		this.judgePostUser = judgePostUser;
+	}
 	public post getPost() {
 		return post;
 	}

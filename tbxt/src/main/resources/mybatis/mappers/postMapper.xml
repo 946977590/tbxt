@@ -66,6 +66,16 @@
 		ORDER BY post_id DESC LIMIT #{preNum},#{pageSize}
 	</select>
 	
+	<select id="judgePostUserTopic" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		post
+		WHERE
+		post.post_id = #{postId}
+		AND post_user_id = #{userId}
+	</select>
+	
 	<select id="selectAllPostInBackByFYandKw" resultMap="AllPostResultMap">
 		select
 		<include refid="Base_Column_List" />

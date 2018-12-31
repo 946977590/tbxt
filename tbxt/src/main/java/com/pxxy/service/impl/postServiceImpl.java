@@ -48,6 +48,9 @@ public class postServiceImpl implements postService {
 	private userMapper userMapper;
 	
 	@Autowired 
+	private post_topicMapper post_topicMapper;
+	
+	@Autowired 
 	private huatiMapper huatiMapper;
 	
 	public int creatPost(post record) {
@@ -111,6 +114,9 @@ public class postServiceImpl implements postService {
 	public PostUserDTO queryPostLayer(String postId) {
 		List<post_picture> Piclist = post_pictureMapper.selectByPostId(postId);
 		DTOBarAndPic DTO_BarAndPic = postMapper.queryPostLayer_BarAndPic(postId);
+		post post = postMapper.selectByPrimaryKey(postId);
+		user user111 = userMapper.selectByPrimaryKey(post.getPostUserId());
+		DTO_BarAndPic.getPost().setPostAuthor(user111.getUserNickname());
 		DTO_BarAndPic.setPost_pictureList(Piclist);
 		DTOtopic DTO_Topic = postMapper.queryPostLayer_Topic(postId);
 		if(DTO_Topic != null) {
@@ -169,7 +175,10 @@ public class postServiceImpl implements postService {
 		//根据相关id获取对应的post
 		for(int i=0;i<postIdList.size();i++) {
 			String postId = (String) postIdList.get(i);
+			post post = postMapper.selectByPrimaryKey(postId);
+			user user111 = userMapper.selectByPrimaryKey(post.getPostUserId());
 			postByGreatReadedDTO = postMapper.queryPostViewByGreatReaded(postId);
+			postByGreatReadedDTO.getPost().setPostAuthor(user111.getUserNickname());//修改作者昵称bug
 			postByGreatReadedDTOList.add(postByGreatReadedDTO);
 		}
 		postUserDTO.setPostByGreatReadedDTOList(postByGreatReadedDTOList);
@@ -327,6 +336,16 @@ public class postServiceImpl implements postService {
 		}
 		DTOBarAndPic.setPostList(postList);
 		return DTOBarAndPic;
+	}
+
+	public post judgePostUserTopic(String postId, String userId) {
+		post post = postMapper.judgePostUserTopic(postId, userId);
+		return post;
+	}
+
+	public int deleteTopic(String topicId) {
+		int i = post_topicMapper.deleteByPrimaryKey(topicId);
+		return i;
 	}
 
 }

@@ -469,3 +469,8 @@
 .gonggao_list_item_name{
 	border-bottom: 3px solid #DCDCDC;
 }
+.delTopic{
+	display:none;
+	margin-left:30px;
+	color:#FF4500;
+}

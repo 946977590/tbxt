@@ -2,6 +2,8 @@ package com.pxxy.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.DTOgreat;
 import com.pxxy.DTO.DTOhuati;
@@ -45,4 +47,6 @@ public interface postService {
     int updateHuati(huati record);	//封禁话题
     DTOBarAndPic selectAllPostInBackFY(int preNum,int pageSize);	//分页
     DTOBarAndPic selectAllPostInBackByFYandKw(String postTitle,int preNum,int pageSize);	//关键字查询分页
+    post judgePostUserTopic(String postId,String userId);
+    int deleteTopic(String topicId);
 }

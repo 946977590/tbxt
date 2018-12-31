@@ -110,5 +110,6 @@ public class post_barServiceImpl implements post_barService {
 		PostUserDTO postUserDTO = post_barMapper.selectAllBarFY(preNum,pageSize);
 		return postUserDTO;
 	}
+
 		
 }
