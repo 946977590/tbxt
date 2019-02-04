@@ -17,14 +17,14 @@ public class userServiceImpl implements userService {
 	public int insert(user user) {
 		// TODO Auto-generated method stub
 		int a = userMapper.insert(user);
-		System.out.println("²åÈëÁË"+a+"ÌõÊý¾Ý");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+a+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		return a;
 	}
 
 	public user queryByUserEmail(String userEmail) {
 		// TODO Auto-generated method stub
 		user user = userMapper.queryByUserEmail(userEmail);
-		System.out.println("login²éÑ¯³öÀ´µÄuserÊÇ=="+user);
+		System.out.println("loginï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½userï¿½ï¿½=="+user);
 		return user;
 	}
 
@@ -56,5 +56,16 @@ public class userServiceImpl implements userService {
 	public PostUserDTO queryUserBykw(String userNickname) {
 		PostUserDTO postUserDTO = userMapper.queryUserBykw(userNickname);
 		return postUserDTO;
+	}
+
+	public void tranferIn(String userId1, String userId2, String userLevel) {
+		user user1 = userMapper.selectByPrimaryKey(userId1);
+		user user2 = userMapper.selectByPrimaryKey(userId2);
+		user1.setUserLevel("-"+userLevel);
+		user2.setUserLevel(userLevel);
+		userMapper.updateByPrimaryKeySelective(user1);
+		int i=1/0;
+		userMapper.updateByPrimaryKeySelective(user2);
+		
 	}
 }

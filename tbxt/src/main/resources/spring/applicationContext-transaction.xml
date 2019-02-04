@@ -17,7 +17,7 @@
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<!--所有以query开头的方法都是只读的 -->
-			<tx:method name="query*" read-only="true" />
+			<tx:method name="query*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="true" />
 			<!--其他方法使用默认事务策略 -->
 			<tx:method name="*" />
 		</tx:attributes>

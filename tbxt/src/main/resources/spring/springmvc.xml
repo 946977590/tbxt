@@ -19,6 +19,13 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 	
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/skipto_*"/>
+			<bean class="com.pxxy.interceptor.UserInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 	<!-- 配置Spring MVC 的视图解析器 (渲染视图完成模型和视图的绑定)-->
     <bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

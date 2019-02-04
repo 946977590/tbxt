@@ -16,8 +16,8 @@ public class Usertest {
 	@Autowired
 	private  userMapper userMapper;
 	
-	/*	@Autowired
-	private  postMapper postMapper;*/
+	@Autowired
+	private com.pxxy.service.userService userService;
 	
 	@Test
 	public void test2() {
@@ -47,4 +47,8 @@ public class Usertest {
 		
 	}*/
 	
+	@Test
+	public void testTranfer() {
+		userService.tranferIn("f931b368-1dea-44b5-bea6-7366c0533448", "e7f19db3-8a3a-472c-891a-b7ae776cfd01", "10");
+	}
 }

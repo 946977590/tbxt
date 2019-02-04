@@ -279,7 +279,7 @@
 								</div>
 								<p class="comment_title">{{postList.DTOBarAndPic.post.postTitle}}<span style="font-size: 15px; float: left; margin-left: 20px; color: #FF7F42;" v-if="postList.DTOBarAndPic.post.postCategory">#{{postList.DTOBarAndPic.post.postCategory}}</span></p>
 								<p class="comment_content">{{postList.DTOBarAndPic.post.postContent}}</p>
-								<img v-for="item in pictureList" :key="item" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " 
+								<img v-for="item in pictureList" :key="item" :src=" '/tbxt/IoReadImage?pictureName='+item.pictureName " 
 								style="width: 200px;padding:5px; height: 130px;float: left;margin-left: 1px;"
 									alt=""> 
 								<div class="count layui-clear">

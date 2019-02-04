@@ -10,7 +10,7 @@ var vm = new Vue({
 				userEmail:this.userEmail,
 				passWord:this.passWord
 			};
-			var url = 'http://localhost:8080/tbxt/ManaLogin';
+			var url = '/tbxt/ManaLogin';
 			this.$http.post(url,data,{emulateJSON:true}).then(function(res){
 //				console.log("====1====="+res.body);
 				switch(res.body){

@@ -18,7 +18,7 @@ import com.pxxy.service.postService;
 @ContextConfiguration(locations={ "classpath*:spring/applicationContext-transaction.xml", "classpath*:spring/applicationContext-mybatis.xml","classpath*:spring/applicationContext.xml"})
 public class Post_test {
 
-	@Autowired
+	@Autowired 
 	private  postMapper postMapper;
 	
 	@Autowired
@@ -45,7 +45,7 @@ public class Post_test {
 		String greatId = "9";
 //		postMapper.delGreat(greatId);
 		postMapper.greatAdd(postId, userId, greatId);
-		System.out.println("É¾³ýÊý¾Ý³É¹¦£¡");
+		System.out.println("É¾ï¿½ï¿½ï¿½ï¿½ï¿½Ý³É¹ï¿½ï¿½ï¿½");
 	}
 	
 	@Test
@@ -65,11 +65,11 @@ public class Post_test {
 	public void test15() {
 		PostUserDTO postUserDTO = new PostUserDTO();
 		PostByGreatReadedDTO postByGreatReadedDTO = new PostByGreatReadedDTO();
-		//»ñÈ¡Ïà¹ØpostIdÊý×é¼¯ºÏ
+		//ï¿½ï¿½È¡ï¿½ï¿½ï¿½postIdï¿½ï¿½ï¿½é¼¯ï¿½ï¿½
 		ArrayList postIdList = (ArrayList) postMapper.queryTopPostId();
 		List<PostByGreatReadedDTO> postByGreatReadedDTOList = new ArrayList<PostByGreatReadedDTO>();
-		System.out.println("Service²ã======postIdList==="+postIdList);
-		//¸ù¾ÝÏà¹Øid»ñÈ¡¶ÔÓ¦µÄpost
+		System.out.println("Serviceï¿½ï¿½======postIdList==="+postIdList);
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½idï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½post
 		for(int i=0;i<postIdList.size();i++) {
 			String postId = (String) postIdList.get(i);
 			postByGreatReadedDTO = postMapper.queryPostViewByGreatReaded(postId);
@@ -83,12 +83,12 @@ public class Post_test {
 	public void test16() {
 		PostUserDTO postUserDTO = new PostUserDTO();
 		PostByGreatReadedDTO postByGreatReadedDTO = new PostByGreatReadedDTO();
-		//»ñÈ¡Ïà¹ØpostIdÊý×é¼¯ºÏ
+		//ï¿½ï¿½È¡ï¿½ï¿½ï¿½postIdï¿½ï¿½ï¿½é¼¯ï¿½ï¿½
 		String barId = "123";
 		ArrayList postIdList = (ArrayList) postMapper.queryBarPostId(barId);
 		List<PostByGreatReadedDTO> postByGreatReadedDTOList = new ArrayList<PostByGreatReadedDTO>();
-		System.out.println("Service²ã======postIdList==="+postIdList);
-		//¸ù¾ÝÏà¹Øid»ñÈ¡¶ÔÓ¦µÄpost
+		System.out.println("Serviceï¿½ï¿½======postIdList==="+postIdList);
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½idï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½post
 		for(int i=0;i<postIdList.size();i++) {
 			String postId = (String) postIdList.get(i);
 			postByGreatReadedDTO = postMapper.queryPostViewByGreatReaded(postId);

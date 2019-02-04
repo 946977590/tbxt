@@ -13,7 +13,7 @@ data(){
     },
     mounted(){
     	// 获取轮播
-    	var url = 'http://localhost:8080/tbxt/selectAllAnnounces';	 
+    	var url = '/tbxt/selectAllAnnounces';	 
 		this.$http.post(url, {
 			emulateJSON : true
 		}).then(function(res) {
@@ -31,7 +31,7 @@ methods:{
 		var data = {
 			'announceId':announceId	
 		}
-		var url = 'http://localhost:8080/tbxt/queryGGByid';	 
+		var url = '/tbxt/queryGGByid';	 
 		this.$http.post(url,data,{
 			emulateJSON : true
 		}).then(function(res) {
@@ -65,7 +65,7 @@ var component888 = Vue.extend({
 	template:`
 	<div carousel-item="">
 		<div v-for="item in slideList" :key="item">
-			<a href="javascript:;" v-on:click="pass_postCategory(item.pictureBelong)"><img  :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " style="width: 100%; height: 100%;" /></a>
+			<a href="javascript:;" v-on:click="pass_postCategory(item.pictureBelong)"><img  :src=" '/tbxt/IoReadImage?pictureName='+item.pictureName " style="width: 100%; height: 100%;" /></a>
 		</div>
 	</div>
 	`,
@@ -76,7 +76,7 @@ data(){
     },
     mounted(){
     	// 获取轮播
-    	var url = 'http://localhost:8080/tbxt/querySlidePic';	 
+    	var url = '/tbxt/querySlidePic';	 
 		this.$http.post(url, {
 			emulateJSON : true
 		}).then(function(res) {
@@ -122,7 +122,7 @@ data(){
     },
 created(){	
     	// 获取热门话题
-    	var url = 'http://localhost:8080/tbxt/queryHotHuati';	 
+    	var url = '/tbxt/queryHotHuati';	 
 		this.$http.post(url, {
 			emulateJSON : true
 		}).then(function(res) {
@@ -164,7 +164,7 @@ var commponent2 = Vue.extend({
 	      }
 	    },
   mounted(){
-        	var url = 'http://localhost:8080/tbxt/queryAllBar';
+        	var url = '/tbxt/queryAllBar';
 			this.$http.post(url, {
 				emulateJSON : true
 			}).then(function(res) {
@@ -193,7 +193,7 @@ var commponent2 = Vue.extend({
 				var data = {
 					'barId':barId
 				}
-				var url2 = 'http://localhost:8080/tbxt/queryBarPic';
+				var url2 = '/tbxt/queryBarPic';
 				this.$http.post(url2,data,{
 					emulateJSON : true
 				}).then(function(res) {
@@ -323,7 +323,7 @@ var sjx_post_component = Vue.extend({
         	},
         	Open_personPostInfo : function(postid){
         		// 监测该贴是否被点赞
-				var url2 = 'http://localhost:8080/tbxt/greatJudge';
+				var url2 = '/tbxt/greatJudge';
 				var data = {
 						'postId': postid
 				}
@@ -367,7 +367,7 @@ var sjx_post_component = Vue.extend({
 				var data = {
 						'postId': postid
 				}
-				var url = 'http://localhost:8080/tbxt/GetpostByPostId';
+				var url = '/tbxt/GetpostByPostId';
 				vm.$http.post(url,data,{
 					emulateJSON : true,
 				}).then(function(res) {
@@ -426,7 +426,7 @@ var post_view_component = Vue.extend({
 				<a href="" id="title_v" >{{pitem.post.postContent}}</a>
 			</div>
 			<div class="right-sec_tiezi_photo_box" >
-				<img class="right-sec_tiezi_photo" v-for="item in pitem.post_pictureList" :key="item" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " />
+				<img class="right-sec_tiezi_photo" v-for="item in pitem.post_pictureList" :key="item" :src=" '/tbxt/IoReadImage?pictureName='+item.pictureName " />
 			</div>
 			
 			<div class="right-sec_tiezi_author_info_box2">
@@ -454,7 +454,7 @@ var post_view_component = Vue.extend({
 		      }
 		    },
 	  created(){
-	        	var url = 'http://localhost:8080/tbxt/queryTopPostView';
+	        	var url = '/tbxt/queryTopPostView';
 				this.$http.post(url, {
 					emulateJSON : true
 				}).then(function(res) {
@@ -482,7 +482,7 @@ var post_view_component = Vue.extend({
 	        	// 打开帖子
 				open_tiezi : function(postid) {
 					// 监测该贴是否被点赞
-					var url2 = 'http://localhost:8080/tbxt/greatJudge';
+					var url2 = '/tbxt/greatJudge';
 					var data = {
 							'postId': postid
 					}
@@ -527,12 +527,12 @@ var post_view_component = Vue.extend({
 					var data = {
 							'postId': postid
 					}
-					var url = 'http://localhost:8080/tbxt/GetpostByPostId';
+					var url = '/tbxt/GetpostByPostId';
 					vm.$http.post(url,data,{
 						emulateJSON : true,
 					}).then(function(res) {
 // console.log("res.body=="+JSON.stringify(res.body));
-						var Judurl = 'http://localhost:8080/tbxt/AddRead';
+						var Judurl = '/tbxt/AddRead';
 						vm.$http.post(Judurl,data,{
 							emulateJSON : true,
 						}).then(function(res) {
@@ -609,7 +609,7 @@ var post_view_component = Vue.extend({
 					style="font-size: 13px; float: left; text-align : left; display: inline; margin-left: 20px; color: #8D8D8D" >{{pitem.post.postContent}}</a>
 			</div>
 			<div class="right-sec_tiezi_photo_box" >
-				<img class="right-sec_tiezi_photo" v-for="item in pitem.post_pictureList" :key="item" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " />
+				<img class="right-sec_tiezi_photo" v-for="item in pitem.post_pictureList" :key="item" :src=" '/tbxt/IoReadImage?pictureName='+item.pictureName " />
 			</div>
 			
 			<div class="right-sec_tiezi_author_info_box">
@@ -659,7 +659,7 @@ var post_view_component = Vue.extend({
 		    		'postCategory' : postCategory
 		    		}
 // console.log('postCategory'+postCategory);
-	        	var url = 'http://localhost:8080/tbxt/queryHuatiByCategory';
+	        	var url = '/tbxt/queryHuatiByCategory';
 				this.$http.post(url,data,{
 					emulateJSON : true
 				}).then(function(res) {
@@ -692,7 +692,7 @@ var post_view_component = Vue.extend({
 	        	// 打开帖子
 				open_tiezi : function(postid) {
 					// 监测该贴是否被点赞
-					var url2 = 'http://localhost:8080/tbxt/greatJudge';
+					var url2 = '/tbxt/greatJudge';
 					var data = {
 							'postId': postid
 					}
@@ -736,7 +736,7 @@ var post_view_component = Vue.extend({
 							'postId': postid
 					}
 					sessionStorage.setItem('toPost',postid); // 存入一个值
-					var url = 'http://localhost:8080/tbxt/GetpostByPostId';
+					var url = '/tbxt/GetpostByPostId';
 					vm.$http.post(url,data,{
 						emulateJSON : true,
 					}).then(function(res) {
@@ -772,7 +772,7 @@ var post_view_component = Vue.extend({
 						}, 10);
 						}
 // this.$options.methods.judgeRead(postid);
-						var Judurl = 'http://localhost:8080/tbxt/AddRead';
+						var Judurl = '/tbxt/AddRead';
 						vm.$http.post(Judurl,data,{
 							emulateJSON : true,
 						}).then(function(res) {
@@ -820,7 +820,7 @@ var post_view_component = Vue.extend({
 					style="font-size: 13px; float: left; text-align : left; display: inline; margin-left: 20px; color: #8D8D8D" >{{pitem.post.postContent}}</a>
 			</div>
 			<div class="right-sec_tiezi_photo_box" >
-				<img class="right-sec_tiezi_photo" v-for="item in pitem.post_pictureList" :key="item" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+item.pictureName " />
+				<img class="right-sec_tiezi_photo" v-for="item in pitem.post_pictureList" :key="item" :src=" '/tbxt/IoReadImage?pictureName='+item.pictureName " />
 			</div>
 			
 			<div class="right-sec_tiezi_author_info_box">
@@ -870,7 +870,7 @@ var post_view_component = Vue.extend({
 		    	var data={
 		    		'barId' : barId
 		    		}
-	        	var url = 'http://localhost:8080/tbxt/queryBarPostView';
+	        	var url = '/tbxt/queryBarPostView';
 				this.$http.post(url,data,{
 					emulateJSON : true
 				}).then(function(res) {
@@ -907,7 +907,7 @@ var post_view_component = Vue.extend({
 	        	// 打开帖子
 				open_tiezi : function(postid) {
 					// 监测该贴是否被点赞
-					var url2 = 'http://localhost:8080/tbxt/greatJudge';
+					var url2 = '/tbxt/greatJudge';
 					var data = {
 							'postId': postid
 					}
@@ -951,7 +951,7 @@ var post_view_component = Vue.extend({
 							'postId': postid
 					}
 					sessionStorage.setItem('toPost',postid); // 存入一个值
-					var url = 'http://localhost:8080/tbxt/GetpostByPostId';
+					var url = '/tbxt/GetpostByPostId';
 					vm.$http.post(url,data,{
 						emulateJSON : true,
 					}).then(function(res) {
@@ -987,7 +987,7 @@ var post_view_component = Vue.extend({
 						}, 10);
 						}
 // this.$options.methods.judgeRead(postid);
-						var Judurl = 'http://localhost:8080/tbxt/AddRead';
+						var Judurl = '/tbxt/AddRead';
 						vm.$http.post(Judurl,data,{
 							emulateJSON : true,
 						}).then(function(res) {
@@ -1012,7 +1012,7 @@ var post_view_component = Vue.extend({
 			var component121 = Vue.extend({
 				template:`
 				<div>
-					<img class="barPic" alt="" :src=" 'http://localhost:8080/tbxt/IoReadImage?pictureName='+barPicName">
+					<img class="barPic" alt="" :src=" '/tbxt/IoReadImage?pictureName='+barPicName">
 				</div>
 				`,
 			data(){
@@ -1026,7 +1026,7 @@ var post_view_component = Vue.extend({
 			    	var data = {
 			    		'barId':barId	
 			    	}
-	        		var url = 'http://localhost:8080/tbxt/queryBarPic'
+	        		var url = '/tbxt/queryBarPic'
 	            		this.$http.post(url,data,{emulateJSON:true}).then(function(res) {
 	        				// 处理成功的结果
 // console.log(res.body);
@@ -1136,7 +1136,7 @@ var post_view_component = Vue.extend({
 	      }
 	    },
 	   created(){
-	    	var url = 'http://localhost:8080/tbxt/queryHotHuatiAll'
+	    	var url = '/tbxt/queryHotHuatiAll'
     		this.$http.post(url).then(function(res) {
 				// 处理成功的结果
 				this.huatiList = res.body.huatiList
@@ -1208,7 +1208,7 @@ var post_view_component = Vue.extend({
 						formData.append('files', file7.files[0]);
 						formData.append('files', file8.files[0]);
 						formData.append('files', file9.files[0]);
-						var url = 'http://localhost:8080/tbxt/postCreat';
+						var url = '/tbxt/postCreat';
 						this.$http.post(url, formData, {
 							emulateJSON : true
 						}).then(function(res) {
@@ -1370,7 +1370,7 @@ var post_view_component = Vue.extend({
 								userEmail : this.registerBox_userEmail,
 								userPassword : this.registerBox_userPassword
 							};
-						var url = 'http://localhost:8080/tbxt/register';
+						var url = '/tbxt/register';
 						this.$http.post(url, data, {
 							emulateJSON : true
 						}).then(function(res) {
@@ -1460,7 +1460,7 @@ var post_view_component = Vue.extend({
 					userEmail : this.loginBox_userEmail,
 					userPassword : this.loginBox_userPassword
 				};
-				var url = 'http://localhost:8080/tbxt/login';
+				var url = '/tbxt/login';
 				this.$http.post(url, data, {
 					emulateJSON : true
 				}).then(function(res) {
@@ -1635,7 +1635,7 @@ var vm = new Vue(
 								'userGender':cc
 							}
 // console.log('update');
-							var url = 'http://localhost:8080/tbxt/UpdateUser';
+							var url = '/tbxt/UpdateUser';
 							this.$http.post(url,data,{
 								emulateJSON : true
 							}).then(function(res) {
@@ -1650,7 +1650,7 @@ var vm = new Vue(
 					userEmail : aa,
 					userPassword : bb
 				};
-				var url = 'http://localhost:8080/tbxt/login';
+				var url = '/tbxt/login';
 				this.$http.post(url, data, {
 					emulateJSON : true
 				}).then(function(res) {
@@ -1895,7 +1895,7 @@ var vm = new Vue(
 				},
 				// 打开发帖页面
 				open_fatie:function(){
-					var url = 'http://localhost:8080/tbxt/requestSession';
+					var url = '/tbxt/requestSession';
 					this.$http.post(url, {
 						emulateJSON : true
 					}).then(function(res) {
@@ -1926,7 +1926,7 @@ var vm = new Vue(
 				},
 				// 打开个人动态页面
 				open_myinfozx:function(){
-					var url = 'http://localhost:8080/tbxt/GetpostByuserId';
+					var url = '/tbxt/GetpostByuserId';
 					this.$http.post(url, {
 						emulateJSON : true
 					}).then(function(res) {
@@ -1985,7 +1985,7 @@ var vm = new Vue(
 				},
 				// 评论功能
 				tijiao_comments_click : function(index_comments){
-					var url = 'http://localhost:8080/tbxt/CommentsAdd';
+					var url = '/tbxt/CommentsAdd';
 					var postId = vm.pass_postId
 					var topicContent = vm.comments_topicContent.trim();
 // console.log("评论功能===获取topicContent=="+vm.comments_topicContent);
@@ -2007,7 +2007,7 @@ var vm = new Vue(
 				                  });
 // console.log("kkkkkkkkkkkk")
 							       $("#comments_shafa").hide();
-			                	  var url2 = 'http://localhost:8080/tbxt/GetpostByPostId';
+			                	  var url2 = '/tbxt/GetpostByPostId';
 									vm.$http.post(url2,data,{
 										emulateJSON : true,
 									}).then(function(res) {
@@ -2070,7 +2070,7 @@ var vm = new Vue(
 				// 判断点赞
 				judge_great : function(postId){
 					postId = vm.pass_postId
-					var url = 'http://localhost:8080/tbxt/greatJudge';
+					var url = '/tbxt/greatJudge';
 // console.log("judge_great.点赞id==="+postId);
 					var data = {
 						'postId': postId,
@@ -2120,7 +2120,7 @@ var vm = new Vue(
 				},
 				// 点赞
 				great_add : function(postId){
-					var url = 'http://localhost:8080/tbxt/greatAdd';
+					var url = '/tbxt/greatAdd';
 // console.log("click_great点赞id==="+postId);
 					var data = {
 							'postId': postId,
@@ -2130,7 +2130,7 @@ var vm = new Vue(
 					}).then(function(res) {
 						 switch(res.body){
 						     case 'great_add':
-						    	 var url2 = 'http://localhost:8080/tbxt/GetgreatNum';
+						    	 var url2 = '/tbxt/GetgreatNum';
 						    	 vm.$http.post(url2, data,{
 										emulateJSON : true
 									}).then(function(res) {
@@ -2170,7 +2170,7 @@ var vm = new Vue(
 				},
 				// 取消点赞
 				great_del : function(postId){
-					var url = 'http://localhost:8080/tbxt/greatDel';
+					var url = '/tbxt/greatDel';
 // console.log("click_great点赞id==="+postId);
 					var data = {
 							'postId': postId,
@@ -2180,7 +2180,7 @@ var vm = new Vue(
 					}).then(function(res) {
 						 switch(res.body){
 						     case 'great_del':
-						    	 var url2 = 'http://localhost:8080/tbxt/GetgreatNum';
+						    	 var url2 = '/tbxt/GetgreatNum';
 						    	 vm.$http.post(url2, data,{
 										emulateJSON : true
 									}).then(function(res) {
@@ -2223,7 +2223,7 @@ var vm = new Vue(
 					var data = {
 						'barName':vm.seacherBarName
 					}
-					var url = 'http://localhost:8080/tbxt/queryBarByName'
+					var url = '/tbxt/queryBarByName'
 					this.$http.post(url, data,{
 						emulateJSON : true
 					}).then(function(res) {
@@ -2269,7 +2269,7 @@ var vm = new Vue(
 		  							var data = {
 		  									'postId': postid
 		  							}
-		  							var url = 'http://localhost:8080/tbxt/GetpostByPostId';
+		  							var url = '/tbxt/GetpostByPostId';
 		  							vm.$http.post(url,data,{
 		  								emulateJSON : true,
 		  							}).then(function(res) {

@@ -5,12 +5,14 @@ import com.pxxy.pojo.user;
 
 public interface userService {
 	
-	 int insert(user user);	//Ìí¼ÓÓÃ»§
+	 int insert(user user);	//ï¿½ï¿½ï¿½ï¿½Ã»ï¿½
 	 user selectByPrimaryKey(String userId);
-	 user queryByUserEmail(String uerEmail); //ÓÃ»§µÇÂ½
+	 user queryByUserEmail(String uerEmail); //ï¿½Ã»ï¿½ï¿½ï¿½Â½
 	 user queryByManaUserEmail(String userEmail);
-	 PostUserDTO queryAllUser();	//²éÑ¯³ı¹ÜÀíÔ±Ö®ÍâËùÓĞ»áÔ±
-	 PostUserDTO queryAllUserFY(int preNum,int pageSize);	//·ÖÒ³²éÑ¯³ı¹ÜÀíÔ±Ö®ÍâËùÓĞ»áÔ±
+	 PostUserDTO queryAllUser();	//ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±Ö®ï¿½ï¿½ï¿½ï¿½ï¿½Ğ»ï¿½Ô±
+	 PostUserDTO queryAllUserFY(int preNum,int pageSize);	//ï¿½ï¿½Ò³ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±Ö®ï¿½ï¿½ï¿½ï¿½ï¿½Ğ»ï¿½Ô±
 	 int updateByPrimaryKeySelective(user record);
 	 PostUserDTO queryUserBykw(String userNickname);
+	 //springï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 void tranferIn(String userId1,String userId2,String userLevel);
 }
