@@ -1,10 +1,15 @@
 package com.pxxy.DTO;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.pxxy.pojo.*;
-public class PostUserDTO {
+public class PostUserDTO implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private post post;
 	private post_bar post_bar;
 	private user user;

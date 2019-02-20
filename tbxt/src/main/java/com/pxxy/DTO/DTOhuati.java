@@ -1,10 +1,15 @@
 package com.pxxy.DTO;
 
+import java.io.Serializable;
 import java.util.List;
 import com.pxxy.pojo.huati;
 
-public class DTOhuati {
+public class DTOhuati implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private huati huati;
 	private List<huati> huatiList;
 	private int huatiNum;

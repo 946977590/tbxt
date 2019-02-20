@@ -1,5 +1,6 @@
 package com.pxxy.DTO;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.pxxy.pojo.post;
@@ -7,8 +8,12 @@ import com.pxxy.pojo.post_bar;
 import com.pxxy.pojo.post_picture;
 import com.pxxy.pojo.user;
 
-public class DTOBarAndPic {
+public class DTOBarAndPic implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private post post;
 	private post_bar post_bar;
 	private user user;

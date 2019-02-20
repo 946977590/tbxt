@@ -245,7 +245,7 @@ public class postController {
     public String IoReadImage(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(required = false) String pictureName) throws IOException {
 //		System.out.println("====ppp");
-		pictureName = new String(pictureName.getBytes("ISO8859-1"), "UTF-8");//瑙ｅ喅鍥剧墖涓枃璺緞涔辩爜
+		pictureName = new String(pictureName.getBytes("ISO8859-1"), "UTF-8");
 		String linkurl = "D:\\AUPLOAD\\images\\" + pictureName;
 		FileInputStream in = new FileInputStream(linkurl);
 		ServletOutputStream out = null;

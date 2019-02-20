@@ -2,6 +2,7 @@ package com.pxxy.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import com.pxxy.pojo.post_great;
 import com.pxxy.pojo.post_picture;
 import com.pxxy.pojo.post_readed;
 import com.pxxy.pojo.user;
+import com.alibaba.fastjson.JSONObject;
 import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.DTOgreat;
 import com.pxxy.DTO.DTOhuati;
@@ -22,6 +24,8 @@ import com.pxxy.DTO.PostByGreatReadedDTO;
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.mapper.*;
 import com.pxxy.service.postService;
+import com.pxxy.utils.RedisUtil;
+import com.pxxy.utils.SerializeUtil;
 
 @Service
 public class postServiceImpl implements postService {
@@ -53,33 +57,38 @@ public class postServiceImpl implements postService {
 	@Autowired 
 	private huatiMapper huatiMapper;
 	
+	@Autowired
+    private RedisUtil redisUtil;
+	
 	public int creatPost(post record) {
 		int a = postMapper.insertSelective(record);
-		System.out.println("service=====post³É¹¦²åÈë"+a+"ÌõÊı¾İ");
+//		System.out.println("service=====postï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½"+a+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		return a;
 	}
 	
 	public int insertPicture(post_picture record) {
 //		int a = postMapper.insertPicture(record);
-//		System.out.println("service====post_picture³É¹¦²åÈë"+a+"ÌõÊı¾İ");
+//		System.out.println("service====post_pictureï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½"+a+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		return 0;
 	}
 
 	public PostUserDTO queryPostByUserId(String userId) {
 		// TODO Auto-generated method stub
-//		System.out.println("service===½øÈëqueryPostByUserId·½·¨");
+//		System.out.println("service===ï¿½ï¿½ï¿½ï¿½queryPostByUserIdï¿½ï¿½ï¿½ï¿½");
 		PostUserDTO PostUserDTO = new PostUserDTO();
-		DTOBarAndPic dTOBarAndPic0 = postMapper.queryPostByUserId(userId);
 		DTOreaded DTOreaded = new DTOreaded();
 		DTOgreat DTOgreat = new DTOgreat();
-		List postList = postMapper.queryPostIdListByUserId(userId);
 		int countRead = 0;
 		int countGreat = 0;
 		int rrr = 0;
 		int ggg =0;
-		String postId = "";
+		
+		long startTime = System.currentTimeMillis();
+		
+		DTOBarAndPic dTOBarAndPic0 = postMapper.queryPostByUserId(userId);
+		List postList = postMapper.queryPostIdListByUserId(userId);
 		for(int i=0;i<postList.size();i++) {
-			postId = (String) postList.get(i);
+			String postId = (String) postList.get(i);
 			rrr = post_readedMapper.CountReadByuser(postId);
 			ggg = post_greatMapper.CountGreatByUser(postId);
 			countRead = countRead+rrr;
@@ -101,7 +110,7 @@ public class postServiceImpl implements postService {
 			dTOBarAndPic = dTOBarAndPic2;
 			PostUserDTO.setDTOBarAndPic(dTOBarAndPic);
 		}
-		
+		System.out.println("æµ‹è¯•è€—æ—¶======="+(System.currentTimeMillis()-startTime));
 		return PostUserDTO;
 	}
 	
@@ -110,7 +119,7 @@ public class postServiceImpl implements postService {
 		return postUserDTO;
 	}
 
-	//postµÄLayerÏêÇéÊı¾İ
+	//postï¿½ï¿½Layerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public PostUserDTO queryPostLayer(String postId) {
 		List<post_picture> Piclist = post_pictureMapper.selectByPostId(postId);
 		DTOBarAndPic DTO_BarAndPic = postMapper.queryPostLayer_BarAndPic(postId);
@@ -165,34 +174,40 @@ public class postServiceImpl implements postService {
 		postMapper.commentAdd(topicId, postId, userId, bUserId, topicContent);
 	}
 	
-	//Ìù°ÉÊ×Ò³ÈÈÃÅÍÆ¼ö
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½
 	public PostUserDTO queryTopPostView() {
+		if(redisUtil.hasKey("TopPostView")) {
+			System.out.println("é¦–é¡µæ¨è===è¯¥æ•°æ®ä»redisç¼“å­˜è¯»å–");
+			return (PostUserDTO) redisUtil.get("TopPostView");
+		}
 		PostUserDTO postUserDTO = new PostUserDTO() ;
 		PostByGreatReadedDTO postByGreatReadedDTO = new PostByGreatReadedDTO();
 		List<PostByGreatReadedDTO> postByGreatReadedDTOList = new ArrayList<PostByGreatReadedDTO>();
-		//»ñÈ¡Ïà¹ØpostIdÊı×é¼¯ºÏ
 		ArrayList postIdList = (ArrayList) postMapper.queryTopPostId();
-		//¸ù¾İÏà¹Øid»ñÈ¡¶ÔÓ¦µÄpost
+		
 		for(int i=0;i<postIdList.size();i++) {
 			String postId = (String) postIdList.get(i);
 			post post = postMapper.selectByPrimaryKey(postId);
 			user user111 = userMapper.selectByPrimaryKey(post.getPostUserId());
 			postByGreatReadedDTO = postMapper.queryPostViewByGreatReaded(postId);
-			postByGreatReadedDTO.getPost().setPostAuthor(user111.getUserNickname());//ĞŞ¸Ä×÷ÕßêÇ³Æbug
+			postByGreatReadedDTO.getPost().setPostAuthor(user111.getUserNickname());//ï¿½Ş¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç³ï¿½bug
 			postByGreatReadedDTOList.add(postByGreatReadedDTO);
 		}
+		
 		postUserDTO.setPostByGreatReadedDTOList(postByGreatReadedDTOList);
+		redisUtil.set("TopPostView", postUserDTO);
+		System.out.println("é¦–é¡µæ¨è===è¯¥æ•°æ®ä»æ•°æ®åº“è¯»å–");
 		return postUserDTO;
 	}
 	
-	//°ÉÄÚÈİÏêÇé
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public PostUserDTO queryBarPostView(String barId) {
 		PostUserDTO postUserDTO = new PostUserDTO() ;
 		PostByGreatReadedDTO postByGreatReadedDTO = new PostByGreatReadedDTO();
 		List<PostByGreatReadedDTO> postByGreatReadedDTOList = new ArrayList<PostByGreatReadedDTO>();
-		//»ñÈ¡Ïà¹ØpostIdÊı×é¼¯ºÏ
+		//ï¿½ï¿½È¡ï¿½ï¿½ï¿½postIdï¿½ï¿½ï¿½é¼¯ï¿½ï¿½
 		ArrayList postIdList = (ArrayList) postMapper.queryBarPostId(barId);
-		//¸ù¾İÏà¹Øid»ñÈ¡¶ÔÓ¦µÄpost
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½idï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½post
 		for(int i=0;i<postIdList.size();i++) {
 			String postId = (String) postIdList.get(i);
 			postByGreatReadedDTO = postMapper.queryPostViewByGreatReaded(postId);
@@ -201,13 +216,13 @@ public class postServiceImpl implements postService {
 		postUserDTO.setPostByGreatReadedDTOList(postByGreatReadedDTOList);
 		return postUserDTO;
 	}
-	//»°ÌâÉçÇø
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public PostUserDTO queryHuatiPostView(String postCategory) {
 		PostUserDTO postUserDTO = new PostUserDTO() ;
 		PostByGreatReadedDTO postByGreatReadedDTO = new PostByGreatReadedDTO();
 		List<PostByGreatReadedDTO> postByGreatReadedDTOList = new ArrayList<PostByGreatReadedDTO>();
 		ArrayList postIdList = (ArrayList) postMapper.queryHuatiPostId(postCategory);
-		//¸ù¾İÏà¹Øid»ñÈ¡¶ÔÓ¦µÄpost
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½idï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½post
 		for(int i=0;i<postIdList.size();i++) {
 			String postId = (String) postIdList.get(i);
 			postByGreatReadedDTO = postMapper.queryPostViewByGreatReaded(postId);
@@ -236,7 +251,7 @@ public class postServiceImpl implements postService {
 
 	public DTOBarAndPic selectAllPostInBack() {
 		DTOBarAndPic DTOBarAndPic = new DTOBarAndPic();
-		DTOBarAndPic DTOBarAndPic1 = postMapper.selectAllPostInBack();	//ºóÌ¨²éÑ¯ËùÓĞÌû×Ó
+		DTOBarAndPic DTOBarAndPic1 = postMapper.selectAllPostInBack();	//ï¿½ï¿½Ì¨ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		List<post> postList = DTOBarAndPic1.getPostList();
 		for(int i=0;i<DTOBarAndPic1.getPostList().size();i++) {
 			String barId = DTOBarAndPic1.getPostList().get(i).getPostBarId();
@@ -296,11 +311,17 @@ public class postServiceImpl implements postService {
 	}
 
 	public DTOhuati queryHotHuati() {
+		if(redisUtil.hasKey("huatiPostView")) {
+			System.out.println("çƒ­é—¨è¯é¢˜===è¯¥æ•°æ®ä»redisç¼“å­˜è¯»å–");
+			return (DTOhuati) redisUtil.get("huatiPostView");
+		}
 		DTOhuati DTOhuati = new DTOhuati();
 		List<huati> list = huatiMapper.queryHotHuati();
 		List<?> Numlist = huatiMapper.queryHotHuatiNum();
 		DTOhuati.setHuatiList(list);
 		DTOhuati.setNumList(Numlist);
+		redisUtil.set("huatiPostView", DTOhuati);
+		System.out.println("çƒ­é—¨è¯é¢˜===è¯¥æ•°æ®ä»æ•°æ®åº“è¯»å–");
 		return DTOhuati;
 	}
 

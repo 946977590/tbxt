@@ -135,14 +135,24 @@
 
 	<!-- ====================头部=====首页预览帖子========================== -->
 	<select id="queryTopPostId" resultType="java.lang.String">
-		SELECT
+	SELECT
+	post_great.post_id ,
+	COUNT(post_great.post_id)
+	FROM
+	post_great
+	GROUP BY
+	post_great.post_id
+	HAVING
+	COUNT(post_great.post_id) > 2
+	
+	<!-- SELECT
 		post.post_id
 		FROM post RIGHT JOIN post_great
 		ON post.post_id = post_great.post_id
 		RIGHT JOIN post_readed
 		ON post.post_id = post_readed.post_id
 		WHERE post.post_isdelete = '0'
-		GROUP BY post_great.post_id DESC
+		group BY post_great.post_id  -->
 	</select>
 	
 	<!-- ======话题社区===== -->

@@ -1,11 +1,16 @@
 package com.pxxy.DTO;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.pxxy.pojo.post_readed;
 
-public class DTOreaded {
+public class DTOreaded implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<post_readed> post_readedList;
 	private int countRead;
 	

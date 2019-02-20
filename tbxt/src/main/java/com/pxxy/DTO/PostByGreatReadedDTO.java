@@ -1,12 +1,17 @@
 package com.pxxy.DTO;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.pxxy.pojo.post;
 import com.pxxy.pojo.post_bar;
 import com.pxxy.pojo.post_picture;
 
-public class PostByGreatReadedDTO {
+public class PostByGreatReadedDTO implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<post_picture> post_pictureList;
 	private post post;
 	private post_bar post_bar;

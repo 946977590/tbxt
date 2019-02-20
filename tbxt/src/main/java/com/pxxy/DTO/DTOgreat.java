@@ -1,11 +1,16 @@
 package com.pxxy.DTO;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.pxxy.pojo.post_great;
 
-public class DTOgreat {
+public class DTOgreat implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<post_great> post_greatList;
 	private int CountGreat;
 	private int CountPost;

@@ -1,10 +1,16 @@
 package com.pxxy.DTO;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.pxxy.pojo.post_topic;
 
-public class DTOtopic {
+public class DTOtopic implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private post_topic post_topic;
 	
