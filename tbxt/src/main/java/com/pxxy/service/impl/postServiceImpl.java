@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,8 @@ import com.pxxy.utils.SerializeUtil;
 
 @Service
 public class postServiceImpl implements postService {
+	
+	private static Logger logger = Logger.getLogger(postServiceImpl.class);  
 
 	@Autowired 
 	private postMapper postMapper;
@@ -158,10 +161,32 @@ public class postServiceImpl implements postService {
 
 	public post_great judgeGreat(String postId, String userId) {
 		post_great great = postMapper.judgeGreat(postId, userId);
+		
+		if(redisUtil.hasKey("TopPostView")) {
+			redisUtil.del("TopPostView");
+			logger.debug("更新话题缓存");
+		}
+		DTOhuati DTOhuati = new DTOhuati();
+		List<huati> list = huatiMapper.queryHotHuati();
+		List<?> Numlist = huatiMapper.queryHotHuatiNum();
+		DTOhuati.setHuatiList(list);
+		DTOhuati.setNumList(Numlist);
+		redisUtil.set("huatiPostView", DTOhuati);
+		
 		return great;
 	}
 
 	public void delGreat(String greatId) {
+		if(redisUtil.hasKey("TopPostView")) {
+			redisUtil.del("TopPostView");
+			logger.debug("更新话题缓存");
+		}
+		DTOhuati DTOhuati = new DTOhuati();
+		List<huati> list = huatiMapper.queryHotHuati();
+		List<?> Numlist = huatiMapper.queryHotHuatiNum();
+		DTOhuati.setHuatiList(list);
+		DTOhuati.setNumList(Numlist);
+		redisUtil.set("huatiPostView", DTOhuati);
 		postMapper.delGreat(greatId);
 	}
 
@@ -177,14 +202,13 @@ public class postServiceImpl implements postService {
 	//������ҳ�����Ƽ�
 	public PostUserDTO queryTopPostView() {
 		if(redisUtil.hasKey("TopPostView")) {
-			System.out.println("首页推荐===该数据从redis缓存读取");
+			logger.debug("首页推荐===该数据从redis缓存读取");
 			return (PostUserDTO) redisUtil.get("TopPostView");
 		}
 		PostUserDTO postUserDTO = new PostUserDTO() ;
 		PostByGreatReadedDTO postByGreatReadedDTO = new PostByGreatReadedDTO();
 		List<PostByGreatReadedDTO> postByGreatReadedDTOList = new ArrayList<PostByGreatReadedDTO>();
 		ArrayList postIdList = (ArrayList) postMapper.queryTopPostId();
-		
 		for(int i=0;i<postIdList.size();i++) {
 			String postId = (String) postIdList.get(i);
 			post post = postMapper.selectByPrimaryKey(postId);
@@ -193,10 +217,13 @@ public class postServiceImpl implements postService {
 			postByGreatReadedDTO.getPost().setPostAuthor(user111.getUserNickname());//�޸������ǳ�bug
 			postByGreatReadedDTOList.add(postByGreatReadedDTO);
 		}
-		
 		postUserDTO.setPostByGreatReadedDTOList(postByGreatReadedDTOList);
-		redisUtil.set("TopPostView", postUserDTO);
-		System.out.println("首页推荐===该数据从数据库读取");
+		try {
+			redisUtil.set("TopPostView", postUserDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.debug("首页推荐===该数据从数据库读取");
 		return postUserDTO;
 	}
 	
@@ -312,7 +339,7 @@ public class postServiceImpl implements postService {
 
 	public DTOhuati queryHotHuati() {
 		if(redisUtil.hasKey("huatiPostView")) {
-			System.out.println("热门话题===该数据从redis缓存读取");
+			logger.debug("热门话题===该数据从redis缓存读取");
 			return (DTOhuati) redisUtil.get("huatiPostView");
 		}
 		DTOhuati DTOhuati = new DTOhuati();
@@ -320,8 +347,12 @@ public class postServiceImpl implements postService {
 		List<?> Numlist = huatiMapper.queryHotHuatiNum();
 		DTOhuati.setHuatiList(list);
 		DTOhuati.setNumList(Numlist);
-		redisUtil.set("huatiPostView", DTOhuati);
-		System.out.println("热门话题===该数据从数据库读取");
+		try {
+			redisUtil.set("huatiPostView", DTOhuati);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.debug("热门话题===该数据从数据库读取");
 		return DTOhuati;
 	}
 
