@@ -1,6 +1,11 @@
 eclipse.preferences.version=1
+encoding//src/main/java=GBK
 encoding//src/main/java/com/pxxy/controller/postController.java=UTF-8
+encoding//src/main/java/com/pxxy/service/impl/post_barServiceImpl.java=GBK
+encoding//src/main/java/com/pxxy/utils/ImgCompress.java=GBK
+encoding//src/main/java/com/pxxy/utils/SendEmail.java=GBK
 encoding//src/main/webapp/barExtend.html=UTF-8
 encoding//src/main/webapp/infozx.html=UTF-8
 encoding//src/main/webapp/loginBack.html=UTF-8
 encoding//src/main/webapp/tieba.html=UTF-8
+encoding/<project>=UTF-8

@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import com.pxxy.mapper.postMapper;
+
 import com.pxxy.service.postService;
 import com.pxxy.service.post_pictureService;
 
@@ -46,6 +48,15 @@ import com.pxxy.pojo.user;
 
 @Controller
 public class postController {
+	
+	@Autowired
+	private postMapper postMapper;
+	@RequestMapping("/ssk")
+	@ResponseBody
+	public DTOBarAndPic kk(){
+		DTOBarAndPic dto = postMapper.queryPostByUserId("7eff2242-a10c-4300-b6fa-764868dcf35f");
+		return dto;
+	}
 
 	@Autowired
 	private postService postService;

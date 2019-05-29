@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.pxxy.DTO.DTOBarAndPic;
 import com.pxxy.DTO.PostByGreatReadedDTO;
 import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.mapper.huatiMapper;
@@ -15,7 +16,8 @@ import com.pxxy.pojo.post_great;
 import com.pxxy.service.postService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={ "classpath*:spring/applicationContext-transaction.xml", "classpath*:spring/applicationContext-mybatis.xml","classpath*:spring/applicationContext.xml"})
+@ContextConfiguration(locations={ "classpath*:spring/applicationContext-transaction.xml",
+		"classpath*:spring/applicationContext-mybatis.xml","classpath*:spring/applicationContext.xml","classpath*:spring/applicationContext-redis.xml"})
 public class Post_test {
 
 	@Autowired 
@@ -56,9 +58,9 @@ public class Post_test {
 	
 	@Test
 	public void test14() {
-		String postId = "7eff2242-a10c-4300-b6fa-764868dcf35f";
-		PostByGreatReadedDTO postByGreatReadedDTO = postMapper.queryPostViewByGreatReaded(postId);
-		System.out.println("postByGreatReadedDTO===="+postByGreatReadedDTO.getPost_pictureList());
+		DTOBarAndPic list = postMapper.queryPostByUserId("7eff2242-a10c-4300-b6fa-764868dcf35f");
+		System.out.println("====");
+		System.out.println(list);
 	}
 	
 	@Test

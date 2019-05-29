@@ -5,12 +5,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import com.pxxy.DTO.PostUserDTO;
 
 import com.pxxy.pojo.user;
 import com.pxxy.mapper.userMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={ "classpath*:spring/applicationContext-transaction.xml", "classpath*:spring/applicationContext-mybatis.xml","classpath*:spring/applicationContext.xml"})
+@ContextConfiguration(locations={ "classpath*:spring/applicationContext-transaction.xml",
+		"classpath*:spring/applicationContext-mybatis.xml","classpath*:spring/applicationContext.xml","classpath*:spring/applicationContext-redis.xml"})
 public class test {
 
 	@Resource
@@ -18,13 +20,8 @@ public class test {
 	
 	@Test
 	public void test2() {
-		System.out.println("========");
-		user user = new user();
-		user.setUserId("28");
-		user.setUserNickname("niuniu");
-		System.out.println("获取user的昵称为"+user.getUserNickname());
-		userMapper.insert(user);
-		System.out.println("成功插入数据");
+		PostUserDTO list = userMapper.queryAllUser();
+		System.out.println("==========="+list.getUserList().size());
 	}
 	
 	@Test
@@ -37,8 +34,8 @@ public class test {
 		user user = new user();
 		user.setUserId("21");
 		user.setUserNickname("niuniu");
-		System.out.println("获取user的昵称为"+user.getUserNickname());
+		System.out.println("锟斤拷取user锟斤拷锟角筹拷为"+user.getUserNickname());
 		userMapper.insert(user);
-		System.out.println("成功插入数据");
+		System.out.println("锟缴癸拷锟斤拷锟斤拷锟斤拷锟斤拷");
 	}*/
 }

@@ -6,11 +6,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.pxxy.pojo.post;
 import com.pxxy.pojo.user;
+import com.pxxy.DTO.PostUserDTO;
 import com.pxxy.mapper.postMapper;
 import com.pxxy.mapper.userMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={ "classpath*:spring/applicationContext-transaction.xml", "classpath*:spring/applicationContext-mybatis.xml","classpath*:spring/applicationContext.xml"})
+@ContextConfiguration({"classpath*:spring/applicationContext-transaction.xml", "classpath*:spring/applicationContext-mybatis.xml","classpath*:spring/applicationContext.xml"})
 public class Usertest {
 
 	@Autowired
@@ -39,13 +40,14 @@ public class Usertest {
 		System.out.println("==user2="+user2);
 	}
 	
-	/*@Test
-	public void testselectByPrimaryKey(String postId) {
-		postId = "123";
-		post post = postMapper.selectByPrimaryKey(postId);
-		System.out.println("postId=="+post);
+	@Test
+	public void testselectByPrimaryKey() {
+		System.out.println("========");
+		user user = userMapper.queryByUserEmail("123");
+		PostUserDTO list = userMapper.queryAllUser();
+		System.out.println(list.getUserList().size());
 		
-	}*/
+	}
 	
 	@Test
 	public void testTranfer() {

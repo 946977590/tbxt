@@ -91,12 +91,6 @@
 		<association property="post_bar"
 			javaType="com.pxxy.pojo.post_bar"
 			resultMap="com.pxxy.mapper.post_barMapper.BaseResultMap" />
-
-		<!-- <collection property="post_pictureList" ofType="post_picture"> <id 
-			property="pictureId" column="picture_id" /> <result column="picture_belong" 
-			property="pictureBelong"/> <result column="picture_name" property="pictureName"/> 
-			</collection> -->
-
 		<collection property="post_barList" ofType="post_bar">
 			<id property="barId" column="bar_id" />
 			<result property="barName" column="bar_name" />
@@ -112,7 +106,6 @@
 			<result column="post_modifytime" property="postModifytime" />
 			<result column="post_isdelete" property="postIsdelete" />
 		</collection>
-
 	</resultMap>
 
 	<select id="queryPostByUserId" resultMap="QueryDTO_resultMap">

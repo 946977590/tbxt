@@ -162,31 +162,31 @@ public class postServiceImpl implements postService {
 	public post_great judgeGreat(String postId, String userId) {
 		post_great great = postMapper.judgeGreat(postId, userId);
 		
-		if(redisUtil.hasKey("TopPostView")) {
-			redisUtil.del("TopPostView");
-			logger.debug("更新话题缓存");
-		}
-		DTOhuati DTOhuati = new DTOhuati();
-		List<huati> list = huatiMapper.queryHotHuati();
-		List<?> Numlist = huatiMapper.queryHotHuatiNum();
-		DTOhuati.setHuatiList(list);
-		DTOhuati.setNumList(Numlist);
-		redisUtil.set("huatiPostView", DTOhuati);
+//		if(redisUtil.hasKey("TopPostView")) {
+//			redisUtil.del("TopPostView");
+//			logger.debug("更新话题缓存");
+//		}
+//		DTOhuati DTOhuati = new DTOhuati();
+//		List<huati> list = huatiMapper.queryHotHuati();
+//		List<?> Numlist = huatiMapper.queryHotHuatiNum();
+//		DTOhuati.setHuatiList(list);
+//		DTOhuati.setNumList(Numlist);
+//		redisUtil.set("huatiPostView", DTOhuati);
 		
 		return great;
 	}
 
 	public void delGreat(String greatId) {
-		if(redisUtil.hasKey("TopPostView")) {
-			redisUtil.del("TopPostView");
-			logger.debug("更新话题缓存");
-		}
-		DTOhuati DTOhuati = new DTOhuati();
-		List<huati> list = huatiMapper.queryHotHuati();
-		List<?> Numlist = huatiMapper.queryHotHuatiNum();
-		DTOhuati.setHuatiList(list);
-		DTOhuati.setNumList(Numlist);
-		redisUtil.set("huatiPostView", DTOhuati);
+//		if(redisUtil.hasKey("TopPostView")) {
+//			redisUtil.del("TopPostView");
+//			logger.debug("更新话题缓存");
+//		}
+//		DTOhuati DTOhuati = new DTOhuati();
+//		List<huati> list = huatiMapper.queryHotHuati();
+//		List<?> Numlist = huatiMapper.queryHotHuatiNum();
+//		DTOhuati.setHuatiList(list);
+//		DTOhuati.setNumList(Numlist);
+//		redisUtil.set("huatiPostView", DTOhuati);
 		postMapper.delGreat(greatId);
 	}
 
