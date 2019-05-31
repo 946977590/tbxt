@@ -37,7 +37,7 @@ var vm = new Vue({
 	},
 	mounted(){
 		this.$nextTick(function () {
-			var url = '/tbxt/requestSession';
+			var url = '/tbxt/requestManaSession';
 			this.$http.post(url).then(function(res) {
 //				console.log(res.body.userNickname);
 				// 处理成功的结果

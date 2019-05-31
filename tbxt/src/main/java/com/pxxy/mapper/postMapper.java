@@ -29,35 +29,37 @@ public interface postMapper {
 
     int updateByPrimaryKey(post record);
     
-    DTOBarAndPic queryPostByUserId(String userId);	//¸ù¾İÓÃ»§id²éÑ¯Ïà¹Øpost¶à±íĞÅÏ¢
+    DTOBarAndPic queryPostByUserId(String userId);	//ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½idï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½postï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
     
-    PostUserDTO queryPostViewByTest(String userId);	//²âÊÔÊ×Ò³ÍÆ¼öpost
+    PostUserDTO queryPostViewByTest(String userId);	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½Æ¼ï¿½post
     
-    DTOgreat queryPostLayer_great(String postId);	//PostÏêÇé  µãÔŞ
+    DTOgreat queryPostLayer_great(String postId);	//Postï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½
     
-    DTOreaded queryPostLayer_readed(String postId);	//PostÏêÇé  ÔÄ¶Á
+    DTOreaded queryPostLayer_readed(String postId);	//Postï¿½ï¿½ï¿½ï¿½  ï¿½Ä¶ï¿½
     
-    DTOtopic queryPostLayer_Topic(String postId);	//PostÏêÇé  ÆÀÂÛ
+    DTOtopic queryPostLayer_Topic(String postId);	//Postï¿½ï¿½ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½
     
-    DTOBarAndPic queryPostLayer_BarAndPic(String postId);	//PostÏêÇé Ìù°É-Í¼Æ¬
+    DTOBarAndPic queryPostLayer_BarAndPic(String postId);	//Postï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½-Í¼Æ¬
     
-    post_great judgeGreat(@Param("postId")String postId,@Param("userId")String userId);			//µãÔŞÅĞ¶Ï
+    post_great judgeGreat(@Param("postId")String postId,@Param("userId")String userId);			//ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¶ï¿½
     
-    void greatAdd(@Param("greatId")String greatId,@Param("postId")String postId,@Param("userId")String userId);	//µãÔŞ
+    void greatAdd(@Param("greatId")String greatId,@Param("postId")String postId,@Param("userId")String userId);	//ï¿½ï¿½ï¿½ï¿½
     
-    void delGreat(String greatId);		//É¾³ıµãÔŞ
+    void delGreat(String greatId);		//É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     
-    void commentAdd(@Param("topicId")String topicId,@Param("postId")String postId,@Param("userId")String userId,@Param("bUserId")String bUserId,@Param("topicContent")String topicContent);//Ôö¼ÓÆÀÂÛ
+    void commentAdd(@Param("topicId")String topicId,@Param("postId")String postId,@Param("userId")String userId,@Param("bUserId")String bUserId,@Param("topicContent")String topicContent);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     
     List<?> queryTopPostId();
     
     PostByGreatReadedDTO queryPostViewByGreatReaded(String postId);
     List<?> queryBarPostId(String barId);
-    PostUserDTO queryAllBar(); 			//²éÑ¯ËùÓĞÌù°É
-    DTOBarAndPic selectAllPostInBack();	//ºóÌ¨²éÑ¯ËùÓĞÌû×Ó
-    List<?> queryPostIdListByUserId(String postUserId);	//¸ù¾İÓÃ»§id²éÑ¯µ±Ç°ËùÓĞÌû×Óid
-    List<?> queryHuatiPostId(String postCategory);	//»°ÌâÉçÇøËùÓĞÌû×Óid
-    DTOBarAndPic selectAllPostInBackByFY(@Param("preNum")int preNum,@Param("pageSize")int pageSize);	//·ÖÒ³
+    PostUserDTO queryAllBar(); 			//ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    DTOBarAndPic selectAllPostInBack();	//ï¿½ï¿½Ì¨ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    List<?> queryPostIdListByUserId(String postUserId);	//ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½idï¿½ï¿½Ñ¯ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½id
+    List<?> queryHuatiPostId(String postCategory);	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½id
+    DTOBarAndPic selectAllPostInBackByFY(@Param("preNum")int preNum,@Param("pageSize")int pageSize);	//ï¿½ï¿½Ò³
     DTOBarAndPic selectAllPostInBackByFYandKw(@Param("postTitle") String postTitle,@Param("preNum")int preNum,@Param("pageSize")int pageSize);
     post judgePostUserTopic(@Param("postId")String postId,@Param("userId")String userId);
+    
+    List<String> queryDeletePostId(); //æŸ¥è¯¢å·²åˆ é™¤å¸–å­
 }

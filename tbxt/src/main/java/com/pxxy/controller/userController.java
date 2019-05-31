@@ -37,7 +37,7 @@ public class userController {
 	@Autowired
 	private userService userService;
 	
-	//ÓÃ»§×¢²á
+	//ï¿½Ã»ï¿½×¢ï¿½ï¿½
 	@RequestMapping(value="/register",method=RequestMethod.POST)
 	@ResponseBody
 	public void login(HttpServletRequest request,HttpServletResponse response,
@@ -75,13 +75,13 @@ public class userController {
 			pw.write(result);
 			
 		} catch (Exception e) {
-			System.out.println("²éÑ¯user³ö´í");
+			System.out.println("ï¿½ï¿½Ñ¯userï¿½ï¿½ï¿½ï¿½");
 			pw.write(result);
 		}
 		pw.flush();
 		pw.close();
 	}
-	//·¢ËÍ×¢²áÑéÖ¤Âë
+	//ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½
 	@RequestMapping(value="/sendEmail",method=RequestMethod.POST)
 	@ResponseBody
 	public String sendEmail(@RequestParam String userEmail,@RequestParam String userNickname) throws IOException{
@@ -94,7 +94,7 @@ public class userController {
 		}
 		return verifyCode;
 	}
-	//·¢ËÍÐÞ¸ÄÃÜÂëÑéÖ¤Âë
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½
 	@RequestMapping(value="/sendXGEmail",method=RequestMethod.POST)
 	@ResponseBody
 	public String sendXGEmail(@RequestParam String userEmail) throws IOException{
@@ -110,7 +110,7 @@ public class userController {
 		return verifyCode;
 	}
 	
-	//»ñÈ¡session²¢ÅÐ¶Ï
+	//ï¿½ï¿½È¡sessionï¿½ï¿½ï¿½Ð¶ï¿½
 	@RequestMapping(value="/requestSession",method=RequestMethod.POST)
 	@ResponseBody
 	public void requestSession(HttpServletRequest request,HttpServletResponse response) throws IOException{
@@ -129,7 +129,27 @@ public class userController {
 		pw.close();
 		
 	}
-	//ÓÃ»§µÇÂ½
+	
+	@RequestMapping(value="/requestManaSession",method=RequestMethod.POST)
+	@ResponseBody
+	public void requestManaSession(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter pw = response.getWriter();
+		HttpSession session = request.getSession();
+		user sessionUser = (user) session.getAttribute("userMana");
+		if(sessionUser!=null) {
+			Gson gson = new Gson();
+			pw.write(gson.toJson(sessionUser));
+		}else{
+			pw.write("");
+		}
+		pw.flush();
+		pw.close();
+		
+	}
+	
+	//ï¿½Ã»ï¿½ï¿½ï¿½Â½
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	@ResponseBody
 	public void login(HttpServletRequest request,HttpServletResponse response,
@@ -160,7 +180,7 @@ public class userController {
 	
 	}
 	
-	//×¢ÏúÓÃ»§
+	//×¢ï¿½ï¿½ï¿½Ã»ï¿½
 		@RequestMapping(value="/logout",method=RequestMethod.POST)
 		@ResponseBody
 		public void logout(HttpServletRequest request,HttpServletResponse response)
@@ -174,7 +194,7 @@ public class userController {
 			pw.write("logoutSuccess");
 		}
 		
-	//×¢ÏúÓÃ»§
+	//×¢ï¿½ï¿½ï¿½Ã»ï¿½
 	@RequestMapping(value="/ManaLogin",method=RequestMethod.POST)
 	@ResponseBody
 	public void ManaLogin(HttpServletRequest request,HttpServletResponse response,
@@ -190,7 +210,7 @@ public class userController {
 		if(user != null) {
 			if(user.getUserPassword().equals(passWord)) {
 				res = "success";
-				session.setAttribute("user", user);
+				session.setAttribute("userMana", user);
 			}else {
 				res = "password_error";
 			}
@@ -214,7 +234,7 @@ public class userController {
 		return postUserDTO;
 	}
 	
-	//¹Ø¼ü×Ö²éÑ¯
+	//ï¿½Ø¼ï¿½ï¿½Ö²ï¿½Ñ¯
 	@RequestMapping(value="/queryUserByKW",method=RequestMethod.POST)
 	@ResponseBody
 	public PostUserDTO queryUserByKW(@RequestParam String userNickname) {
@@ -230,7 +250,7 @@ public class userController {
 		return user;
 	}
 	
-	//·â½ûÓÃ»§
+	//ï¿½ï¿½ï¿½ï¿½Ã»ï¿½
 	@RequestMapping(value="/BannedUser",method=RequestMethod.POST)
 	@ResponseBody
 	public String BannedUser(@RequestParam String userId) {
@@ -243,7 +263,7 @@ public class userController {
 		userService.updateByPrimaryKeySelective(user);
 		return "banned";
 	}
-	//½â³ý·â½û
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/ReBannedUser",method=RequestMethod.POST)
 	@ResponseBody
 	public String ReBannedUser(@RequestParam String userId) {
@@ -256,7 +276,7 @@ public class userController {
 		userService.updateByPrimaryKeySelective(user);
 		return "Rebanned";
 	}
-	//¸üÐÂÓÃ»§ÐÅÏ¢
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢
 	@RequestMapping(value="/UpdateUser",method=RequestMethod.POST)
 	@ResponseBody
 	public String UpdateUser(HttpServletRequest request,@RequestParam String userNickname,@RequestParam String userGender) {
@@ -272,7 +292,7 @@ public class userController {
 		userService.updateByPrimaryKeySelective(user);
 		return "Update";
 	}
-	//¼ÇµÃÃÜÂëµÄ===ÐÞ¸ÄÃÜÂë
+	//ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½===ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/UpdateJdPassword",method=RequestMethod.POST)
 	@ResponseBody
 	public String UpdateUserPassword(@RequestParam String userEmail,@RequestParam String userOldPassword
@@ -292,7 +312,7 @@ public class userController {
 		}
 		
 	}
-	//Íü¼ÇÃÜÂëµÄ===ÐÞ¸ÄÃÜÂë
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½===ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/UpdateWjPassword",method=RequestMethod.POST)
 	@ResponseBody
 	public String UpdateWjPassword(@RequestParam String userEmail,@RequestParam String userPassword) {
@@ -306,7 +326,7 @@ public class userController {
 		}
 		
 	}
-	//¸ù¾Ýid²énickname
+	//ï¿½ï¿½ï¿½ï¿½idï¿½ï¿½nickname
 	@RequestMapping(value="/findName",method=RequestMethod.POST)
 	@ResponseBody
 	public user findName(HttpServletRequest request) {

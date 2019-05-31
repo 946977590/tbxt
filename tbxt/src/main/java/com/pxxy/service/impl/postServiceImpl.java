@@ -203,14 +203,17 @@ public class postServiceImpl implements postService {
 	public PostUserDTO queryTopPostView() {
 		if(redisUtil.hasKey("TopPostView")) {
 			logger.debug("首页推荐===该数据从redis缓存读取");
+			if(redisUtil.get("TopPostView") instanceof PostUserDTO)
 			return (PostUserDTO) redisUtil.get("TopPostView");
 		}
 		PostUserDTO postUserDTO = new PostUserDTO() ;
 		PostByGreatReadedDTO postByGreatReadedDTO = new PostByGreatReadedDTO();
 		List<PostByGreatReadedDTO> postByGreatReadedDTOList = new ArrayList<PostByGreatReadedDTO>();
 		ArrayList postIdList = (ArrayList) postMapper.queryTopPostId();
+		List delIdList = postMapper.queryDeletePostId();
 		for(int i=0;i<postIdList.size();i++) {
 			String postId = (String) postIdList.get(i);
+			if(delIdList.contains(postId)) continue;
 			post post = postMapper.selectByPrimaryKey(postId);
 			user user111 = userMapper.selectByPrimaryKey(post.getPostUserId());
 			postByGreatReadedDTO = postMapper.queryPostViewByGreatReaded(postId);
@@ -219,7 +222,7 @@ public class postServiceImpl implements postService {
 		}
 		postUserDTO.setPostByGreatReadedDTOList(postByGreatReadedDTOList);
 		try {
-			redisUtil.set("TopPostView", postUserDTO);
+			redisUtil.set("TopPostView", postUserDTO, 60);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -234,9 +237,11 @@ public class postServiceImpl implements postService {
 		List<PostByGreatReadedDTO> postByGreatReadedDTOList = new ArrayList<PostByGreatReadedDTO>();
 		//��ȡ���postId���鼯��
 		ArrayList postIdList = (ArrayList) postMapper.queryBarPostId(barId);
+		List delIdList = postMapper.queryDeletePostId();
 		//�������id��ȡ��Ӧ��post
 		for(int i=0;i<postIdList.size();i++) {
 			String postId = (String) postIdList.get(i);
+			if(delIdList.contains(postId)) continue;
 			postByGreatReadedDTO = postMapper.queryPostViewByGreatReaded(postId);
 			postByGreatReadedDTOList.add(postByGreatReadedDTO);
 		}
@@ -340,6 +345,7 @@ public class postServiceImpl implements postService {
 	public DTOhuati queryHotHuati() {
 		if(redisUtil.hasKey("huatiPostView")) {
 			logger.debug("热门话题===该数据从redis缓存读取");
+			if(redisUtil.get("huatiPostView") instanceof DTOhuati)
 			return (DTOhuati) redisUtil.get("huatiPostView");
 		}
 		DTOhuati DTOhuati = new DTOhuati();
@@ -348,7 +354,7 @@ public class postServiceImpl implements postService {
 		DTOhuati.setHuatiList(list);
 		DTOhuati.setNumList(Numlist);
 		try {
-			redisUtil.set("huatiPostView", DTOhuati);
+			redisUtil.set("huatiPostView", DTOhuati,3600);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

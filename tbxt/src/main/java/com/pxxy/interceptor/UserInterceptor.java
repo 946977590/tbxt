@@ -17,7 +17,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter{
 			throws Exception {
 		System.out.println("preHandle=====");
 		HttpSession session = request.getSession();
-		user user = (user) session.getAttribute("user");
+		user user = (user) session.getAttribute("userMana");
 		if(!user.getUserEmail().equals("123")) {
 			request.getRequestDispatcher("/loginBack.html").forward(request, response);;
 			System.out.println("拦截请求==============");
@@ -33,7 +33,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter{
 			throws Exception {
 		System.out.println("postHandle=====");
 		HttpSession session = request.getSession();
-		user user = (com.pxxy.pojo.user) session.getAttribute("user");
+		user user = (com.pxxy.pojo.user) session.getAttribute("userMana");
 		if(user.getUserEmail().equals("123")) {
 			System.out.println("卧槽，是管理员登录了！！！");
 		}
